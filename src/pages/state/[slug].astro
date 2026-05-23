@@ -59,10 +59,16 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       <h1>{j.name}</h1>
       <div class="helpline-grid">
         <div class="helpline-card helpline-card--national">
-          <p class="helpline-card__eyebrow">National Problem Gambling Helpline</p>
-          <p class="helpline-card__number">{j.helpline.national.label}</p>
-          <p class="helpline-card__digits">({j.helpline.national.digits})</p>
-          <p class="helpline-card__note">Free. 24/7. Call or text.</p>
+          <img
+            class="myreset-lockup"
+            src="/brand/myreset-horizontal-color.png"
+            width="640"
+            height="162"
+            alt="1-800-MY-RESET, the National Problem Gambling Helpline"
+          />
+          <p class="helpline-card__note">
+            {j.helpline.national.digits} · Free. 24/7. Call or text.
+          </p>
           <a class="btn btn-primary" href={`tel:${j.helpline.national.tel}`}>
             Call or text {j.helpline.national.label}
           </a>
@@ -405,6 +411,13 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
     .helpline-card--national {
       border: 2px solid var(--c-primary);
     }
+    .myreset-lockup {
+      display: block;
+      width: 100%;
+      max-width: 15rem;
+      height: auto;
+      margin-bottom: var(--space-3);
+    }
     .helpline-card__eyebrow {
       margin: 0;
       font-weight: 700;
@@ -514,7 +527,8 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       position: relative;
     }
     .proc--pending {
-      opacity: 0.75;
+      background: transparent;
+      border: 1px dashed var(--c-border-strong);
     }
     .proc__step {
       font-size: 0.75rem;
@@ -572,7 +586,7 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       border-left: 4px solid var(--c-primary);
     }
     .legal-cell--not-authorized {
-      opacity: 0.7;
+      background: var(--c-surface-alt);
     }
     .legal-cell--tribal-only,
     .legal-cell--limited {

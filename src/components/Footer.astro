@@ -17,11 +17,19 @@ const quickLinks = [
 <footer class="site-footer surface-dark">
   <div class="container footer-grid">
     <div class="footer-helpline">
-      <p class="footer-helpline__name">National Problem Gambling Helpline</p>
-      <p class="footer-helpline__number">
-        1-800-MY-RESET <span class="footer-helpline__digits">(1-800-697-3738)</span>
+      <a class="footer-helpline__lockup" href="tel:+18006973738">
+        <img
+          src="/brand/myreset-horizontal-white.png"
+          width="640"
+          height="199"
+          loading="lazy"
+          decoding="async"
+          alt="Call or text 1-800-MY-RESET, the National Problem Gambling Helpline"
+        />
+      </a>
+      <p class="footer-helpline__disclosure">
+        1-800-697-3738 · Free. 24/7. Call or text.
       </p>
-      <p class="footer-helpline__disclosure">Free. 24/7. Call or text.</p>
       <p class="footer-988">
         In crisis? Call or text <strong>988</strong> — Suicide &amp; Crisis
         Lifeline.
@@ -91,24 +99,16 @@ const quickLinks = [
   }
 
   /* Helpline lockup */
-  .footer-helpline__name {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #cbd9e2;
+  .footer-helpline__lockup {
+    display: inline-block;
   }
-  .footer-helpline__number {
-    margin: var(--space-1) 0 0;
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: #fff;
-  }
-  .footer-helpline__digits {
-    font-size: 1rem;
-    font-weight: 600;
-    white-space: nowrap;
+  .footer-helpline__lockup img {
+    width: 100%;
+    max-width: 16rem;
+    height: auto;
   }
   .footer-helpline__disclosure {
-    margin: var(--space-1) 0 var(--space-4);
+    margin: var(--space-3) 0 var(--space-4);
     font-weight: 600;
     color: #fff;
   }

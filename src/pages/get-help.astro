@@ -13,10 +13,16 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <div class="help-cards">
         <div class="help-card help-card--primary">
-          <p class="help-card__name">National Problem Gambling Helpline</p>
-          <p class="help-card__number">1-800-MY-RESET</p>
-          <p class="help-card__digits">(1-800-697-3738)</p>
-          <p class="help-card__note">Free. 24/7. Call or text.</p>
+          <img
+            class="myreset-lockup"
+            src="/brand/myreset-horizontal-color.png"
+            width="640"
+            height="162"
+            alt="1-800-MY-RESET, the National Problem Gambling Helpline"
+          />
+          <p class="help-card__digits">
+            (1-800-697-3738) · Free. 24/7. Call or text.
+          </p>
           <a class="btn btn-primary" href="tel:+18006973738">
             Call or text 1-800-MY-RESET
           </a>
@@ -69,6 +75,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       border-color: var(--c-primary);
       border-width: 2px;
       background: var(--c-primary-tint);
+    }
+    .myreset-lockup {
+      display: block;
+      width: 100%;
+      max-width: 16rem;
+      height: auto;
+      margin-bottom: var(--space-2);
     }
     .help-card__name {
       margin: 0;
