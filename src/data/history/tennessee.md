@@ -1,0 +1,37 @@
+# Tennessee — Gambling History
+
+## Present-day posture
+
+Tennessee in 2026 is the country's only major online-sports-betting market with no commercial casinos, no in-state racetracks, and no tribal gaming. The state operates an education lottery (TELC, transitioning to TDLR oversight under 2025 legislation), permits charitable raffles and bingo under an annual-event model restricted to one event per nonprofit per year, and licenses roughly a dozen mobile sports-wagering operators through the Sports Wagering Council (SWC). Daily fantasy sports operates under a separate statutory permission. Retail sports betting does not exist anywhere in Tennessee.¹
+
+## Compressed history
+
+Tennessee was admitted as the 16th state on June 1, 1796. Andrew Jackson kept a thoroughbred stable at the Hermitage and was personally embroiled in some of the most famous antebellum match races. The 1834 constitution prohibited the legislature from authorizing lotteries, language carried forward into the 1870 constitution: "The Legislature shall have no power to authorize lotteries for any purpose." Pari-mutuel wagering on horse racing was banned in 1905 and would not return for 82 years.² The Racing Control Act of 1987 created a Tennessee State Racing Commission and authorized up to three tracks subject to local-option referendum; every proposed track was voted down or stymied by litigation, the Commission shrank to a single member by the late 1990s and dissolved in 1998, and the underlying statute was formally repealed in 2015 without a single wager ever having been placed.³
+
+The 1834 anti-lottery clause was overturned only by Amendment 1 to the constitution, approved by roughly 58 percent of voters on November 5, 2002. The Tennessee Education Lottery Corporation was created June 11, 2003 and sold its first ticket January 20, 2004, with proceeds dedicated to the Hope Scholarship and pre-K programs. Charitable gaming followed a similar constitutional path: an amendment authorizing annual nonprofit games-of-chance fundraisers was ratified, and the Tennessee Nonprofit Gaming Law was enacted, with the Secretary of State's Division of Charitable Solicitations and Gaming administering an omnibus list submitted to the General Assembly each March 1.⁴ Tennessee became the **first U.S. state to legalize an online-only sports-betting model** through the Tennessee Sports Gaming Act of May 2019, which took effect July 1, 2019 and went live with mobile wagering on November 1, 2020. Regulatory oversight transferred from TELC to the newly created Sports Wagering Advisory Council (later renamed Sports Wagering Council) on January 1, 2022. Tennessee uniquely taxes 1.85 percent of handle (rather than adjusted gross revenue), the only such structure in the country.⁵
+
+## Regulatory framework today
+
+The **Tennessee Sports Wagering Council** (https://www.tn.gov/swc.html), codified at Tenn. Code Ann. tit. 4, ch. 49, licenses and regulates online sports-wagering operators and fantasy sports. The **Tennessee Education Lottery Corporation** (https://www.tnlottery.com/) administers draw and instant lottery games — 2025 legislation restructures the TELC institutional form effective September 1, 2025, with some operational functions migrating to the Department of Licensing and Regulation. The **Tennessee Secretary of State, Division of Charitable Solicitations and Gaming** (https://sos.tn.gov/charities) licenses annual nonprofit gaming events. The **Tennessee Department of Mental Health and Substance Abuse Services (TDMHSAS)** funds problem-gambling treatment from a statutory carve-out of sports-wagering tax revenue.
+
+## Voluntary self-exclusion (VSE)
+
+Tennessee's self-exclusion program is administered by the **Tennessee Sports Wagering Council** for online sports wagering and fantasy sports — the only forms of legal commercial wagering in the state. Because Tennessee has no casinos, no racetracks, no tribal gaming, and no land-based VLTs, the SWC program operationally covers the entire commercial gambling market.⁶
+
+Enrollment is initiated either through the SWC's online application portal at https://www.tn.gov/swc/forms/self-exclusion.html or by mailing/emailing a completed form with a copy of a driver's license and a selfie photograph holding the ID to SWAC.Tech@tn.gov (subject line: "Self-Exclusion Program"). Applicants may also self-exclude directly through any licensed sportsbook's in-app responsible-gaming controls; those enrollments are reported by the operator to the Council. SWC Rule 1350-01, revised June 30, 2025, distinguishes between the **statewide self-exclusion list** (operator-blocking across all licensees) and a **licensee-specific self-exclusion list** maintained by each operator. The 2025 revision also defined "account cool-off" and "responsible gaming limit" as separate self-imposed tools.⁷
+
+Duration options are **1 year, 3 years, or 5 years**. Tennessee does not offer a lifetime option as of 2026. Scope of the statewide list: all 12-plus licensed mobile sportsbooks operating in Tennessee, including DraftKings, FanDuel, BetMGM, Caesars, ESPN BET, and Fanatics — once added, the enrollee's account must be closed and any remaining balance returned, all marketing must cease, and the enrollee cannot create a new account under any name with any licensed Tennessee operator until the term expires. Fantasy-sports licensees are also bound. Removal is automatic at the end of the elected period; no reinstatement application is required, although the enrollee may need to verify identity to re-register with operators. An excluded person who circumvents the program (using a false name, a relative's account, etc.) is subject to forfeiture of any deposit and winnings, and the operator is required to report the breach. Operators that knowingly accept wagers from listed individuals face administrative penalties under SWC Rule 1350-01.⁸
+
+Tennessee does not participate in any formal multi-state self-exclusion compact; however, because most Tennessee licensees operate in multiple states, an account closure for VSE in Tennessee will typically trigger downstream operator-internal restrictions in other states for the same individual under operator policy. The Tennessee Problem Gambling Helpline (1-800-889-9789), administered through TDMHSAS contracts, is the principal referral resource.⁹
+
+## Sources
+
+1. Tennessee Sports Wagering Council — https://www.tn.gov/swc.html
+2. Tennessee Encyclopedia, "Lotteries" — https://tennesseeencyclopedia.net/entries/lotteries/
+3. National Gambling Impact Study Commission, Tennessee Title 4 ch. 36 (Horse Racing) — https://govinfo.library.unt.edu/ngisc/reports/tn.pdf
+4. Tennessee Secretary of State, Charitable Gaming Event FAQs — https://sos.tn.gov/charities/guides/charitable-gaming-event-faqs
+5. TrackBill, HB1 / Tennessee Sports Gaming Act (2019-2020 session) — https://trackbill.com/bill/tennessee-house-bill-1-gambling
+6. Tennessee Voluntary Sports Wagering Self-Exclusion — https://www.tn.gov/swc/forms/self-exclusion.html
+7. Tennessee Sports Wagering Council, Rules ch. 1350-01 (June 30, 2025 revision) — https://publications.tnsosfiles.com/rules/1350/1350-01.20250630.pdf
+8. Tennessee Sports Wagering Council Newsroom, "Sports Wagering Council Strengthens Rules, Regulations" (April 8, 2025) — https://www.tn.gov/swac/about/tennessee-sports-wagering-council-newroom/2025/4/8/sports-wagering-council-strengthens-rules--regulations.html
+9. Tennessee Education Lottery Corporation — https://www.tnlottery.com/

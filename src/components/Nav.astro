@@ -188,10 +188,23 @@ const current = Astro.url.pathname.replace(/\/$/, "") || "/";
   const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
   const nav = document.getElementById("primary-nav");
   if (toggle && nav) {
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      nav.classList.toggle("is-open", open);
+    };
     toggle.addEventListener("click", () => {
-      const open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      nav.classList.toggle("is-open", !open);
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+    // Close when a link is chosen.
+    nav.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("a")) setOpen(false);
+    });
+    // Close on Escape and return focus to the toggle.
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && toggle.getAttribute("aria-expanded") === "true") {
+        setOpen(false);
+        toggle.focus();
+      }
     });
   }
 </script>

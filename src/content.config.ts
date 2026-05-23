@@ -2,16 +2,9 @@ import { defineCollection } from "astro:content";
 import { z } from "astro:schema";
 import { glob } from "astro/loaders";
 
-// Per-jurisdiction data (50 states + DC + 5 territories). Populated in Phase 2
-// from the Gaming Regulatory Archive. Schema kept light until then.
-const states = defineCollection({
-  loader: glob({ pattern: "**/*.json", base: "./src/content/states" }),
-  schema: z.object({
-    name: z.string(),
-    abbr: z.string(),
-    slug: z.string(),
-    helpline: z.string().default("1-800-MY-RESET (1-800-697-3738)"),
-  }),
+// Per-jurisdiction gambling-history narratives (rendered on state pages).
+const history = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/data/history" }),
 });
 
 // Downloadable resource catalog (rack cards, fact sheets, graphics).
@@ -26,4 +19,4 @@ const resources = defineCollection({
   }),
 });
 
-export const collections = { states, resources };
+export const collections = { history, resources };

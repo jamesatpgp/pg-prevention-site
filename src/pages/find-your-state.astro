@@ -1,14 +1,188 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
+import { getAllJurisdictions } from "../lib/jurisdictions";
+
+const all = getAllJurisdictions();
+const states = all.filter((j) => !j.isTerritory);
+const territories = all.filter((j) => j.isTerritory);
 ---
 
 <BaseLayout
   title="Find Your State"
-  description="Local helplines, regulators, and resources for every U.S. state, the District of Columbia, and five territories."
+  description="Choose your state or territory for local helplines, who regulates gambling, what's legal, and where to find help. All 50 states, DC, and five U.S. territories."
 >
-  <ComingSoon
-    heading="Find Your State"
-    blurb="An interactive map and a page for every U.S. state, the District of Columbia, and five territories — with local helplines, regulators, and resources — is on the way."
-  />
+  <section class="section">
+    <div class="container">
+      <h1>Find help in your state</h1>
+      <p class="lead">
+        Choose your state or territory below. Each page lists local helplines,
+        who regulates gambling there, what's legal, and where to find help. We
+        cover all 50 states, the District of Columbia, and five U.S. territories.
+      </p>
+
+      <form class="state-jump" action="/find-your-state" method="get">
+        <label for="state-select">Jump to a state or territory</label>
+        <div class="state-jump__row">
+          <select id="state-select" name="state">
+            <option value="">Select…</option>
+            <optgroup label="States &amp; DC">
+              {states.map((j) => <option value={j.slug}>{j.name}</option>)}
+            </optgroup>
+            <optgroup label="Territories">
+              {territories.map((j) => <option value={j.slug}>{j.name}</option>)}
+            </optgroup>
+          </select>
+          <button type="submit" class="btn btn-primary">Go</button>
+        </div>
+      </form>
+
+      <div class="state-filter">
+        <label for="state-filter-input">Or filter the list</label>
+        <input
+          type="search"
+          id="state-filter-input"
+          placeholder="Type a state name…"
+          autocomplete="off"
+        />
+      </div>
+
+      <h2 id="states-h">States &amp; the District of Columbia</h2>
+      <ul class="state-list" aria-labelledby="states-h">
+        {
+          states.map((j) => (
+            <li class="state-list__item" data-name={j.name.toLowerCase()}>
+              <a href={`/state/${j.slug}`}>
+                <span class="state-list__abbr" aria-hidden="true">{j.abbr}</span>
+                <span>{j.name}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <h2 id="terr-h">U.S. Territories</h2>
+      <ul class="state-list" aria-labelledby="terr-h">
+        {
+          territories.map((j) => (
+            <li class="state-list__item" data-name={j.name.toLowerCase()}>
+              <a href={`/state/${j.slug}`}>
+                <span class="state-list__abbr" aria-hidden="true">{j.abbr}</span>
+                <span>{j.name}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <p id="filter-empty" class="filter-empty" hidden>
+        No state or territory matches that search.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .lead {
+      font-size: 1.2rem;
+      max-width: 65ch;
+    }
+    .state-jump {
+      margin: var(--space-6) 0 var(--space-4);
+    }
+    .state-jump label,
+    .state-filter label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+    .state-jump__row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+    }
+    select,
+    input[type="search"] {
+      min-height: var(--target-min);
+      padding: var(--space-2) var(--space-3);
+      font: inherit;
+      border: 2px solid var(--c-border-strong);
+      border-radius: var(--radius);
+      background: var(--c-surface);
+      color: var(--c-text);
+      min-width: 16rem;
+    }
+    .state-filter {
+      margin-bottom: var(--space-6);
+    }
+    .state-list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-2);
+      grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+      margin-bottom: var(--space-8);
+    }
+    .state-list__item a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      min-height: var(--target-min);
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      background: var(--c-surface);
+      text-decoration: none;
+      color: var(--c-text);
+      font-weight: 600;
+    }
+    .state-list__item a:hover {
+      background: var(--c-primary-tint);
+      border-color: var(--c-primary);
+      color: var(--c-primary-hover);
+    }
+    .state-list__abbr {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 2.4rem;
+      padding: var(--space-1) var(--space-2);
+      background: var(--c-primary);
+      color: #fff;
+      border-radius: var(--radius);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+    .filter-empty {
+      font-weight: 600;
+      color: var(--c-text-muted);
+    }
+  </style>
+
+  <script>
+    // Dropdown: navigate on submit (works as a convenience; the list below
+    // is the no-JS accessible path).
+    const form = document.querySelector<HTMLFormElement>(".state-jump");
+    const select = document.querySelector<HTMLSelectElement>("#state-select");
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const slug = select?.value;
+      if (slug) window.location.href = `/state/${slug}`;
+    });
+
+    // Type-to-filter the lists.
+    const input = document.querySelector<HTMLInputElement>("#state-filter-input");
+    const items = Array.from(
+      document.querySelectorAll<HTMLLIElement>(".state-list__item"),
+    );
+    const empty = document.querySelector<HTMLParagraphElement>("#filter-empty");
+    input?.addEventListener("input", () => {
+      const q = input.value.trim().toLowerCase();
+      let visible = 0;
+      for (const li of items) {
+        const match = (li.dataset.name ?? "").includes(q);
+        li.hidden = !match;
+        if (match) visible++;
+      }
+      if (empty) empty.hidden = visible !== 0;
+    });
+  </script>
 </BaseLayout>

@@ -1,0 +1,53 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Page not found"
+  description="We couldn't find that page. Free help is still available any time."
+>
+  <section class="section">
+    <div class="container notfound">
+      <p class="notfound__eyebrow">Page not found</p>
+      <h1>We couldn't find that page.</h1>
+      <p class="notfound__lead">
+        The page may have moved, or the link may be incomplete. Here are some
+        ways to find what you need.
+      </p>
+      <ul class="notfound__links">
+        <li><a href="/">Go to the home page</a></li>
+        <li><a href="/find-your-state">Find help in your state</a></li>
+        <li><a href="/get-help">Get help now</a></li>
+        <li><a href="/resources">Browse the Resource Library</a></li>
+      </ul>
+      <p>
+        Need help right now? Call or text the National Problem Gambling Helpline
+        at <a href="tel:+18006973738">1-800-MY-RESET (1-800-697-3738)</a>. It is
+        free and available 24/7. If you are in crisis, call or text
+        <a href="tel:988">988</a>, the Suicide &amp; Crisis Lifeline.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .notfound__eyebrow {
+      margin: 0 0 var(--space-2);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-primary);
+    }
+    .notfound__lead {
+      font-size: 1.2rem;
+    }
+    .notfound__links {
+      list-style: none;
+      display: grid;
+      gap: var(--space-2);
+      margin: var(--space-5) 0 var(--space-6);
+    }
+    .notfound__links a {
+      font-weight: 700;
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,499 @@
+---
+import { getEntry, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  getAllJurisdictions,
+  getJurisdiction,
+  type LegalStatus,
+} from "../../lib/jurisdictions";
+
+export async function getStaticPaths() {
+  return getAllJurisdictions().map((j) => ({ params: { slug: j.slug } }));
+}
+
+const { slug } = Astro.params;
+const j = getJurisdiction(slug!);
+if (!j) return Astro.redirect("/find-your-state");
+
+// Render the history markdown (collection entry id === slug).
+const historyEntry = await getEntry("history", slug!);
+const History = historyEntry ? (await render(historyEntry)).Content : null;
+
+const statusLabel: Record<LegalStatus, string> = {
+  authorized: "Authorized",
+  limited: "Limited / unsettled",
+  "tribal-only": "Tribal only",
+  "not-authorized": "Not authorized",
+};
+
+const hasPrevention =
+  j.help.affiliateName ||
+  j.help.preventionOrg ||
+  j.help.treatmentDirectoryUrl ||
+  j.help.affiliateUrl;
+---
+
+<BaseLayout
+  title={`Gambling in ${j.name}`}
+  description={`Helplines, who regulates gambling, what's legal, and where to find help in ${j.name}. The National Problem Gambling Helpline is 1-800-MY-RESET.`}
+>
+  <div class="container breadcrumb">
+    <a href="/find-your-state">← All states &amp; territories</a>
+  </div>
+
+  <!-- 1. Helpline banner -->
+  <section class="helpline-banner" aria-label={`Get help in ${j.name}`}>
+    <div class="container">
+      <h1>{j.name}</h1>
+      <div class="helpline-grid">
+        <div class="helpline-card helpline-card--national">
+          <p class="helpline-card__eyebrow">National Problem Gambling Helpline</p>
+          <p class="helpline-card__number">{j.helpline.national.label}</p>
+          <p class="helpline-card__digits">({j.helpline.national.digits})</p>
+          <p class="helpline-card__note">Free. 24/7. Call or text.</p>
+          <a class="btn btn-primary" href={`tel:${j.helpline.national.tel}`}>
+            Call or text {j.helpline.national.label}
+          </a>
+        </div>
+
+        {
+          j.helpline.stateLine && (
+            <div class="helpline-card">
+              <p class="helpline-card__eyebrow">{j.name} helpline</p>
+              <p class="helpline-card__number helpline-card__number--state">
+                {j.helpline.stateLine}
+              </p>
+              <p class="helpline-card__note">
+                Connects you to resources in {j.name}.
+              </p>
+              {j.helpline.stateTel && (
+                <a class="btn btn-outline" href={`tel:${j.helpline.stateTel}`}>
+                  Call the {j.name} line
+                </a>
+              )}
+            </div>
+          )
+        }
+
+        <div class="helpline-card helpline-card--988">
+          <p class="helpline-card__eyebrow">In a crisis?</p>
+          <p class="helpline-card__number">988</p>
+          <p class="helpline-card__note">
+            Call or text the 988 Suicide &amp; Crisis Lifeline any time.
+          </p>
+          <a class="btn btn-outline" href="tel:988">Call or text 988</a>
+        </div>
+      </div>
+      {
+        j.helpline.stateLine && (
+          <p class="helpline-foot">
+            1-800-MY-RESET is the national helpline. The {j.name} line connects
+            you to local resources.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- 2. Gambling in [State] -->
+  {
+    j.summary && (
+      <section class="section" aria-labelledby="summary-h">
+        <div class="container">
+          <h2 id="summary-h">Gambling in {j.name}</h2>
+          <p class="lead">{j.summary}</p>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 3. Legal gambling types -->
+  <section class="section section-alt" aria-labelledby="legal-h">
+    <div class="container">
+      <h2 id="legal-h">What kinds of gambling are legal in {j.name}?</h2>
+      <ul class="legal-grid">
+        {
+          j.legal.map((v) => (
+            <li class={`legal-cell legal-cell--${v.status}`}>
+              <span class="legal-cell__status" aria-hidden="true">
+                {v.status === "authorized" ? "✓" : v.status === "not-authorized" ? "—" : "•"}
+              </span>
+              <span class="legal-cell__label">{v.label}</span>
+              <span class="legal-cell__state">
+                {v.year ? `${statusLabel[v.status]} (since ${v.year})` : statusLabel[v.status]}
+              </span>
+              {v.citation && (
+                <span class="legal-cell__cite">
+                  {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+                </span>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+      <p class="fine-print">
+        Based on our statute inventory{j.retrievalDate ? `, retrieved ${j.retrievalDate}` : ""}.
+        "Not authorized" means no authorizing statute is on file. See each citation
+        for the source.
+      </p>
+    </div>
+  </section>
+
+  <!-- 4. Who regulates -->
+  <section class="section" aria-labelledby="reg-h">
+    <div class="container">
+      <h2 id="reg-h">Who regulates gambling in {j.name}?</h2>
+      {
+        j.regulators.primary.length === 0 && (
+          <p>No state-level gambling regulator is on file for {j.name}.</p>
+        )
+      }
+      <ul class="reg-list">
+        {
+          j.regulators.primary.map((r) => (
+            <li class="reg-item">
+              <p class="reg-item__name">
+                {r.website ? <a href={r.website}>{r.name}</a> : r.name}
+              </p>
+              <p class="reg-item__type">{r.type}</p>
+              {r.phone && <p class="reg-item__meta">{r.phone}</p>}
+            </li>
+          ))
+        }
+      </ul>
+
+      {
+        (j.regulators.tribalCount > 0 || j.regulators.county.length > 0) && (
+          <details class="reg-more">
+            <summary>
+              Show tribal and county regulators
+              {j.regulators.tribalCount > 0
+                ? ` (${j.regulators.tribalCount} tribal gaming commission${j.regulators.tribalCount === 1 ? "" : "s"})`
+                : ""}
+            </summary>
+            <ul class="reg-list reg-list--sub">
+              {j.regulators.county.map((r) => (
+                <li class="reg-item">
+                  <p class="reg-item__name">
+                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
+                  </p>
+                  <p class="reg-item__type">{r.type}</p>
+                </li>
+              ))}
+              {j.regulators.tribal.map((r) => (
+                <li class="reg-item">
+                  <p class="reg-item__name">
+                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
+                  </p>
+                  <p class="reg-item__type">{r.type}</p>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- 5. Get help in [State] -->
+  <section class="section section-alt" aria-labelledby="help-h">
+    <div class="container">
+      <h2 id="help-h">Get help in {j.name}</h2>
+      {
+        hasPrevention ? (
+          <ul class="help-list">
+            {(j.help.affiliateName || j.help.affiliateUrl) && (
+              <li>
+                <strong>NCPG affiliate:</strong>{" "}
+                {j.help.affiliateUrl ? (
+                  <a href={j.help.affiliateUrl}>{j.help.affiliateName ?? j.help.affiliateUrl}</a>
+                ) : (
+                  j.help.affiliateName
+                )}
+              </li>
+            )}
+            {j.help.preventionOrg && j.help.preventionOrg !== j.help.affiliateName && (
+              <li>
+                <strong>Prevention &amp; treatment:</strong>{" "}
+                {j.help.preventionUrl ? (
+                  <a href={j.help.preventionUrl}>{j.help.preventionOrg}</a>
+                ) : (
+                  j.help.preventionOrg
+                )}
+              </li>
+            )}
+            {j.help.treatmentDirectoryUrl && (
+              <li>
+                <strong>Find treatment:</strong>{" "}
+                <a href={j.help.treatmentDirectoryUrl}>Treatment directory</a>
+              </li>
+            )}
+          </ul>
+        ) : (
+          <p>
+            No state-specific organization is listed for {j.name}. The national
+            helpline above and the{" "}
+            <a href="https://www.ncpgambling.org/help-treatment/treatment-facilities/">
+              NCPG treatment directory
+            </a>{" "}
+            can still help.
+          </p>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- 6. Resources (Phase 4 placeholder) -->
+  <section class="section" aria-labelledby="res-h">
+    <div class="container">
+      <h2 id="res-h">Resources for {j.name}</h2>
+      <p class="coming">
+        Downloadable rack cards and fact sheets customized for {j.name} are
+        coming soon. In the meantime, browse the{" "}
+        <a href="/resources">Resource Library</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. Self-exclusion (data gap placeholder) -->
+  <section class="section section-alt" aria-labelledby="se-h">
+    <div class="container">
+      <h2 id="se-h">Self-exclusion in {j.name}</h2>
+      <p class="coming">
+        Details about {j.name}'s voluntary self-exclusion options are coming
+        soon. To talk through your options now, call or text{" "}
+        <a href={`tel:${j.helpline.national.tel}`}>{j.helpline.national.label}</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. Funding & transparency -->
+  {
+    (j.funding.mechanism || j.funding.budgetDisclosed) && (
+      <section class="section" aria-labelledby="fund-h">
+        <div class="container">
+          <h2 id="fund-h">Funding &amp; transparency</h2>
+          {j.funding.mechanism && (
+            <p>
+              <strong>How {j.name} funds problem-gambling services:</strong>{" "}
+              {j.funding.mechanism}
+            </p>
+          )}
+          {j.funding.budgetDisclosed && (
+            <p>
+              <strong>Annual budget disclosed:</strong> {j.funding.budgetDisclosed}
+            </p>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- 9. Brief history (collapsible) -->
+  {
+    History && (
+      <section class="section section-alt" aria-labelledby="hist-h">
+        <div class="container">
+          <h2 id="hist-h">A brief history of gambling in {j.name}</h2>
+          <details class="history">
+            <summary>Read the full history</summary>
+            <div class="history__body">
+              <History />
+            </div>
+          </details>
+        </div>
+      </section>
+    )
+  }
+
+  <style>
+    .breadcrumb {
+      padding-top: var(--space-5);
+    }
+    .breadcrumb a {
+      font-weight: 600;
+    }
+
+    /* Helpline banner */
+    .helpline-banner {
+      background: var(--c-primary-tint);
+      padding-block: var(--space-8);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .helpline-banner h1 {
+      margin-bottom: var(--space-5);
+    }
+    .helpline-grid {
+      display: grid;
+      gap: var(--space-4);
+    }
+    @media (min-width: 48em) {
+      .helpline-grid {
+        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+      }
+    }
+    .helpline-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .helpline-card--national {
+      border: 2px solid var(--c-primary);
+    }
+    .helpline-card__eyebrow {
+      margin: 0;
+      font-weight: 700;
+      color: var(--c-text-muted);
+      font-size: 0.9rem;
+    }
+    .helpline-card__number {
+      margin: var(--space-1) 0 0;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--c-heading);
+    }
+    .helpline-card__number--state {
+      font-size: 1.25rem;
+    }
+    .helpline-card__digits {
+      margin: 0;
+      color: var(--c-text-muted);
+      font-weight: 600;
+    }
+    .helpline-card__note {
+      margin: var(--space-2) 0 var(--space-4);
+    }
+    .helpline-foot {
+      margin: var(--space-5) 0 0;
+      color: var(--c-text-muted);
+    }
+
+    .lead {
+      font-size: 1.2rem;
+      max-width: 70ch;
+    }
+
+    /* Legal grid */
+    .legal-grid {
+      list-style: none;
+      display: grid;
+      gap: var(--space-3);
+      grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+    }
+    .legal-cell {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-areas: "icon label" "icon state" "cite cite";
+      gap: 0 var(--space-3);
+      padding: var(--space-4);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      background: var(--c-surface);
+    }
+    .legal-cell--authorized {
+      border-left: 4px solid var(--c-primary);
+    }
+    .legal-cell--not-authorized {
+      opacity: 0.7;
+    }
+    .legal-cell--tribal-only,
+    .legal-cell--limited {
+      border-left: 4px solid var(--c-border-strong);
+    }
+    .legal-cell__status {
+      grid-area: icon;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--c-primary);
+    }
+    .legal-cell--not-authorized .legal-cell__status {
+      color: var(--c-text-muted);
+    }
+    .legal-cell__label {
+      grid-area: label;
+      font-weight: 700;
+      color: var(--c-heading);
+    }
+    .legal-cell__state {
+      grid-area: state;
+      color: var(--c-text-muted);
+      font-size: 0.95rem;
+    }
+    .legal-cell__cite {
+      grid-area: cite;
+      margin-top: var(--space-2);
+      font-size: 0.8rem;
+      word-break: break-word;
+    }
+
+    .fine-print {
+      margin-top: var(--space-5);
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+      max-width: 70ch;
+    }
+
+    /* Regulators */
+    .reg-list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    }
+    .reg-list--sub {
+      margin-top: var(--space-4);
+    }
+    .reg-item__name {
+      margin: 0;
+      font-weight: 700;
+    }
+    .reg-item__type,
+    .reg-item__meta {
+      margin: var(--space-1) 0 0;
+      color: var(--c-text-muted);
+      font-size: 0.9rem;
+    }
+    .reg-more {
+      margin-top: var(--space-5);
+    }
+    .reg-more summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--c-primary);
+      min-height: var(--target-min);
+      display: flex;
+      align-items: center;
+    }
+
+    .help-list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-3);
+    }
+    .coming {
+      color: var(--c-text-muted);
+    }
+
+    /* History */
+    .history summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--c-primary);
+      min-height: var(--target-min);
+      display: flex;
+      align-items: center;
+    }
+    .history__body {
+      margin-top: var(--space-4);
+      max-width: 70ch;
+    }
+    .history__body :global(h2) {
+      font-size: 1.3rem;
+      margin-top: var(--space-6);
+    }
+    .history__body :global(h3) {
+      font-size: 1.1rem;
+    }
+  </style>
+</BaseLayout>
