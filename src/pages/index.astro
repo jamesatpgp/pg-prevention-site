@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import FindYourState from "../components/FindYourState.astro";
 
 const proTiles = [
   {
@@ -44,22 +45,9 @@ const proTiles = [
   </section>
 
   <!-- Find Your State -->
-  <section class="section section-alt" aria-labelledby="find-state-heading">
-    <div class="container">
-      <h2 id="find-state-heading">Find help in your state</h2>
-      <p>
-        We cover all 50 states, the District of Columbia, and five U.S.
-        territories. Each state page lists local helplines, who regulates
-        gambling there, and resources you can download.
-      </p>
-      <div class="state-placeholder">
-        <p class="state-placeholder__label">
-          An interactive map and a searchable state list are coming soon.
-        </p>
-        <a class="btn btn-primary" href="/find-your-state">Browse states</a>
-      </div>
-    </div>
-  </section>
+  <div class="section section-alt">
+    <FindYourState />
+  </div>
 
   <!-- For Prevention Professionals (visually distinct band) -->
   <section class="pro-band surface-dark" aria-labelledby="pro-heading">
