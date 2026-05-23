@@ -1,0 +1,42 @@
+---
+import "../styles/global.css";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import StickyHelp from "../components/StickyHelp.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Problem Gambling Prevention",
+  description = "Free, evidence-based information about gambling and gambling harm, with help in every U.S. state and territory.",
+} = Astro.props;
+
+const fullTitle =
+  title === "Problem Gambling Prevention"
+    ? title
+    : `${title} — Problem Gambling Prevention`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="color-scheme" content="light" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <Nav />
+    <main id="main-content">
+      <slot />
+    </main>
+    <Footer />
+    <StickyHelp />
+  </body>
+</html>

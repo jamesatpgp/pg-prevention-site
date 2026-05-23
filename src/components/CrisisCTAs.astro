@@ -1,0 +1,94 @@
+---
+// Stacked crisis-help CTA pair: 1-800-MY-RESET (primary) + 988 (secondary).
+// Compliance: vanity number + digits always shown; "Free. 24/7. Call or text."
+// disclosure; person-first language; no categorical confidentiality claims.
+interface Props {
+  variant?: "nav" | "sticky";
+}
+const { variant = "nav" } = Astro.props;
+---
+
+<div class:list={["crisis-ctas", `crisis-ctas--${variant}`]}>
+  <a class="cta cta--help" href="tel:+18006973738">
+    <span class="cta__label">Get Gambling Help</span>
+    <span class="cta__number">
+      1-800-MY-RESET <span class="cta__digits">(1-800-697-3738)</span>
+    </span>
+  </a>
+  <a class="cta cta--988" href="tel:988">
+    <span class="cta__label">In crisis? Call or text 988</span>
+    <span class="cta__sub">Suicide &amp; Crisis Lifeline</span>
+  </a>
+  <p class="crisis-ctas__note">Free. 24/7. Call or text.</p>
+</div>
+
+<style>
+  .crisis-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: var(--target-min);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1.25;
+    transition: background-color 0.15s ease;
+  }
+
+  .cta--help {
+    background: var(--c-cta-help-bg);
+  }
+  .cta--help:hover {
+    background: var(--c-cta-help-bg-hover);
+    color: #fff;
+  }
+
+  .cta--988 {
+    background: var(--c-cta-988-bg);
+  }
+  .cta--988:hover {
+    background: var(--c-cta-988-bg-hover);
+    color: #fff;
+  }
+
+  .cta__label {
+    font-size: 0.95rem;
+  }
+  .cta__number {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+  }
+  .cta__digits {
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.95;
+    white-space: nowrap;
+  }
+  .cta__sub {
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0.95;
+  }
+
+  .crisis-ctas__note {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--c-text-muted);
+    text-align: center;
+  }
+
+  /* Sticky variant sits inside the floating disclosure panel */
+  .crisis-ctas--sticky .crisis-ctas__note {
+    color: var(--c-text);
+  }
+</style>

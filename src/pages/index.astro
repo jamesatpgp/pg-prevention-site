@@ -1,0 +1,196 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const proTiles = [
+  {
+    title: "Browse the Resource Library",
+    body: "Rack cards, fact sheets, and graphics you can download and use today.",
+    href: "/resources",
+  },
+  {
+    title: "Download state-customized materials",
+    body: "Resources carrying your state's helpline, regulator, and local context.",
+    href: "/professionals",
+  },
+  {
+    title: "Find training & CEUs",
+    body: "A curated directory of training mapped to the IC&RC PS domains.",
+    href: "/professionals",
+  },
+];
+---
+
+<BaseLayout>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <p class="hero__eyebrow">
+        Problem Gambling Prevention · National Resource Center
+      </p>
+      <h1 class="hero__headline">
+        Information you can trust about gambling and gambling harm.
+      </h1>
+      <p class="hero__subhead">
+        A free resource center for two audiences: people looking for help or
+        answers, and the prevention professionals who serve them.
+      </p>
+      <div class="hero__ctas">
+        <a class="btn btn-primary hero__cta" href="/get-help">I need help</a>
+        <a class="btn btn-outline hero__cta" href="/professionals">
+          I'm a prevention professional
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Find Your State -->
+  <section class="section section-alt" aria-labelledby="find-state-heading">
+    <div class="container">
+      <h2 id="find-state-heading">Find help in your state</h2>
+      <p>
+        We cover all 50 states, the District of Columbia, and five U.S.
+        territories. Each state page lists local helplines, who regulates
+        gambling there, and resources you can download.
+      </p>
+      <div class="state-placeholder">
+        <p class="state-placeholder__label">
+          An interactive map and a searchable state list are coming soon.
+        </p>
+        <a class="btn btn-primary" href="/find-your-state">Browse states</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Prevention Professionals (visually distinct band) -->
+  <section class="pro-band surface-dark" aria-labelledby="pro-heading">
+    <div class="container">
+      <p class="pro-band__eyebrow">For prevention professionals</p>
+      <h2 id="pro-heading" class="pro-band__heading">
+        Free, citation-ready resources for your work.
+      </h2>
+      <p class="pro-band__intro">
+        Everything here is free to download and use. There is no login, no
+        paywall, and no fee — for anyone.
+      </p>
+      <ul class="pro-tiles">
+        {
+          proTiles.map((tile) => (
+            <li class="pro-tile">
+              <a class="pro-tile__link" href={tile.href}>
+                <span class="pro-tile__title">{tile.title}</span>
+                <span class="pro-tile__body">{tile.body}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <style>
+    /* Hero */
+    .hero {
+      padding-block: var(--space-12) var(--space-10);
+      background: var(--c-bg);
+    }
+    .hero__eyebrow {
+      margin: 0 0 var(--space-4);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-primary);
+      font-size: 0.9rem;
+    }
+    .hero__headline {
+      max-width: 18ch;
+      margin-bottom: var(--space-5);
+    }
+    .hero__subhead {
+      font-size: 1.25rem;
+      max-width: 52ch;
+      color: var(--c-text);
+      margin-bottom: var(--space-6);
+    }
+    .hero__ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .hero__cta {
+      font-size: 1.1rem;
+      padding-inline: var(--space-6);
+    }
+
+    /* Find Your State */
+    .state-placeholder {
+      margin-top: var(--space-6);
+      padding: var(--space-8) var(--space-5);
+      background: var(--c-surface);
+      border: 2px dashed var(--c-border-strong);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    .state-placeholder__label {
+      font-weight: 600;
+      color: var(--c-text-muted);
+      margin-bottom: var(--space-5);
+    }
+
+    /* Professional band */
+    .pro-band {
+      background: var(--c-band-pro-bg);
+      color: var(--c-band-pro-text);
+      padding-block: var(--space-10);
+    }
+    .pro-band__eyebrow {
+      margin: 0 0 var(--space-2);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #cbd9e2;
+    }
+    .pro-band__heading {
+      color: #fff;
+      max-width: 22ch;
+    }
+    .pro-band__intro {
+      color: #e7eef3;
+      max-width: 54ch;
+      font-size: 1.15rem;
+      margin-bottom: var(--space-6);
+    }
+    .pro-tiles {
+      list-style: none;
+      display: grid;
+      gap: var(--space-4);
+    }
+    @media (min-width: 48em) {
+      .pro-tiles {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .pro-tile__link {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      height: 100%;
+      padding: var(--space-5);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      color: #fff;
+    }
+    .pro-tile__link:hover {
+      background: rgba(255, 255, 255, 0.16);
+      color: #fff;
+    }
+    .pro-tile__title {
+      font-weight: 800;
+      font-size: 1.15rem;
+    }
+    .pro-tile__body {
+      color: #e7eef3;
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Get Help Now"
+  description="Free, 24/7 help for gambling and gambling harm. Call or text the National Problem Gambling Helpline at 1-800-MY-RESET, or call or text 988 in a crisis."
+>
+  <section class="section get-help">
+    <div class="container">
+      <p class="eyebrow">Get help now</p>
+      <h1>You can get help. It is free, and it is available any time.</h1>
+
+      <div class="help-cards">
+        <div class="help-card help-card--primary">
+          <p class="help-card__name">National Problem Gambling Helpline</p>
+          <p class="help-card__number">1-800-MY-RESET</p>
+          <p class="help-card__digits">(1-800-697-3738)</p>
+          <p class="help-card__note">Free. 24/7. Call or text.</p>
+          <a class="btn btn-primary" href="tel:+18006973738">
+            Call or text 1-800-MY-RESET
+          </a>
+        </div>
+
+        <div class="help-card">
+          <p class="help-card__name">Suicide &amp; Crisis Lifeline</p>
+          <p class="help-card__number">988</p>
+          <p class="help-card__note">
+            If you are in crisis or thinking about suicide, you can reach the
+            988 Suicide &amp; Crisis Lifeline any time.
+          </p>
+          <a class="btn btn-outline" href="tel:988">Call or text 988</a>
+        </div>
+      </div>
+
+      <p class="help-state">
+        Looking for help near you?
+        <a href="/find-your-state">Find resources in your state</a>.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .eyebrow {
+      margin: 0 0 var(--space-2);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-primary);
+    }
+    .help-cards {
+      display: grid;
+      gap: var(--space-5);
+      margin-block: var(--space-6);
+    }
+    @media (min-width: 48em) {
+      .help-cards {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+    }
+    .help-card {
+      padding: var(--space-6);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+    }
+    .help-card--primary {
+      border-color: var(--c-primary);
+      border-width: 2px;
+      background: var(--c-primary-tint);
+    }
+    .help-card__name {
+      margin: 0;
+      font-weight: 700;
+      color: var(--c-text-muted);
+    }
+    .help-card__number {
+      margin: var(--space-1) 0 0;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--c-heading);
+    }
+    .help-card__digits {
+      margin: 0;
+      font-weight: 600;
+      color: var(--c-text-muted);
+    }
+    .help-card__note {
+      margin: var(--space-3) 0 var(--space-4);
+    }
+    .help-state {
+      font-size: 1.1rem;
+    }
+  </style>
+</BaseLayout>

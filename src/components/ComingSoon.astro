@@ -1,0 +1,40 @@
+---
+interface Props {
+  heading: string;
+  blurb?: string;
+}
+const { heading, blurb } = Astro.props;
+---
+
+<section class="section">
+  <div class="container coming-soon">
+    <p class="coming-soon__eyebrow">Coming soon</p>
+    <h1>{heading}</h1>
+    <p class="coming-soon__lead">
+      {
+        blurb ??
+          "We are building this section now. In the meantime, free help is always available."
+      }
+    </p>
+    <p>
+      Need help right now? Call or text the National Problem Gambling Helpline at
+      <a href="tel:+18006973738">1-800-MY-RESET (1-800-697-3738)</a>. It is free
+      and available 24/7. If you are in crisis, call or text
+      <a href="tel:988">988</a>, the Suicide &amp; Crisis Lifeline.
+    </p>
+    <p><a class="btn btn-outline" href="/">Back to home</a></p>
+  </div>
+</section>
+
+<style>
+  .coming-soon__eyebrow {
+    margin: 0 0 var(--space-2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--c-primary);
+  }
+  .coming-soon__lead {
+    font-size: 1.2rem;
+  }
+</style>

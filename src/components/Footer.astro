@@ -1,0 +1,176 @@
+---
+// Helpline lockups below are placeholder text. The approved NCPG MYRESET and
+// SAMHSA 988 image lockups must not be recreated; drop in the official assets
+// when supplied.
+const year = new Date().getFullYear();
+
+const quickLinks = [
+  { label: "Sitemap", href: "/sitemap" },
+  { label: "Accessibility statement", href: "/accessibility" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Methodology & data sources", href: "/methodology" },
+  { label: "Sponsors & partners", href: "/sponsors" },
+  { label: "Consulting & training services", href: "/consulting" },
+];
+---
+
+<footer class="site-footer surface-dark">
+  <div class="container footer-grid">
+    <div class="footer-helpline">
+      <p class="footer-helpline__name">National Problem Gambling Helpline</p>
+      <p class="footer-helpline__number">
+        1-800-MY-RESET <span class="footer-helpline__digits">(1-800-697-3738)</span>
+      </p>
+      <p class="footer-helpline__disclosure">Free. 24/7. Call or text.</p>
+      <p class="footer-988">
+        In crisis? Call or text <strong>988</strong> — Suicide &amp; Crisis
+        Lifeline.
+      </p>
+    </div>
+
+    <nav class="footer-links" aria-label="Footer">
+      <h2 class="footer-heading">Site</h2>
+      <ul>
+        {
+          quickLinks.map((link) => (
+            <li>
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="footer-sponsors">
+      <h2 class="footer-heading">Sponsors</h2>
+      <div class="sponsor-placeholder" role="img" aria-label="Sponsor logos will appear here">
+        <span>Sponsor logos</span>
+      </div>
+      <p class="footer-fine">
+        Sponsorship does not constitute endorsement of any treatment provider.
+      </p>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p class="footer-access">
+      All resources on this site are free. No registration required.
+    </p>
+    <p class="footer-copyright">
+      &copy; {year} Problem Gambling Prevention. Information you can trust about
+      gambling and gambling harm.
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--c-band-pro-bg);
+    color: #fff;
+    padding-block: var(--space-8) var(--space-6);
+    margin-top: var(--space-12);
+  }
+
+  .footer-grid {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 48em) {
+    .footer-grid {
+      grid-template-columns: 1.2fr 1fr 1fr;
+    }
+  }
+
+  .footer-heading {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #cbd9e2;
+    margin-bottom: var(--space-3);
+  }
+
+  /* Helpline lockup */
+  .footer-helpline__name {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #cbd9e2;
+  }
+  .footer-helpline__number {
+    margin: var(--space-1) 0 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+  }
+  .footer-helpline__digits {
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .footer-helpline__disclosure {
+    margin: var(--space-1) 0 var(--space-4);
+    font-weight: 600;
+    color: #fff;
+  }
+  .footer-988 {
+    margin: 0;
+    max-width: 38ch;
+  }
+  .footer-988 strong {
+    font-size: 1.1rem;
+  }
+
+  /* Links */
+  .footer-links ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .footer-links a {
+    display: inline-block;
+    min-height: var(--target-min);
+    padding-block: var(--space-2);
+    color: #e7eef3;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .footer-links a:hover {
+    color: #fff;
+  }
+
+  /* Sponsor placeholder */
+  .sponsor-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+    border: 2px dashed #4a6b80;
+    border-radius: var(--radius);
+    color: #cbd9e2;
+    font-size: 0.85rem;
+  }
+  .footer-fine {
+    margin: var(--space-3) 0 0;
+    font-size: 0.85rem;
+    color: #cbd9e2;
+    max-width: 40ch;
+  }
+
+  .footer-bottom {
+    margin-top: var(--space-8);
+    padding-top: var(--space-5);
+    border-top: 1px solid #2a546d;
+  }
+  .footer-access {
+    margin: 0 0 var(--space-2);
+    font-weight: 700;
+    color: #fff;
+  }
+  .footer-copyright {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #cbd9e2;
+    max-width: none;
+  }
+</style>

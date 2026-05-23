@@ -1,0 +1,197 @@
+---
+import CrisisCTAs from "./CrisisCTAs.astro";
+
+const navItems = [
+  { label: "Understand Gambling", href: "/understand-gambling" },
+  { label: "Find Your State", href: "/find-your-state" },
+  { label: "For Prevention Professionals", href: "/professionals" },
+  { label: "Resource Library", href: "/resources" },
+  { label: "About", href: "/about" },
+];
+
+const current = Astro.url.pathname.replace(/\/$/, "") || "/";
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="wordmark" href="/" aria-label="Problem Gambling Prevention, home">
+      <span class="wordmark__line1">Problem Gambling</span>
+      <span class="wordmark__line2">Prevention</span>
+    </a>
+
+    <button
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+    >
+      <svg
+        class="nav-toggle__icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path
+          d="M3 6h18M3 12h18M3 18h18"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"></path>
+      </svg>
+      <span class="nav-toggle__text">Menu</span>
+    </button>
+
+    <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+      <ul class="primary-nav__list">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                aria-current={current === item.href ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header-ctas">
+      <CrisisCTAs variant="nav" />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--c-surface);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand toggle"
+      "ctas  ctas"
+      "nav   nav";
+    gap: var(--space-4);
+    align-items: center;
+    padding-block: var(--space-4);
+  }
+
+  /* Wordmark */
+  .wordmark {
+    grid-area: brand;
+    display: inline-flex;
+    flex-direction: column;
+    text-decoration: none;
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .wordmark__line1 {
+    color: var(--c-heading);
+    font-size: 1.35rem;
+  }
+  .wordmark__line2 {
+    color: var(--c-primary);
+    font-size: 1.35rem;
+  }
+
+  /* Hamburger toggle */
+  .nav-toggle {
+    grid-area: toggle;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--target-min);
+    min-width: var(--target-min);
+    padding: var(--space-2) var(--space-3);
+    background: var(--c-surface);
+    border: 2px solid var(--c-border-strong);
+    border-radius: var(--radius);
+    color: var(--c-heading);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* Primary nav */
+  .primary-nav {
+    grid-area: nav;
+    display: none;
+  }
+  .primary-nav.is-open {
+    display: block;
+  }
+  .primary-nav__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+  .primary-nav__list a {
+    display: block;
+    min-height: var(--target-min);
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius);
+    color: var(--c-text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .primary-nav__list a:hover {
+    background: var(--c-surface-alt);
+    color: var(--c-primary-hover);
+  }
+  .primary-nav__list a[aria-current="page"] {
+    color: var(--c-primary);
+    box-shadow: inset 3px 0 0 var(--c-primary);
+  }
+
+  .header-ctas {
+    grid-area: ctas;
+  }
+
+  /* Desktop: single row, full nav visible, no hamburger */
+  @media (min-width: 64em) {
+    .header-inner {
+      grid-template-columns: auto 1fr auto;
+      grid-template-areas: "brand nav ctas";
+      gap: var(--space-6);
+    }
+    .nav-toggle {
+      display: none;
+    }
+    .primary-nav {
+      display: block;
+    }
+    .primary-nav__list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+    .primary-nav__list a[aria-current="page"] {
+      box-shadow: inset 0 -3px 0 var(--c-primary);
+    }
+    .crisis-ctas--nav {
+      align-items: stretch;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>(".nav-toggle");
+  const nav = document.getElementById("primary-nav");
+  if (toggle && nav) {
+    toggle.addEventListener("click", () => {
+      const open = toggle.getAttribute("aria-expanded") === "true";
+      toggle.setAttribute("aria-expanded", String(!open));
+      nav.classList.toggle("is-open", !open);
+    });
+  }
+</script>
