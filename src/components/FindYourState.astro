@@ -1,4 +1,5 @@
 ---
+import USGeoMap from "./USGeoMap.astro";
 import USHexMap from "./USHexMap.astro";
 import JurisdictionList from "./JurisdictionList.astro";
 ---
@@ -11,6 +12,8 @@ import JurisdictionList from "./JurisdictionList.astro";
       gambling there, what's legal, and where to find help. We cover all 50
       states, the District of Columbia, and five U.S. territories.
     </p>
+
+    <USGeoMap />
 
     <div class="fys-map-wrap">
       <USHexMap />
@@ -26,16 +29,29 @@ import JurisdictionList from "./JurisdictionList.astro";
     font-size: 1.2rem;
     max-width: 60ch;
   }
-  /* Hex map: kept large enough for >=44px tap targets; scrolls on narrow
-     screens. The list below is the comfortable universal path. */
+  /* Geo map (desktop only, dominant). */
+  .find-your-state :global(.us-geo-map) {
+    max-width: 46rem;
+    margin: var(--space-6) auto 0;
+  }
+  /* Hex map: >=44px tap targets on mobile (scrolls if needed); compact on
+     desktop, where it's the secondary "quick view" beside the geo map. */
   .fys-map-wrap {
-    margin: var(--space-6) 0 var(--space-8);
+    margin: var(--space-5) 0 var(--space-8);
     overflow-x: auto;
   }
   .fys-map-wrap :global(.us-hex-map) {
     min-width: 34rem;
-    max-width: 40rem;
     margin-inline: auto;
+  }
+  @media (min-width: 48em) {
+    .fys-map-wrap {
+      overflow-x: visible;
+    }
+    .fys-map-wrap :global(.us-hex-map) {
+      min-width: 0;
+      max-width: 28rem;
+    }
   }
   .fys-list-heading {
     font-size: 1.15rem;

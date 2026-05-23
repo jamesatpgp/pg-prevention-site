@@ -44,7 +44,7 @@ const dividerY = terrTop - dy / 2 - 6;
       <a href={linkFor(p)} aria-label={p.name}>
         <title>{p.name}</title>
         <polygon class="hex" points={hexPoints(p.cx, p.cy)} />
-        <text class="hex-label" x={p.cx.toFixed(1)} y={p.cy.toFixed(1)}>
+        <text class="hex-label" x={p.cx.toFixed(1)} y={p.cy.toFixed(1)} aria-hidden="true">
           {p.code}
         </text>
       </a>

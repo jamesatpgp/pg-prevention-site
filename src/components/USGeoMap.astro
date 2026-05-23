@@ -1,0 +1,72 @@
+---
+// Geographic U.S. map. Paths are pre-projected (AlbersUsaTerritories, via
+// scripts/gen-geo-paths.mjs) into a compact JSON, so there is no projection
+// math or runtime JS here. Covers 50 states + DC + PR (the 4 small Pacific/
+// Atlantic territories are only in the heavy 500k source; they remain fully
+// covered by the hex map and the list). This map is decorative + pointer-only:
+// aria-hidden, links tabindex="-1", hidden on mobile. The hex map and list are
+// the accessible interactive paths.
+import paths from "../data/us-geo-paths.json";
+import { jurisdictions, linkFor } from "../data/map-jurisdictions";
+
+const byFips = new Map(jurisdictions.map((j) => [j.fips, j]));
+const shapes = paths
+  .map((p) => {
+    const j = byFips.get(p.fips);
+    return { d: p.d, name: j?.name ?? "", href: j ? linkFor(j) : null };
+  })
+  .filter((s): s is { d: string; name: string; href: string } => s.href !== null);
+---
+
+<svg
+  class="us-geo-map"
+  viewBox="0 0 960 500"
+  aria-hidden="true"
+  focusable="false"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  {
+    shapes.map((s) => (
+      <a href={s.href} tabindex="-1">
+        <path class="geo-path" d={s.d} />
+        <title>{s.name}</title>
+      </a>
+    ))
+  }
+</svg>
+
+<style>
+  .us-geo-map {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .geo-path {
+    fill: var(--c-primary-tint);
+    stroke: var(--c-primary);
+    stroke-width: 0.6;
+    stroke-linejoin: round;
+    transition: fill 0.15s ease;
+  }
+  .us-geo-map a {
+    cursor: pointer;
+  }
+  .us-geo-map a:hover .geo-path {
+    fill: var(--c-primary);
+  }
+  @media (max-width: 47.99em) {
+    .us-geo-map {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .geo-path {
+      transition: none;
+    }
+  }
+  @media print {
+    .us-geo-map {
+      display: none;
+    }
+  }
+</style>
