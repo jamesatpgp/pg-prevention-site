@@ -1,8 +1,7 @@
 ---
-// Stacked crisis-help CTA pair using the official helpline logo lockups
-// (white variants on filled buttons). 1-800-MY-RESET (primary) + 988
-// (secondary). Compliance: vanity (logo) + digits (text) shown; "Free. 24/7.
-// Call or text." disclosure; person-first; no categorical confidentiality claims.
+// Stacked crisis-help CTA pair: the official helpline logo lockups (white
+// variants) centered on filled tap-to-call buttons. The lockups carry the
+// numbers themselves, so no added text. 1-800-MY-RESET (primary) + 988.
 interface Props {
   variant?: "nav" | "sticky";
 }
@@ -18,7 +17,6 @@ const { variant = "nav" } = Astro.props;
       height="199"
       alt="1-800-MY-RESET, the National Problem Gambling Helpline"
     />
-    <span class="cta__action">Call or text · 1-800-697-3738</span>
   </a>
   <a class="cta cta--988" href="tel:988">
     <img
@@ -28,9 +26,7 @@ const { variant = "nav" } = Astro.props;
       height="124"
       alt="988 Suicide & Crisis Lifeline"
     />
-    <span class="cta__action">Call or text · in a crisis</span>
   </a>
-  <p class="crisis-ctas__note">Free. 24/7. Call or text.</p>
 </div>
 
 <style>
@@ -42,9 +38,8 @@ const { variant = "nav" } = Astro.props;
 
   .cta {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
+    align-items: center;
+    justify-content: center;
     padding: var(--space-3) var(--space-4);
     border-radius: var(--radius);
     text-decoration: none;
@@ -65,33 +60,15 @@ const { variant = "nav" } = Astro.props;
     background: var(--c-cta-988-bg-hover);
   }
 
+  /* Both lockups share a width so the stacked pair reads as a balanced set. */
   .cta__logo {
     height: auto;
     max-width: 100%;
   }
-  /* Both lockups share a width so the stacked pair reads as a balanced set. */
   .cta__logo--myreset {
     width: 7.5rem;
   }
   .cta__logo--988 {
     width: 7.5rem;
-  }
-
-  .cta__action {
-    color: #fff;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-  }
-
-  .crisis-ctas__note {
-    margin: 0;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--c-text-muted);
-    text-align: center;
-  }
-  .crisis-ctas--sticky .crisis-ctas__note {
-    color: var(--c-text);
   }
 </style>
