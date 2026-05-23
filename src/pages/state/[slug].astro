@@ -31,6 +31,18 @@ const hasPrevention =
   j.help.preventionOrg ||
   j.help.treatmentDirectoryUrl ||
   j.help.affiliateUrl;
+
+// Derived structural stats (real archive data; population stats are a gap).
+const authorizedCount = j.legal.filter((v) => v.status === "authorized").length;
+const years = j.legal
+  .map((v) => (v.year ? parseInt(v.year, 10) : null))
+  .filter((y): y is number => y !== null && !Number.isNaN(y));
+const earliestYear = years.length ? Math.min(...years) : null;
+// Authorized types with a statute citation, for the regulation-process view.
+const processItems = j.legal.filter(
+  (v) => v.status === "authorized" && v.citation && v.id !== "tribal",
+);
+const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "authorized";
 ---
 
 <BaseLayout
@@ -56,25 +68,6 @@ const hasPrevention =
           </a>
         </div>
 
-        {
-          j.helpline.stateLine && (
-            <div class="helpline-card">
-              <p class="helpline-card__eyebrow">{j.name} helpline</p>
-              <p class="helpline-card__number helpline-card__number--state">
-                {j.helpline.stateLine}
-              </p>
-              <p class="helpline-card__note">
-                Connects you to resources in {j.name}.
-              </p>
-              {j.helpline.stateTel && (
-                <a class="btn btn-outline" href={`tel:${j.helpline.stateTel}`}>
-                  Call the {j.name} line
-                </a>
-              )}
-            </div>
-          )
-        }
-
         <div class="helpline-card helpline-card--988">
           <p class="helpline-card__eyebrow">In a crisis?</p>
           <p class="helpline-card__number">988</p>
@@ -84,14 +77,35 @@ const hasPrevention =
           <a class="btn btn-outline" href="tel:988">Call or text 988</a>
         </div>
       </div>
-      {
-        j.helpline.stateLine && (
-          <p class="helpline-foot">
-            1-800-MY-RESET is the national helpline. The {j.name} line connects
-            you to local resources.
-          </p>
-        )
-      }
+    </div>
+  </section>
+
+  <!-- At a glance (structural stats) -->
+  <section class="section glance-section" aria-labelledby="glance-h">
+    <div class="container">
+      <h2 id="glance-h" class="visually-hidden">{j.name} at a glance</h2>
+      <ul class="glance">
+        <li class="glance__item">
+          <span class="glance__num">{authorizedCount}<span class="glance__den">/8</span></span>
+          <span class="glance__label">gambling types authorized</span>
+        </li>
+        <li class="glance__item">
+          <span class="glance__num">{j.regulators.primary.length}</span>
+          <span class="glance__label">state-level regulators</span>
+        </li>
+        <li class="glance__item">
+          <span class="glance__num">{j.regulators.tribalCount}</span>
+          <span class="glance__label">tribal gaming commissions</span>
+        </li>
+        <li class="glance__item">
+          <span class="glance__num">{earliestYear ?? "—"}</span>
+          <span class="glance__label">earliest authorization</span>
+        </li>
+      </ul>
+      <p class="fine-print">
+        Population-level statistics (adult and youth prevalence, treatment
+        access, appropriations) are coming soon for {j.name}.
+      </p>
     </div>
   </section>
 
@@ -139,10 +153,60 @@ const hasPrevention =
     </div>
   </section>
 
-  <!-- 4. Who regulates -->
+  <!-- 4. How gambling is regulated (the process) -->
   <section class="section" aria-labelledby="reg-h">
     <div class="container">
-      <h2 id="reg-h">Who regulates gambling in {j.name}?</h2>
+      <h2 id="reg-h">How gambling is regulated in {j.name}</h2>
+      <p class="lead">
+        Each legal form of gambling moves through the same layered process: a
+        <strong>statute</strong> in the state code authorizes it,
+        <strong>administrative rules</strong> spell out the details, and a
+        <strong>commission or agency</strong> licenses and enforces it.
+      </p>
+
+      {
+        processItems.length > 0 && (
+          <ol class="process-list">
+            {processItems.map((v) => (
+              <li class="process">
+                <p class="process__type">
+                  {v.year ? `${v.label} · since ${v.year}` : v.label}
+                </p>
+                <ol class="process__chain">
+                  <li class="proc">
+                    <span class="proc__step">Law</span>
+                    <span class="proc__body">
+                      {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+                    </span>
+                  </li>
+                  <li class="proc proc--pending">
+                    <span class="proc__step">Rules</span>
+                    <span class="proc__body">Administrative code — coming soon</span>
+                  </li>
+                  <li class="proc">
+                    <span class="proc__step">Regulator</span>
+                    <span class="proc__body">{v.agency ?? "—"}</span>
+                  </li>
+                </ol>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+
+      {
+        tribalAuthorized && (
+          <p class="tribal-note">
+            Tribal gaming is regulated under federal law (the Indian Gaming
+            Regulatory Act) through the National Indian Gaming Commission and
+            tribal–state compacts, with {j.regulators.tribalCount} tribal gaming
+            commission{j.regulators.tribalCount === 1 ? "" : "s"} on file (listed
+            below).
+          </p>
+        )
+      }
+
+      <h3 class="reg-dir-h">Regulators in {j.name}</h3>
       {
         j.regulators.primary.length === 0 && (
           <p>No state-level gambling regulator is on file for {j.name}.</p>
@@ -372,6 +436,119 @@ const hasPrevention =
     .lead {
       font-size: 1.2rem;
       max-width: 70ch;
+    }
+
+    /* At a glance */
+    .glance-section {
+      padding-block: var(--space-6);
+    }
+    .glance {
+      list-style: none;
+      display: grid;
+      gap: var(--space-4);
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    }
+    .glance__item {
+      padding: var(--space-4);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      text-align: center;
+    }
+    .glance__num {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--c-heading);
+      line-height: 1.1;
+    }
+    .glance__den {
+      font-size: 1.2rem;
+      color: var(--c-text-muted);
+    }
+    .glance__label {
+      display: block;
+      margin-top: var(--space-2);
+      color: var(--c-text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Regulation process */
+    .process-list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-4);
+      margin: var(--space-6) 0;
+    }
+    .process {
+      padding: var(--space-5);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-left: 4px solid var(--c-primary);
+      border-radius: var(--radius-lg);
+    }
+    .process__type {
+      margin: 0 0 var(--space-3);
+      font-weight: 800;
+      color: var(--c-heading);
+      font-size: 1.1rem;
+    }
+    .process__chain {
+      list-style: none;
+      display: grid;
+      gap: var(--space-3);
+    }
+    @media (min-width: 48em) {
+      .process__chain {
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: stretch;
+      }
+    }
+    .proc {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      padding: var(--space-3);
+      background: var(--c-surface-alt);
+      border-radius: var(--radius);
+      position: relative;
+    }
+    .proc--pending {
+      opacity: 0.75;
+    }
+    .proc__step {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-primary);
+    }
+    .proc--pending .proc__step {
+      color: var(--c-text-muted);
+    }
+    .proc__body {
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+    /* Connector arrows between steps (decorative) */
+    @media (min-width: 48em) {
+      .proc + .proc::before {
+        content: "→";
+        position: absolute;
+        left: calc(var(--space-3) * -1 - 0.4em);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--c-border-strong);
+        font-weight: 800;
+      }
+    }
+    .tribal-note,
+    .reg-dir-h {
+      max-width: 70ch;
+    }
+    .reg-dir-h {
+      margin-top: var(--space-8);
+      font-size: 1.2rem;
     }
 
     /* Legal grid */

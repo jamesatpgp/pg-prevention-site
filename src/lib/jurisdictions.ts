@@ -97,6 +97,7 @@ export interface VerticalStatus {
   note: string | null;
   citation: string | null;
   url: string | null;
+  agency: string | null;
 }
 
 export interface Regulator {
@@ -203,6 +204,7 @@ function build(): Map<string, Jurisdiction> {
             : "No tribal gaming commission on file",
           citation: null,
           url: null,
+          agency: present ? "Tribal gaming commissions (under NIGC oversight)" : null,
         };
       }
       const rows = jStatutes.filter((r) => v.match.includes((r.vertical ?? "").trim()));
@@ -217,14 +219,15 @@ function build(): Map<string, Jurisdiction> {
           note: clean(real.statute_title),
           citation: clean(real.statute_citation),
           url: clean(real.official_url),
+          agency: clean(real.agency_governed),
         };
       }
       const nf = rows[0];
       if (nf) {
         const d = deriveStatusFromTitle(nf.statute_title ?? "");
-        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url) };
+        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed) };
       }
-      return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null };
+      return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null, agency: null };
     });
 
     // ---- Regulators ----
