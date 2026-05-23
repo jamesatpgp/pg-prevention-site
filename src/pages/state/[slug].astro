@@ -76,10 +76,14 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
 
         <div class="helpline-card helpline-card--988">
           <p class="helpline-card__eyebrow">In a crisis?</p>
-          <p class="helpline-card__number">988</p>
-          <p class="helpline-card__note">
-            Call or text the 988 Suicide &amp; Crisis Lifeline any time.
-          </p>
+          <img
+            class="lifeline-988-logo"
+            src="/brand/988-horizontal-navy.png"
+            width="640"
+            height="124"
+            alt="988 Suicide & Crisis Lifeline"
+          />
+          <p class="helpline-card__note">Call or text any time for support.</p>
           <a class="btn btn-outline" href="tel:988">Call or text 988</a>
         </div>
       </div>
@@ -417,6 +421,13 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       max-width: 15rem;
       height: auto;
       margin-bottom: var(--space-3);
+    }
+    .lifeline-988-logo {
+      display: block;
+      width: 100%;
+      max-width: 12rem;
+      height: auto;
+      margin: var(--space-1) 0 var(--space-3);
     }
     .helpline-card__eyebrow {
       margin: 0;

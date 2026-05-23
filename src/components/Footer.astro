@@ -30,10 +30,17 @@ const quickLinks = [
       <p class="footer-helpline__disclosure">
         1-800-697-3738 · Free. 24/7. Call or text.
       </p>
-      <p class="footer-988">
-        In crisis? Call or text <strong>988</strong> — Suicide &amp; Crisis
-        Lifeline.
-      </p>
+      <a class="footer-988-lockup" href="tel:988">
+        <img
+          src="/brand/988-horizontal-white.png"
+          width="640"
+          height="124"
+          loading="lazy"
+          decoding="async"
+          alt="Call or text 988, the Suicide & Crisis Lifeline"
+        />
+      </a>
+      <p class="footer-988">In a crisis? Call or text 988 any time.</p>
     </div>
 
     <nav class="footer-links" aria-label="Footer">
@@ -112,12 +119,18 @@ const quickLinks = [
     font-weight: 600;
     color: #fff;
   }
-  .footer-988 {
-    margin: 0;
-    max-width: 38ch;
+  .footer-988-lockup {
+    display: inline-block;
+    margin-top: var(--space-4);
   }
-  .footer-988 strong {
-    font-size: 1.1rem;
+  .footer-988-lockup img {
+    width: 100%;
+    max-width: 12rem;
+    height: auto;
+  }
+  .footer-988 {
+    margin: var(--space-2) 0 0;
+    max-width: 38ch;
   }
 
   /* Links */

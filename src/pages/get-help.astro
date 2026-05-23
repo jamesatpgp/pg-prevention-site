@@ -29,8 +29,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         </div>
 
         <div class="help-card">
-          <p class="help-card__name">Suicide &amp; Crisis Lifeline</p>
-          <p class="help-card__number">988</p>
+          <img
+            class="lifeline-988-logo"
+            src="/brand/988-horizontal-navy.png"
+            width="640"
+            height="124"
+            alt="988 Suicide & Crisis Lifeline"
+          />
           <p class="help-card__note">
             If you are in crisis or thinking about suicide, you can reach the
             988 Suicide &amp; Crisis Lifeline any time.
@@ -82,6 +87,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       max-width: 16rem;
       height: auto;
       margin-bottom: var(--space-2);
+    }
+    .lifeline-988-logo {
+      display: block;
+      width: 100%;
+      max-width: 13rem;
+      height: auto;
+      margin-bottom: var(--space-3);
     }
     .help-card__name {
       margin: 0;
