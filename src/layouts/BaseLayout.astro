@@ -18,6 +18,9 @@ const fullTitle =
   title === "Problem Gambling Prevention"
     ? title
     : `${title} — Problem Gambling Prevention`;
+
+// Canonical + social URLs use the production domain (Astro.site).
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -27,8 +30,18 @@ const fullTitle =
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="color-scheme" content="light" />
+    <!-- Social / Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Problem Gambling Prevention" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
