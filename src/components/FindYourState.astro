@@ -1,6 +1,5 @@
 ---
 import USGeoMap from "./USGeoMap.astro";
-import USHexMap from "./USHexMap.astro";
 import JurisdictionList from "./JurisdictionList.astro";
 ---
 
@@ -15,11 +14,7 @@ import JurisdictionList from "./JurisdictionList.astro";
 
     <USGeoMap />
 
-    <div class="fys-map-wrap">
-      <USHexMap />
-    </div>
-
-    <h3 class="fys-list-heading">Or pick your state or territory from this list</h3>
+    <h3 class="fys-list-heading">Choose your state or territory</h3>
     <JurisdictionList />
   </div>
 </section>
@@ -29,29 +24,10 @@ import JurisdictionList from "./JurisdictionList.astro";
     font-size: 1.2rem;
     max-width: 60ch;
   }
-  /* Geo map (desktop only, dominant). */
+  /* Geographic map: desktop-only visual aid above the list. */
   .find-your-state :global(.us-geo-map) {
     max-width: 46rem;
-    margin: var(--space-6) auto 0;
-  }
-  /* Hex map: >=44px tap targets on mobile (scrolls if needed); compact on
-     desktop, where it's the secondary "quick view" beside the geo map. */
-  .fys-map-wrap {
-    margin: var(--space-5) 0 var(--space-8);
-    overflow-x: auto;
-  }
-  .fys-map-wrap :global(.us-hex-map) {
-    min-width: 34rem;
-    margin-inline: auto;
-  }
-  @media (min-width: 48em) {
-    .fys-map-wrap {
-      overflow-x: visible;
-    }
-    .fys-map-wrap :global(.us-hex-map) {
-      min-width: 0;
-      max-width: 28rem;
-    }
+    margin: var(--space-6) auto var(--space-8);
   }
   .fys-list-heading {
     font-size: 1.15rem;
