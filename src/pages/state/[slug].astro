@@ -39,7 +39,37 @@ const earliestYear = years.length ? Math.min(...years) : null;
 const processItems = j.legal.filter(
   (v) => v.status === "authorized" && v.citation && v.id !== "tribal",
 );
+// Group authorized forms by their regulator so a shared agency is shown once
+// (laws stay separated; the regulator endpoint is combined).
+type ProcGroup = { agency: string | null; url: string | null; items: typeof processItems };
+const regGroups: ProcGroup[] = [];
+const regSeen = new Map<string, ProcGroup>();
+for (const v of processItems) {
+  const key = (v.agency ?? "").trim().toLowerCase() || "__none__";
+  let g = regSeen.get(key);
+  if (!g) {
+    g = { agency: v.agency ?? null, url: v.agencyUrl ?? null, items: [] };
+    regSeen.set(key, g);
+    regGroups.push(g);
+  }
+  if (!g.url && v.agencyUrl) g.url = v.agencyUrl;
+  g.items.push(v);
+}
 const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "authorized";
+
+// At-a-glance stats: drop any zero/empty value (don't surface nil counts).
+const glanceItems = (
+  [
+    { num: authorizedCount, one: "gambling type authorized", many: "gambling types authorized" },
+    { num: j.regulators.primary.length, one: "state-level regulator", many: "state-level regulators" },
+    { num: j.regulators.tribalCount, one: "tribal gaming commission", many: "tribal gaming commissions" },
+    { num: earliestYear, one: "earliest authorization", many: "earliest authorization" },
+  ] as { num: number | null; one: string; many: string }[]
+).filter((s) => s.num != null && s.num > 0);
+
+// Self-exclusion: enrollable programs vs. documented "no program" findings.
+const sePrograms = j.selfExclusion.programs;
+const seNoProgram = j.selfExclusion.noProgramFindings;
 ---
 
 <BaseLayout
@@ -85,24 +115,18 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
   <section class="section glance-section" aria-labelledby="glance-h">
     <div class="container">
       <h2 id="glance-h" class="visually-hidden">{j.name} at a glance</h2>
-      <ul class="glance">
-        <li class="glance__item">
-          <span class="glance__num">{authorizedCount}</span>
-          <span class="glance__label">gambling types authorized</span>
-        </li>
-        <li class="glance__item">
-          <span class="glance__num">{j.regulators.primary.length}</span>
-          <span class="glance__label">state-level regulators</span>
-        </li>
-        <li class="glance__item">
-          <span class="glance__num">{j.regulators.tribalCount}</span>
-          <span class="glance__label">tribal gaming commissions</span>
-        </li>
-        <li class="glance__item">
-          <span class="glance__num">{earliestYear ?? "—"}</span>
-          <span class="glance__label">earliest authorization</span>
-        </li>
-      </ul>
+      {
+        glanceItems.length > 0 && (
+          <ul class="glance">
+            {glanceItems.map((s) => (
+              <li class="glance__item">
+                <span class="glance__num">{s.num}</span>
+                <span class="glance__label">{s.num === 1 ? s.one : s.many}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
       <p class="fine-print">
         Adult and youth prevalence data for {j.name} is coming soon.
       </p>
@@ -172,39 +196,56 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       </p>
 
       {
-        processItems.length > 0 && (
+        regGroups.length > 0 && (
           <ol class="process-list">
-            {processItems.map((v) => (
-              <li class="process">
-                <p class="process__type">
-                  {v.year ? `${v.label} · since ${v.year}` : v.label}
-                </p>
-                <ol class="process__chain">
-                  <li class="proc">
-                    <span class="proc__step">Law</span>
-                    <span class="proc__body">
-                      {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+            {regGroups.map((g) => (
+              <li class:list={["process", g.items.length > 1 && "process--grouped"]}>
+                <div class="process__forms">
+                  {g.items.map((v) => (
+                    <div class="process__form">
+                      <p class="process__type">
+                        {v.year ? `${v.label} · since ${v.year}` : v.label}
+                      </p>
+                      <ol class="process__chain">
+                        <li class="proc">
+                          <span class="proc__step">Law</span>
+                          <span class="proc__body">
+                            {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+                          </span>
+                        </li>
+                        <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
+                          <span class="proc__step">Rules</span>
+                          <span class="proc__body">
+                            {v.adminCodeVerified && v.adminCodeCitation ? (
+                              v.adminCodeUrl ? (
+                                <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
+                              ) : (
+                                v.adminCodeCitation
+                              )
+                            ) : (
+                              "Not separately codified"
+                            )}
+                          </span>
+                        </li>
+                      </ol>
+                    </div>
+                  ))}
+                </div>
+                {g.url ? (
+                  <a class="proc proc--regulator proc--reglink" href={g.url}>
+                    <span class="proc__step">
+                      {g.items.length > 1 ? "Regulator (shared)" : "Regulator"}
                     </span>
-                  </li>
-                  <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
-                    <span class="proc__step">Rules</span>
-                    <span class="proc__body">
-                      {v.adminCodeVerified && v.adminCodeCitation ? (
-                        v.adminCodeUrl ? (
-                          <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
-                        ) : (
-                          v.adminCodeCitation
-                        )
-                      ) : (
-                        "Not separately codified"
-                      )}
+                    <span class="proc__body">{g.agency ?? "—"}</span>
+                  </a>
+                ) : (
+                  <div class="proc proc--regulator">
+                    <span class="proc__step">
+                      {g.items.length > 1 ? "Regulator (shared)" : "Regulator"}
                     </span>
-                  </li>
-                  <li class="proc">
-                    <span class="proc__step">Regulator</span>
-                    <span class="proc__body">{v.agency ?? "—"}</span>
-                  </li>
-                </ol>
+                    <span class="proc__body">{g.agency ?? "—"}</span>
+                  </div>
+                )}
               </li>
             ))}
           </ol>
@@ -222,26 +263,6 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
           </p>
         )
       }
-
-      <h3 class="reg-dir-h">Regulators in {j.name}</h3>
-      {
-        j.regulators.primary.length === 0 && (
-          <p>No state-level gambling regulator is on file for {j.name}.</p>
-        )
-      }
-      <ul class="reg-list">
-        {
-          j.regulators.primary.map((r) => (
-            <li class="reg-item">
-              <p class="reg-item__name">
-                {r.website ? <a href={r.website}>{r.name}</a> : r.name}
-              </p>
-              <p class="reg-item__type">{r.type}</p>
-              {r.phone && <p class="reg-item__meta">{r.phone}</p>}
-            </li>
-          ))
-        }
-      </ul>
 
       {
         (j.regulators.tribalCount > 0 || j.regulators.county.length > 0) && (
@@ -336,15 +357,114 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
     </div>
   </section>
 
-  <!-- 7. Self-exclusion (data gap placeholder) -->
+  <!-- 7. Self-exclusion -->
   <section class="section section-alt" aria-labelledby="se-h">
     <div class="container">
       <h2 id="se-h">Self-exclusion in {j.name}</h2>
-      <p class="coming">
-        Details about {j.name}'s voluntary self-exclusion options are coming
-        soon. To talk through your options now, call or text{" "}
-        <a href={`tel:${j.helpline.national.tel}`}>{j.helpline.national.label}</a>.
+      <p class="lead">
+        Self-exclusion is a free, voluntary way to ban yourself from gambling.
+        You add your name to a list, and operators must turn you away and stop
+        sending you offers for the time you choose.
       </p>
+
+      {
+        sePrograms.length > 0 ? (
+          <ul class="se-list">
+            {sePrograms.map((p) => (
+              <li class="se-card">
+                <div class="se-card__head">
+                  <h3 class="se-card__name">
+                    {p.url ? <a href={p.url}>{p.name}</a> : p.name}
+                  </h3>
+                  <span class="se-badge">{p.typeLabel}</span>
+                </div>
+                <dl class="se-meta">
+                  {p.verticals && (
+                    <div class="se-meta__row">
+                      <dt>Covers</dt>
+                      <dd>{p.verticals}</dd>
+                    </div>
+                  )}
+                  {p.body && (
+                    <div class="se-meta__row">
+                      <dt>Run by</dt>
+                      <dd>{p.body}</dd>
+                    </div>
+                  )}
+                  {p.enrollment && (
+                    <div class="se-meta__row">
+                      <dt>How to enroll</dt>
+                      <dd>{p.enrollment}</dd>
+                    </div>
+                  )}
+                  {p.duration && (
+                    <div class="se-meta__row">
+                      <dt>How long</dt>
+                      <dd>{p.duration}</dd>
+                    </div>
+                  )}
+                  {p.removal && (
+                    <div class="se-meta__row">
+                      <dt>Coming off the list</dt>
+                      <dd>{p.removal}</dd>
+                    </div>
+                  )}
+                </dl>
+                {p.idpairFlag && (
+                  <p class="se-note">
+                    This enrollment is powered by idPair's National Voluntary
+                    Self-Exclusion Program (NVSEP), which can extend your
+                    exclusion across participating states.
+                  </p>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : authorizedCount === 0 ? (
+          <p>
+            {j.name} has no legal gambling, so there is no self-exclusion program
+            on file. If online or out-of-state gambling is affecting you, you can
+            still get free, confidential help — call or text{" "}
+            <a href={`tel:${j.helpline.national.tel}`}>{j.helpline.national.label}</a>.
+          </p>
+        ) : (
+          <p>
+            We could not confirm a statewide self-exclusion list in {j.name}.
+            Individual casinos, sportsbooks, or apps may still let you exclude
+            yourself — ask the operator directly. To talk through your options,
+            call or text{" "}
+            <a href={`tel:${j.helpline.national.tel}`}>{j.helpline.national.label}</a>.
+          </p>
+        )
+      }
+
+      {
+        sePrograms.length > 0 && seNoProgram.length > 0 && (
+          <details class="se-more">
+            <summary>
+              Gambling types without a self-exclusion program ({seNoProgram.length})
+            </summary>
+            <ul class="se-none-list">
+              {seNoProgram.map((p) => (
+                <li>
+                  {p.url ? <a href={p.url}>{p.name}</a> : p.name}
+                  {p.verticals ? ` — ${p.verticals}` : ""}
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
+
+      {
+        sePrograms.length > 0 && (
+          <p class="fine-print">
+            Based on our self-exclusion inventory
+            {j.selfExclusion.retrievalDate ? `, retrieved ${j.selfExclusion.retrievalDate}` : ""}.
+            Follow each link for the official program and current terms.
+          </p>
+        )
+      }
     </div>
   </section>
 
@@ -463,6 +583,24 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       border: 1px solid var(--c-border);
       border-left: 4px solid var(--c-primary);
       border-radius: var(--radius-lg);
+      display: grid;
+      gap: var(--space-4);
+    }
+    @media (min-width: 48em) {
+      .process {
+        grid-template-columns: 1fr minmax(11rem, 15rem);
+        align-items: stretch;
+        column-gap: var(--space-5);
+      }
+    }
+    .process__forms {
+      display: grid;
+      gap: var(--space-4);
+      min-width: 0;
+    }
+    .process__form + .process__form {
+      border-top: 1px solid var(--c-border);
+      padding-top: var(--space-4);
     }
     .process__type {
       margin: 0 0 var(--space-3);
@@ -477,8 +615,39 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
     }
     @media (min-width: 48em) {
       .process__chain {
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         align-items: stretch;
+      }
+    }
+    /* Regulator endpoint: shown once per regulator, spanning the full height of
+       all the forms (feeds) it governs, and linking to the regulator's site. */
+    .proc--regulator {
+      background: var(--c-primary-tint);
+      justify-content: center;
+    }
+    .proc--reglink {
+      text-decoration: none;
+      color: inherit;
+      transition: background-color 0.15s ease;
+    }
+    .proc--reglink .proc__body {
+      color: var(--c-primary);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .proc--reglink:hover,
+    .proc--reglink:focus-visible {
+      background: var(--c-surface-alt);
+    }
+    @media (min-width: 48em) {
+      .proc--regulator::before {
+        content: "→";
+        position: absolute;
+        left: calc(var(--space-5) * -1 - 0.1em);
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--c-border-strong);
+        font-weight: 800;
       }
     }
     .proc {
@@ -628,6 +797,85 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
     }
     .coming {
       color: var(--c-text-muted);
+    }
+
+    /* Self-exclusion */
+    .se-list {
+      list-style: none;
+      display: grid;
+      gap: var(--space-4);
+      margin-top: var(--space-5);
+    }
+    @media (min-width: 48em) {
+      .se-list {
+        grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+      }
+    }
+    .se-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .se-card__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-2) var(--space-3);
+    }
+    .se-card__name {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    .se-badge {
+      flex: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      background: var(--c-primary-tint);
+      color: var(--c-primary);
+      border: 1px solid var(--c-border);
+    }
+    .se-meta {
+      margin: var(--space-4) 0 0;
+      display: grid;
+      gap: var(--space-3);
+    }
+    .se-meta__row {
+      margin: 0;
+    }
+    .se-meta__row dt {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .se-meta__row dd {
+      margin: var(--space-1) 0 0;
+    }
+    .se-note {
+      margin: var(--space-4) 0 0;
+      padding: var(--space-3) var(--space-4);
+      background: var(--c-primary-tint);
+      border-radius: var(--radius-md, 8px);
+      font-size: 0.95rem;
+    }
+    .se-more {
+      margin-top: var(--space-5);
+    }
+    .se-more summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--c-primary);
+      min-height: var(--target-min);
+      display: flex;
+      align-items: center;
+    }
+    .se-none-list {
+      margin: var(--space-3) 0 0;
+      padding-left: var(--space-5);
+      display: grid;
+      gap: var(--space-2);
     }
 
     /* History */

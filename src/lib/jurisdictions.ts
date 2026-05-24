@@ -87,6 +87,46 @@ const VERTICALS: { id: string; label: string; match: string[]; tribal?: boolean 
   { id: "dfs", label: "Daily fantasy (DFS)", match: ["DFS / fantasy sports"] },
 ];
 
+// The self-exclusion CSV names a few jurisdictions differently than the
+// pg_resources file; normalize so rows join. ("Federal" has no state page.)
+const SE_NAME_ALIASES: Record<string, string> = {
+  "Virgin Islands": "US Virgin Islands",
+};
+
+const SE_TYPE_LABEL: Record<string, string> = {
+  "state-run": "Statewide program",
+  "national-NVSEP": "Multi-state program (NVSEP)",
+  "property-by-property": "Per-property / per-operator",
+  none: "No formal program",
+};
+
+// Some descriptive cells carry an internal reviewer annotation appended as a
+// trailing clause (e.g. "...; needs human review"). Strip those clauses so the
+// public never sees research scaffolding, then fall back to clean().
+function cleanField(v: string | undefined): string | null {
+  const c = clean(v);
+  if (!c) return null;
+  const kept = c
+    .split(";")
+    .map((s) => s.trim())
+    .filter((s) => s && !/needs human review|not confirmed on official|^not found/i.test(s));
+  const out = kept.join("; ").trim();
+  return out || null;
+}
+
+// Verticals are a ";"-joined list; tidy spacing and drop "N/A".
+function cleanVerticals(v: string | undefined): string | null {
+  const c = clean(v);
+  if (!c) return null;
+  return (
+    c
+      .split(";")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .join("; ") || null
+  );
+}
+
 export type LegalStatus = "authorized" | "limited" | "tribal-only" | "not-authorized";
 
 export interface VerticalStatus {
@@ -98,6 +138,7 @@ export interface VerticalStatus {
   citation: string | null;
   url: string | null;
   agency: string | null;
+  agencyUrl: string | null;
   adminCodeCitation: string | null;
   adminCodeUrl: string | null;
   adminCodeVerified: boolean;
@@ -110,6 +151,35 @@ export interface Regulator {
   phone: string | null;
   email: string | null;
   verticals: string | null;
+}
+
+export type SelfExclusionType =
+  | "state-run"
+  | "national-NVSEP"
+  | "property-by-property"
+  | "none";
+
+export interface SelfExclusionProgram {
+  name: string;
+  type: SelfExclusionType;
+  typeLabel: string;
+  body: string | null;
+  verticals: string | null;
+  enrollment: string | null;
+  duration: string | null;
+  removal: string | null;
+  url: string | null;
+  isNvsep: boolean;
+  idpairFlag: boolean;
+  verified: boolean;
+}
+
+export interface SelfExclusion {
+  // Enrollable programs (statewide, multi-state NVSEP, or per-property/operator).
+  programs: SelfExclusionProgram[];
+  // Verticals with a sourced "no self-exclusion program" finding (context only).
+  noProgramFindings: SelfExclusionProgram[];
+  retrievalDate: string | null;
 }
 
 export interface Jurisdiction {
@@ -126,6 +196,7 @@ export interface Jurisdiction {
   };
   legal: VerticalStatus[];
   regulators: { primary: Regulator[]; tribalCount: number; tribal: Regulator[]; county: Regulator[] };
+  selfExclusion: SelfExclusion;
   help: {
     affiliateName: string | null;
     affiliateUrl: string | null;
@@ -146,6 +217,86 @@ function deriveStatusFromTitle(title: string): { status: LegalStatus; note: stri
   )
     return { status: "limited", note: title };
   return { status: "not-authorized", note: title };
+}
+
+// Normalize an agency/body name for fuzzy matching: drop parentheticals,
+// unify dashes, strip punctuation, collapse whitespace.
+function normName(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/\(.*?\)/g, " ")
+    .replace(/[—–-]/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Keywords that tie one of our verticals to a regulatory body's free-text
+// `verticals_covered`, used as a fallback when names don't match.
+const REG_VERTICAL_KW: Record<string, RegExp> = {
+  lottery: /lottery/,
+  "commercial-casino": /casino/,
+  "sports-betting": /sports|sportsbook|sports wager/,
+  "online-casino": /igaming|internet gaming|online casino|interactive|i-?gaming/,
+  charitable: /charitable|bingo|raffle|pull-?tab/,
+  "horse-racing": /horse|racing|pari-?mutuel|parimutuel|harness|thoroughbred/,
+  dfs: /fantasy|dfs/,
+};
+
+// Resolve a statute's regulator to a website. Two complementary passes — the
+// statute's `agency_governed` name rarely matches a body name exactly
+// ("Ohio Lottery Commission" vs "Ohio Lottery", "(OCCC)" suffixes, em-dashes),
+// and a body's `verticals_covered` is sometimes incomplete — so we try the name
+// first, then fall back to matching the vertical against the bodies. Tribal
+// commissions are excluded (tribal gaming is handled as its own vertical).
+function resolveAgencyUrl(
+  agency: string | null,
+  bodies: Record<string, string>[],
+  verticalId?: string,
+): string | null {
+  const cands = bodies.filter(
+    (b) => !/tribal gaming commission/i.test(b.body_type ?? ""),
+  );
+
+  // Pass 1 — fuzzy name match.
+  const a = normName(agency ?? "");
+  if (a.length >= 4) {
+    let bestUrl: string | null = null;
+    let bestScore = 0;
+    for (const b of cands) {
+      const n = normName(b.body_name ?? "");
+      if (n.length < 4) continue;
+      let score = 0;
+      if (n === a) score = 3;
+      else if (a.includes(n) || n.includes(a)) score = 2;
+      else continue;
+      const url = clean(b.website);
+      const adj = score + (url ? 0.5 : 0);
+      if (adj > bestScore) {
+        bestScore = adj;
+        bestUrl = url;
+      }
+    }
+    if (bestUrl) return bestUrl;
+  }
+
+  // Pass 2 — match the vertical against each body's covered verticals.
+  const kw = verticalId ? REG_VERTICAL_KW[verticalId] : undefined;
+  if (kw) {
+    for (const b of cands) {
+      if (kw.test((b.verticals_covered ?? "").toLowerCase())) {
+        const url = clean(b.website);
+        if (url) return url;
+      }
+    }
+    for (const b of cands) {
+      if (/multiple/i.test(b.verticals_covered ?? "")) {
+        const url = clean(b.website);
+        if (url) return url;
+      }
+    }
+  }
+  return null;
 }
 
 function extractTel(value: string): string | null {
@@ -199,6 +350,40 @@ function build(): Map<string, Jurisdiction> {
   };
   const noAdmin = { adminCodeCitation: null, adminCodeUrl: null, adminCodeVerified: false };
 
+  // Self-exclusion layer, grouped by (normalized) jurisdiction name.
+  const seByJur = new Map<string, SelfExclusionProgram[]>();
+  for (const r of readCsv("self_exclusion_inventory.csv")) {
+    let jur = (r.jurisdiction ?? "").trim();
+    if (!jur || jur === "Federal") continue; // no Federal state page
+    jur = SE_NAME_ALIASES[jur] ?? jur;
+    const type = (r.program_type ?? "").trim();
+    const prog: SelfExclusionProgram = {
+      name: (r.program_name ?? "").trim(),
+      type: (["state-run", "national-NVSEP", "property-by-property"].includes(type)
+        ? type
+        : "none") as SelfExclusionType,
+      typeLabel: SE_TYPE_LABEL[type] ?? "Program",
+      body: cleanField(r.administering_body),
+      verticals: cleanVerticals(r.verticals_covered),
+      enrollment: cleanField(r.enrollment_method),
+      duration: cleanField(r.duration_options),
+      removal: cleanField(r.removal_process),
+      url: clean(r.official_url),
+      isNvsep: (r.is_nvsep ?? "").trim().toLowerCase() === "yes",
+      idpairFlag: (r.idpair_flag ?? "").trim().toLowerCase() === "yes",
+      verified: (r.verification_status ?? "").trim().toLowerCase() === "verified",
+    };
+    (seByJur.get(jur) ?? seByJur.set(jur, []).get(jur)!).push(prog);
+  }
+  const buildSelfExclusion = (name: string): SelfExclusion => {
+    const rows = seByJur.get(name) ?? [];
+    return {
+      programs: rows.filter((p) => p.type !== "none"),
+      noProgramFindings: rows.filter((p) => p.type === "none"),
+      retrievalDate: "2026-05-23",
+    };
+  };
+
   const result = new Map<string, Jurisdiction>();
 
   for (const row of pg) {
@@ -225,6 +410,7 @@ function build(): Map<string, Jurisdiction> {
           citation: null,
           url: null,
           agency: present ? "Tribal gaming commissions (under NIGC oversight)" : null,
+          agencyUrl: null,
           ...noAdmin,
         };
       }
@@ -241,15 +427,16 @@ function build(): Map<string, Jurisdiction> {
           citation: clean(real.statute_citation),
           url: clean(real.official_url),
           agency: clean(real.agency_governed),
+          agencyUrl: resolveAgencyUrl(clean(real.agency_governed), jBodies, v.id),
           ...adminFor(name, (real.vertical ?? "").trim()),
         };
       }
       const nf = rows[0];
       if (nf) {
         const d = deriveStatusFromTitle(nf.statute_title ?? "");
-        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed), ...adminFor(name, (nf.vertical ?? "").trim()) };
+        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed), agencyUrl: resolveAgencyUrl(clean(nf.agency_governed), jBodies, v.id), ...adminFor(name, (nf.vertical ?? "").trim()) };
       }
-      return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null, agency: null, ...noAdmin };
+      return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null, agency: null, agencyUrl: null, ...noAdmin };
     });
 
     // ---- Regulators ----
@@ -314,6 +501,7 @@ function build(): Map<string, Jurisdiction> {
       },
       legal,
       regulators: { primary, tribalCount: tribal.length, tribal, county },
+      selfExclusion: buildSelfExclusion(name),
       help: {
         affiliateName: clean(row.ncpg_affiliate_name),
         affiliateUrl: clean(row.ncpg_affiliate_url),
