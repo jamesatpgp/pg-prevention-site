@@ -98,6 +98,9 @@ export interface VerticalStatus {
   citation: string | null;
   url: string | null;
   agency: string | null;
+  adminCodeCitation: string | null;
+  adminCodeUrl: string | null;
+  adminCodeVerified: boolean;
 }
 
 export interface Regulator {
@@ -179,6 +182,23 @@ function build(): Map<string, Jurisdiction> {
     (byJurBodies.get(j) ?? byJurBodies.set(j, []).get(j)!).push(r);
   }
 
+  // Administrative-rules layer, keyed by jurisdiction||vertical (raw statute
+  // vertical). Only "verified" rows expose a citation.
+  const adminByKey = new Map<string, Record<string, string>>();
+  for (const r of readCsv("admin_code_inventory.csv")) {
+    adminByKey.set(`${(r.jurisdiction ?? "").trim()}||${(r.vertical ?? "").trim()}`, r);
+  }
+  const adminFor = (jur: string, vertical: string) => {
+    const r = adminByKey.get(`${jur}||${vertical}`);
+    const verified = (r?.verification_status ?? "").trim().toLowerCase() === "verified";
+    return {
+      adminCodeCitation: verified ? clean(r?.admin_code_citation) : null,
+      adminCodeUrl: verified ? clean(r?.admin_code_url) : null,
+      adminCodeVerified: verified,
+    };
+  };
+  const noAdmin = { adminCodeCitation: null, adminCodeUrl: null, adminCodeVerified: false };
+
   const result = new Map<string, Jurisdiction>();
 
   for (const row of pg) {
@@ -205,6 +225,7 @@ function build(): Map<string, Jurisdiction> {
           citation: null,
           url: null,
           agency: present ? "Tribal gaming commissions (under NIGC oversight)" : null,
+          ...noAdmin,
         };
       }
       const rows = jStatutes.filter((r) => v.match.includes((r.vertical ?? "").trim()));
@@ -220,14 +241,15 @@ function build(): Map<string, Jurisdiction> {
           citation: clean(real.statute_citation),
           url: clean(real.official_url),
           agency: clean(real.agency_governed),
+          ...adminFor(name, (real.vertical ?? "").trim()),
         };
       }
       const nf = rows[0];
       if (nf) {
         const d = deriveStatusFromTitle(nf.statute_title ?? "");
-        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed) };
+        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed), ...adminFor(name, (nf.vertical ?? "").trim()) };
       }
-      return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null, agency: null };
+      return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null, agency: null, ...noAdmin };
     });
 
     // ---- Regulators ----

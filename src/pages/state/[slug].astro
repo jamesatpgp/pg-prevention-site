@@ -177,9 +177,19 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
                       {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
                     </span>
                   </li>
-                  <li class="proc proc--pending">
+                  <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
                     <span class="proc__step">Rules</span>
-                    <span class="proc__body">Administrative code — coming soon</span>
+                    <span class="proc__body">
+                      {v.adminCodeVerified && v.adminCodeCitation ? (
+                        v.adminCodeUrl ? (
+                          <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
+                        ) : (
+                          v.adminCodeCitation
+                        )
+                      ) : (
+                        "Not separately codified"
+                      )}
+                    </span>
                   </li>
                   <li class="proc">
                     <span class="proc__step">Regulator</span>
