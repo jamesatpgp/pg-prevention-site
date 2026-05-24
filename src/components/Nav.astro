@@ -1,12 +1,10 @@
 ---
 import CrisisCTAs from "./CrisisCTAs.astro";
 
+// Pared back for now; we'll build the nav out as more sections come online.
 const navItems = [
   { label: "Understand Gambling", href: "/understand-gambling" },
   { label: "Find Your State", href: "/find-your-state" },
-  { label: "For Prevention Professionals", href: "/professionals" },
-  { label: "Resource Library", href: "/resources" },
-  { label: "About", href: "/about" },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";

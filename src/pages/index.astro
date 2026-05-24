@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import FindYourState from "../components/FindYourState.astro";
+import USGeoMap from "../components/USGeoMap.astro";
+import StateSelect from "../components/StateSelect.astro";
 
 const learnTopics = [
   { title: "What is problem gambling?", body: "What it means, in plain language.", href: "/understand-gambling/what-is-problem-gambling" },
@@ -77,9 +78,24 @@ const proTiles = [
   </section>
 
   <!-- Find Your State -->
-  <div class="section section-alt">
-    <FindYourState />
-  </div>
+  <section class="section section-alt" aria-labelledby="find-your-state-heading">
+    <div class="container">
+      <h2 id="find-your-state-heading">Find your state or territory</h2>
+      <p class="section-lead">
+        Select your state or territory for local helplines, who regulates
+        gambling there, what's legal, and where to find help — all 50 states,
+        DC, and five U.S. territories.
+      </p>
+      <div class="state-finder">
+        <div class="state-finder__map">
+          <USGeoMap />
+        </div>
+        <div class="state-finder__pick">
+          <StateSelect />
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- For Prevention Professionals (visually distinct band) -->
   <section class="pro-band surface-dark" aria-labelledby="pro-heading">
@@ -116,6 +132,23 @@ const proTiles = [
     .learn-all {
       margin-top: var(--space-5);
       font-weight: 700;
+    }
+
+    /* Find Your State: map beside the picker */
+    .state-finder {
+      display: grid;
+      gap: var(--space-6);
+      align-items: center;
+    }
+    @media (min-width: 48em) {
+      .state-finder {
+        grid-template-columns: 1.4fr 1fr;
+      }
+    }
+    @media (max-width: 47.99em) {
+      .state-finder__map {
+        display: none;
+      }
     }
 
     /* Hero */

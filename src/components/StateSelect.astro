@@ -1,0 +1,74 @@
+---
+import { jurisdictionsByName, linkFor } from "../data/map-jurisdictions";
+---
+
+<form class="state-select" data-state-select>
+  <label class="state-select__label" for="state-select-menu">
+    Choose your state or territory
+  </label>
+  <div class="state-select__row">
+    <select id="state-select-menu" class="state-select__menu">
+      <option value="">Select a state or territory…</option>
+      {
+        jurisdictionsByName.map((j) => (
+          <option value={linkFor(j)}>{j.name}</option>
+        ))
+      }
+    </select>
+    <button type="submit" class="btn btn-primary state-select__go">Go</button>
+  </div>
+  <p class="state-select__fallback">
+    <a href="/find-your-state">Or browse all states &amp; territories →</a>
+  </p>
+</form>
+
+<style>
+  .state-select {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+  }
+  .state-select__label {
+    display: block;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--c-heading);
+    margin-bottom: var(--space-3);
+  }
+  .state-select__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+  .state-select__menu {
+    flex: 1 1 12rem;
+    min-height: var(--target-min);
+    padding: var(--space-2) var(--space-3);
+    font: inherit;
+    color: var(--c-text);
+    background: var(--c-surface);
+    border: 2px solid var(--c-border-strong);
+    border-radius: var(--radius);
+  }
+  .state-select__go {
+    flex: 0 0 auto;
+  }
+  .state-select__fallback {
+    margin: var(--space-4) 0 0;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  document
+    .querySelectorAll<HTMLFormElement>("[data-state-select]")
+    .forEach((form) => {
+      const menu = form.querySelector<HTMLSelectElement>("select");
+      if (!menu) return;
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (menu.value) window.location.href = menu.value;
+      });
+    });
+</script>
