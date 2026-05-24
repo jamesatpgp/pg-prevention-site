@@ -29,6 +29,8 @@ const hasPrevention =
 
 // Derived structural stats (real archive data; population stats are a gap).
 const authorizedCount = j.legal.filter((v) => v.status === "authorized").length;
+// Only reference forms the state actually has — hide "not authorized".
+const shownForms = j.legal.filter((v) => v.status !== "not-authorized");
 const years = j.legal
   .map((v) => (v.year ? parseInt(v.year, 10) : null))
   .filter((y): y is number => y !== null && !Number.isNaN(y));
@@ -85,7 +87,7 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       <h2 id="glance-h" class="visually-hidden">{j.name} at a glance</h2>
       <ul class="glance">
         <li class="glance__item">
-          <span class="glance__num">{authorizedCount}<span class="glance__den">/8</span></span>
+          <span class="glance__num">{authorizedCount}</span>
           <span class="glance__label">gambling types authorized</span>
         </li>
         <li class="glance__item">
@@ -123,30 +125,37 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
   <section class="section section-alt" aria-labelledby="legal-h">
     <div class="container">
       <h2 id="legal-h">What kinds of gambling are legal in {j.name}?</h2>
-      <ul class="legal-grid">
-        {
-          j.legal.map((v) => (
-            <li class={`legal-cell legal-cell--${v.status}`}>
-              <span class="legal-cell__status" aria-hidden="true">
-                {v.status === "authorized" ? "✓" : v.status === "not-authorized" ? "—" : "•"}
-              </span>
-              <span class="legal-cell__label">{v.label}</span>
-              <span class="legal-cell__state">
-                {v.year ? `${statusLabel[v.status]} (since ${v.year})` : statusLabel[v.status]}
-              </span>
-              {v.citation && (
-                <span class="legal-cell__cite">
-                  {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+      {
+        shownForms.length > 0 ? (
+          <ul class="legal-grid">
+            {shownForms.map((v) => (
+              <li class={`legal-cell legal-cell--${v.status}`}>
+                <span class="legal-cell__status" aria-hidden="true">
+                  {v.status === "authorized" ? "✓" : "•"}
                 </span>
-              )}
-            </li>
-          ))
-        }
-      </ul>
+                <span class="legal-cell__label">{v.label}</span>
+                <span class="legal-cell__state">
+                  {v.year ? `${statusLabel[v.status]} (since ${v.year})` : statusLabel[v.status]}
+                </span>
+                {v.citation && (
+                  <span class="legal-cell__cite">
+                    {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p class="lead">
+            No form of gambling is currently authorized in {j.name}. People in
+            {j.name} can still experience gambling harm — including from online or
+            out-of-state activity — and free help is always available.
+          </p>
+        )
+      }
       <p class="fine-print">
         Based on our statute inventory{j.retrievalDate ? `, retrieved ${j.retrievalDate}` : ""}.
-        "Not authorized" means no authorizing statute is on file. See each citation
-        for the source.
+        See each citation for the source.
       </p>
     </div>
   </section>
