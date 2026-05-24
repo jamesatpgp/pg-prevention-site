@@ -5,9 +5,10 @@
 // AK, HI, PR). The 20m source omits the 4 small Pacific/Atlantic territories
 // (AS, GU, MP, VI); those are covered by the hex map and the list instead.
 //
-// Because the coordinates are already projected, we render them with a plain
-// geoIdentity (reflectY to match SVG's y-down axis) fit to a 960x500 box, and
-// store integer-rounded path strings. No projection runs at site build time.
+// Because the coordinates are already projected to screen space (y-down,
+// north-up), we render them with a plain geoIdentity (NO reflectY) fit to a
+// 960x500 box, and store integer-rounded path strings. No projection runs at
+// site build time.
 //
 // Run from the project root:  node scripts/gen-geo-paths.mjs
 import { feature } from "topojson-client";
@@ -19,7 +20,7 @@ const SRC =
 
 const topo = await (await fetch(SRC)).json();
 const fc = feature(topo, topo.objects.states);
-const projection = geoIdentity().reflectY(true).fitSize([960, 500], fc);
+const projection = geoIdentity().fitSize([960, 500], fc);
 const path = geoPath(projection);
 const round = (d) => d.replace(/-?\d+\.\d+/g, (m) => Math.round(+m));
 
