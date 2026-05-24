@@ -1,14 +1,54 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout
   title="Resource Library"
-  description="A searchable, filterable library of free rack cards, fact sheets, and graphics, customized for your state."
+  description="A free, searchable library of downloadable problem gambling prevention resources — rack cards, fact sheets, graphics, and more, customized by state."
 >
-  <ComingSoon
-    heading="Resource Library"
-    blurb="A searchable, filterable library of free rack cards, fact sheets, and graphics — customized for your state — is on the way."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">Resource Library</p>
+      <h1>Free resources to download and use</h1>
+      <p class="page-header__lead">
+        A growing library of problem gambling prevention materials — free to
+        download and use for non-commercial prevention and education. No login, no
+        fee.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>What's coming</h2>
+      <ul>
+        <li><strong>Rack cards</strong> — print-ready, customized with each state's helpline and context</li>
+        <li><strong>Fact sheets</strong> — one-page overviews of key topics</li>
+        <li><strong>Social-media graphics</strong> — sized for major platforms</li>
+        <li><strong>Presentation slide decks</strong> — editable, for community presentations</li>
+        <li><strong>Infographics</strong> — data-driven visuals with cited sources</li>
+      </ul>
+
+      <h2>How you'll find what you need</h2>
+      <p>You'll be able to filter the library by:</p>
+      <ul>
+        <li>State or territory</li>
+        <li>IC&amp;RC Prevention Specialist domain</li>
+        <li>CSAP prevention strategy</li>
+        <li>Audience (general public, youth, young adults, parents, providers, policymakers, older adults)</li>
+        <li>Resource type</li>
+        <li>Topic (sports betting, online gambling, youth, families, suicide risk, and more)</li>
+        <li>Language</li>
+      </ul>
+
+      <h2>In the meantime</h2>
+      <p>
+        The <a href="/understand-gambling">Understand Gambling</a> pages can be
+        shared and used today, and the <a href="/professionals">professional hub</a>
+        is organized by IC&amp;RC PS domain. Every <a href="/find-your-state">state
+        page</a> already carries local helpline, regulator, and legal-landscape
+        information you can cite.
+      </p>
+    </div>
+  </section>
 </BaseLayout>
