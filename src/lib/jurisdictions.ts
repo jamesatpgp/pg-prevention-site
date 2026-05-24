@@ -333,6 +333,21 @@ function build(): Map<string, Jurisdiction> {
     (byJurBodies.get(j) ?? byJurBodies.set(j, []).get(j)!).push(r);
   }
 
+  // Supplemental regulator rows: websites for agencies that were missing from
+  // regulatory_bodies.csv. Used ONLY to resolve the regulator-box link — not
+  // added to the regulators directory or the at-a-glance regulator count.
+  const supBodiesByJur = new Map<string, Record<string, string>[]>();
+  try {
+    for (const r of readCsv("regulatory_bodies_supplement.csv")) {
+      let j = r.jurisdiction?.trim();
+      if (!j) continue;
+      j = SE_NAME_ALIASES[j] ?? j; // "Virgin Islands" -> "US Virgin Islands"
+      (supBodiesByJur.get(j) ?? supBodiesByJur.set(j, []).get(j)!).push(r);
+    }
+  } catch {
+    // Supplement is optional; absence just means fewer regulator links.
+  }
+
   // Administrative-rules layer, keyed by jurisdiction||vertical (raw statute
   // vertical). Only "verified" rows expose a citation.
   const adminByKey = new Map<string, Record<string, string>>();
@@ -394,6 +409,10 @@ function build(): Map<string, Jurisdiction> {
     // ---- Legal-status grid ----
     const jStatutes = byJurStatutes.get(name) ?? [];
     const jBodies = byJurBodies.get(name) ?? [];
+    // Candidate pool for resolving regulator links = directory bodies + any
+    // supplemental rows for this jurisdiction (link-only; not shown/counted).
+    const jSup = supBodiesByJur.get(name);
+    const jBodiesForUrl = jSup && jSup.length ? [...jBodies, ...jSup] : jBodies;
     const tribalBodies = jBodies.filter((b) => /tribal gaming commission/i.test(b.body_type ?? ""));
 
     const legal: VerticalStatus[] = VERTICALS.map((v) => {
@@ -427,14 +446,14 @@ function build(): Map<string, Jurisdiction> {
           citation: clean(real.statute_citation),
           url: clean(real.official_url),
           agency: clean(real.agency_governed),
-          agencyUrl: resolveAgencyUrl(clean(real.agency_governed), jBodies, v.id),
+          agencyUrl: resolveAgencyUrl(clean(real.agency_governed), jBodiesForUrl, v.id),
           ...adminFor(name, (real.vertical ?? "").trim()),
         };
       }
       const nf = rows[0];
       if (nf) {
         const d = deriveStatusFromTitle(nf.statute_title ?? "");
-        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed), agencyUrl: resolveAgencyUrl(clean(nf.agency_governed), jBodies, v.id), ...adminFor(name, (nf.vertical ?? "").trim()) };
+        return { id: v.id, label: v.label, status: d.status, year: null, note: d.note || null, citation: null, url: clean(nf.official_url), agency: clean(nf.agency_governed), agencyUrl: resolveAgencyUrl(clean(nf.agency_governed), jBodiesForUrl, v.id), ...adminFor(name, (nf.vertical ?? "").trim()) };
       }
       return { id: v.id, label: v.label, status: "not-authorized", year: null, note: "No authorizing statute on file", citation: null, url: null, agency: null, agencyUrl: null, ...noAdmin };
     });
