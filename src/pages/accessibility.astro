@@ -1,14 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout
   title="Accessibility Statement"
-  description="Our commitment to WCAG 2.2 Level AA, and how to report an accessibility barrier."
+  description="This site is built to meet WCAG 2.2 Level AA. Here is what that means and how to report an accessibility barrier."
 >
-  <ComingSoon
-    heading="Accessibility Statement"
-    blurb="This site is built to meet WCAG 2.2 Level AA. A full accessibility statement, including how to report a barrier, will be published here."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">About</p>
+      <h1>Accessibility statement</h1>
+      <p class="page-header__lead">
+        We want everyone to be able to find help and information here, regardless
+        of how they use the web. This site is built to meet WCAG 2.2 Level AA.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>What we do</h2>
+      <ul>
+        <li>Use clear, semantic structure so screen readers can navigate easily.</li>
+        <li>Make every interactive element reachable and operable with a keyboard, with a visible focus indicator.</li>
+        <li>Meet AA color-contrast levels for text and interface elements.</li>
+        <li>Provide text alternatives for meaningful images.</li>
+        <li>Keep the layout predictable, with no surprise pop-ups, autoplaying media, or motion. We honor your "reduce motion" setting.</li>
+        <li>Offer a plain list of all states and territories as an alternative to the map.</li>
+      </ul>
+
+      <h2>Ongoing work</h2>
+      <p>
+        Accessibility is not a one-time task. We test pages with automated tools
+        and by keyboard and screen reader, and we keep improving. Some content is
+        still being built; we apply the same standards as we add it.
+      </p>
+
+      <h2>Report a barrier</h2>
+      <p>
+        If anything on this site is hard to use or get to, we want to know. Please
+        <a href="/about">contact us</a> and describe what happened and which page
+        you were on. We will work to fix it and to help you get the information you
+        need in the meantime.
+      </p>
+    </div>
+  </section>
 </BaseLayout>

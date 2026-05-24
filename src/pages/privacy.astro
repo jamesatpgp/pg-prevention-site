@@ -1,14 +1,61 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout
   title="Privacy"
-  description="What information this site does and does not collect."
+  description="What this site does and does not collect. No login, no registration, no tracking — and your safety comes first."
 >
-  <ComingSoon
-    heading="Privacy"
-    blurb="A plain-language explanation of what information this site does and does not collect will be published here."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">About</p>
+      <h1>Privacy</h1>
+      <p class="page-header__lead">
+        Looking for information about gambling can feel sensitive. This site is
+        built so you can do that freely and privately.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>No account, no registration</h2>
+      <p>
+        Everything here is free and open. There is no login, no sign-up, no
+        membership, and no fee to read anything or download any resource. You do
+        not give us your name, email, or any personal information to use the site.
+      </p>
+
+      <h2>What we collect</h2>
+      <p>
+        This is a static website. It does not ask for or store personal
+        information about you, and it does not use advertising or advertising
+        trackers. If we add basic, privacy-respecting traffic measurement in the
+        future, we will describe it here first — it would count visits without
+        identifying individuals.
+      </p>
+
+      <h2>Links to other organizations</h2>
+      <p>
+        When you call or text a helpline, or follow a link to another organization
+        (such as a state council, a treatment directory, or 988), you leave this
+        site and that organization's own privacy practices apply. Helpline privacy
+        policies vary by call center; we do not make promises on their behalf.
+      </p>
+
+      <h2>Your safety</h2>
+      <p>
+        If you share a device and want to browse privately, your browser's private
+        or incognito mode will keep this site out of your history. To leave quickly,
+        you can close the tab at any time — nothing here requires you to be signed
+        in.
+      </p>
+
+      <h2>Questions</h2>
+      <p>
+        If you have a question about privacy on this site, please
+        <a href="/about">contact us</a>.
+      </p>
+    </div>
+  </section>
 </BaseLayout>

@@ -1,14 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
+import HelpCallout from "../components/HelpCallout.astro";
+
+const topics = [
+  { title: "What is gambling?", body: "The common forms of gambling and how access has changed.", href: "/understand-gambling/what-is-gambling" },
+  { title: "What is problem gambling?", body: "What it means in plain language, and how it's defined.", href: "/understand-gambling/what-is-problem-gambling" },
+  { title: "Signs & screening", body: "Warning signs, and quick questions that can help.", href: "/understand-gambling/signs-and-screening" },
+  { title: "Risk & protective factors", body: "What raises risk, and what helps protect against harm.", href: "/understand-gambling/risk-and-protective-factors" },
+  { title: "Myths vs. facts", body: "Common misunderstandings, corrected.", href: "/understand-gambling/myths-vs-facts" },
+  { title: "For families & loved ones", body: "How to help someone you care about — and yourself.", href: "/understand-gambling/for-families" },
+  { title: "For youth & young adults", body: "Why younger people face higher risk, and what helps.", href: "/understand-gambling/for-youth" },
+];
 ---
 
 <BaseLayout
   title="Understand Gambling"
-  description="Plain-language information about gambling, problem gambling, the signs, and where to find help."
+  description="Plain-language information about gambling and gambling harm: what it is, the signs, risk factors, myths, and how to help yourself or someone you love."
 >
-  <ComingSoon
-    heading="Understand Gambling"
-    blurb="Plain-language information about what gambling is, what problem gambling looks like, the warning signs, and where to find help is on the way."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">Public education</p>
+      <h1>Understand gambling</h1>
+      <p class="page-header__lead">
+        Clear, judgment-free information about gambling and gambling harm.
+        Start anywhere — every page links to free help.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <ul class="card-grid">
+        {
+          topics.map((t) => (
+            <li>
+              <a class="card-link" href={t.href}>
+                <span class="card-link__title">{t.title}</span>
+                <span>{t.body}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <HelpCallout />
+    </div>
+  </section>
 </BaseLayout>

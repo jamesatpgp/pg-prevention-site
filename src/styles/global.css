@@ -231,6 +231,104 @@ ul {
   background: var(--c-surface-alt);
 }
 
+/* ---------- Content pages ---------- */
+.page-header {
+  padding-block: var(--space-10) var(--space-6);
+}
+.page-header__eyebrow {
+  margin: 0 0 var(--space-2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--c-primary);
+  font-size: 0.9rem;
+}
+.page-header__lead {
+  font-size: 1.25rem;
+  max-width: 60ch;
+  color: var(--c-text);
+}
+
+.prose {
+  max-width: 70ch;
+}
+.prose > * + * {
+  margin-top: var(--space-4);
+}
+.prose h2 {
+  margin-top: var(--space-8);
+  font-size: 1.5rem;
+}
+.prose h3 {
+  margin-top: var(--space-6);
+  font-size: 1.2rem;
+}
+.prose ul,
+.prose ol {
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+.prose li {
+  max-width: 65ch;
+}
+
+/* Card grid for hub landing pages */
+.card-grid {
+  list-style: none;
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  padding: 0;
+}
+.card-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-5);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--c-text);
+}
+.card-link:hover {
+  border-color: var(--c-primary);
+  background: var(--c-primary-tint);
+}
+.card-link__title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: var(--c-heading);
+}
+
+/* Help callout for public-education pages */
+.help-callout {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  background: var(--c-primary-tint);
+  border-left: 4px solid var(--c-primary);
+  border-radius: var(--radius);
+  max-width: 70ch;
+}
+.help-callout p {
+  margin: 0;
+}
+
+.sources {
+  margin-top: var(--space-8);
+  font-size: 0.9rem;
+  color: var(--c-text-muted);
+}
+.sources h2 {
+  font-size: 1rem;
+  color: var(--c-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 /* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
   html {

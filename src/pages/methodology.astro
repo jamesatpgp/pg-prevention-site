@@ -1,14 +1,96 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout
   title="Methodology & Data Sources"
-  description="How we source, verify, and cite the data behind every state page."
+  description="How we source, verify, and cite the regulatory and helpline data behind every state page — primary government sources only, every data point traceable."
 >
-  <ComingSoon
-    heading="Methodology & Data Sources"
-    blurb="How we source, verify, and cite the regulatory and helpline data behind every state page will be documented here."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">About</p>
+      <h1>Methodology &amp; data sources</h1>
+      <p class="page-header__lead">
+        Every state page on this site is built from a structured archive of U.S.
+        gambling regulation and problem-gambling resources. Here is how that data
+        is sourced, verified, and cited — so you can trust it and cite it too.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>What the data covers</h2>
+      <p>
+        The archive covers all 50 states, the District of Columbia, and five U.S.
+        territories. For each jurisdiction it captures four layers:
+      </p>
+      <ul>
+        <li><strong>Regulators</strong> — the agencies and commissions that oversee each form of gambling.</li>
+        <li><strong>Statutes</strong> — the laws that authorize each form of gambling, by citation.</li>
+        <li><strong>Help &amp; treatment resources</strong> — helplines, councils, prevention organizations, and treatment directories.</li>
+        <li><strong>History</strong> — a plain-language narrative of how gambling came to be regulated in each place.</li>
+      </ul>
+
+      <h2>Where the information comes from</h2>
+      <p>
+        When sources disagree, we follow a fixed order of authority, using the
+        most authoritative available source:
+      </p>
+      <ol>
+        <li>Official state or federal government websites (<code>.gov</code>).</li>
+        <li>Agency annual reports and strategic plans.</li>
+        <li>State legislative documentation (statute text and fiscal notes).</li>
+        <li>The National Council on Problem Gambling (NCPG) for help and treatment resources.</li>
+        <li>The American Gaming Association and National Indian Gaming Commission for cross-state data.</li>
+        <li>Legal-information references for statute interpretation.</li>
+      </ol>
+      <p>
+        We do not treat encyclopedias, AI summaries, blog posts, or trade press as
+        primary sources. They may help us <em>locate</em> a primary source, but
+        every citation points to the primary source itself.
+      </p>
+
+      <h2>How we cite</h2>
+      <p>
+        Every data point is traceable to a source URL and a retrieval date. Statutes
+        are cited in the form <em>[State] [Code] § [Section] ([Year])</em>. Text is
+        captured as published, without paraphrasing.
+      </p>
+
+      <h2>What we do when something is missing</h2>
+      <p>
+        We never guess. If a detail is not publicly available — a leadership email,
+        for example — the record says so plainly rather than inventing a value.
+        Where a citation still needs human review, it is flagged as such instead of
+        being presented as confirmed.
+      </p>
+
+      <h2>How current the data is</h2>
+      <p>
+        Each record carries the date it was retrieved. Gambling law changes often,
+        so the archive is reviewed and refreshed on a regular cadence. If you spot
+        something out of date or incorrect, please <a href="/about">contact us</a> —
+        accurate, defensible citations are the whole point.
+      </p>
+
+      <h2>A note on the helpline</h2>
+      <p>
+        This site anchors to <strong>1-800-MY-RESET</strong>, the National Problem
+        Gambling Helpline operated through NCPG's national network, and surfaces
+        <strong>988</strong>, the Suicide &amp; Crisis Lifeline, alongside it. Where
+        a state lists its own number, that is recorded in the archive; the national
+        helpline is the consistent anchor across the site.
+      </p>
+
+      <div class="sources">
+        <h2>Primary references</h2>
+        <ul>
+          <li><a href="https://www.ncpgambling.org/">National Council on Problem Gambling</a></li>
+          <li><a href="https://www.samhsa.gov/mental-health/988">SAMHSA — 988 Suicide &amp; Crisis Lifeline</a></li>
+          <li><a href="https://www.nigc.gov/">National Indian Gaming Commission</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
