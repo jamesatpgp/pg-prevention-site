@@ -1,8 +1,11 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
   getAllJurisdictions,
   getJurisdiction,
+  getCapitolImage,
   type LegalStatus,
 } from "../../lib/jurisdictions";
 
@@ -70,6 +73,32 @@ const glanceItems = (
 // Self-exclusion: enrollable programs vs. documented "no program" findings.
 const sePrograms = j.selfExclusion.programs;
 const seNoProgram = j.selfExclusion.noProgramFindings;
+
+// ---- Statehouse hero image ----
+// Eagerly collected at build time; a hero renders only when BOTH the optimized
+// image file and a manifest row (attribution) are present.
+const capitolFiles = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/capitols/*.{jpg,jpeg,png}",
+  { eager: true },
+);
+const code = j.abbr.toLowerCase();
+const capEntry = Object.entries(capitolFiles).find(([p]) =>
+  p.endsWith(`/capitol-${code}.jpg`),
+);
+const capCredit = getCapitolImage(code);
+const capitol =
+  capEntry && capCredit
+    ? {
+        img: capEntry[1].default,
+        alt: `${j.name} ${j.isTerritory ? "Capitol Building" : "State Capitol"}`,
+        photographer: capCredit.photographer,
+        sourceUrl: capCredit.sourceUrl,
+        org: capCredit.sourceUrl?.includes("loc.gov")
+          ? "Library of Congress"
+          : "Wikimedia Commons",
+        license: capCredit.license,
+      }
+    : null;
 ---
 
 <BaseLayout
@@ -80,34 +109,38 @@ const seNoProgram = j.selfExclusion.noProgramFindings;
     <a href="/find-your-state">← All states &amp; territories</a>
   </div>
 
-  <!-- 1. Helpline banner -->
-  <section class="helpline-banner" aria-label={`Get help in ${j.name}`}>
+  <!-- 1. Statehouse hero -->
+  <section class="state-hero">
     <div class="container">
-      <h1>{j.name}</h1>
-      <div class="helpline-grid">
-        <a
-          class="helpline-card helpline-card--national"
-          href={`tel:${j.helpline.national.tel}`}
-        >
-          <img
-            class="myreset-lockup"
-            src="/brand/myreset-horizontal-color.png"
-            width="640"
-            height="162"
-            alt="Call or text 1-800-MY-RESET, the National Problem Gambling Helpline"
-          />
-        </a>
-
-        <a class="helpline-card helpline-card--988" href="tel:988">
-          <img
-            class="lifeline-988-logo"
-            src="/brand/988-horizontal-navy.png"
-            width="640"
-            height="124"
-            alt="Call or text 988, the Suicide & Crisis Lifeline"
-          />
-        </a>
-      </div>
+      {
+        capitol && (
+          <figure class="state-hero__figure">
+            <Image
+              class="state-hero__img"
+              src={capitol.img}
+              alt={capitol.alt}
+              widths={[400, 800, 1600]}
+              sizes="(max-width: 768px) 100vw, 1100px"
+              format="avif"
+              quality={80}
+              loading="eager"
+            />
+            <figcaption class="state-hero__credit">
+              Photo: {capitol.photographer ?? "Unknown"}
+              {capitol.sourceUrl ? (
+                <>
+                  {" / "}
+                  <a href={capitol.sourceUrl}>{capitol.org}</a>
+                </>
+              ) : (
+                <> / {capitol.org}</>
+              )}
+              {capitol.license ? ` (${capitol.license})` : ""}
+            </figcaption>
+          </figure>
+        )
+      }
+      <h1 class="state-hero__title">{j.name}</h1>
     </div>
   </section>
 
@@ -486,48 +519,29 @@ const seNoProgram = j.selfExclusion.noProgramFindings;
       font-weight: 600;
     }
 
-    /* Helpline banner */
-    .helpline-banner {
-      background: var(--c-primary-tint);
-      padding-block: var(--space-8);
-      border-bottom: 1px solid var(--c-border);
+    /* Statehouse hero */
+    .state-hero {
+      padding-block: var(--space-6) var(--space-2);
     }
-    .helpline-banner h1 {
-      margin-bottom: var(--space-5);
+    .state-hero__figure {
+      margin: 0;
     }
-    .helpline-grid {
-      display: grid;
-      gap: var(--space-4);
-    }
-    @media (min-width: 48em) {
-      .helpline-grid {
-        grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-      }
-    }
-    .helpline-card {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--c-surface);
-      border: 1px solid var(--c-border);
+    .state-hero__img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 22rem;
+      object-fit: cover;
       border-radius: var(--radius-lg);
-      padding: var(--space-5);
-      text-decoration: none;
+      background: var(--c-surface-alt);
     }
-    .helpline-card--national {
-      border: 2px solid var(--c-primary);
+    .state-hero__credit {
+      margin-top: var(--space-2);
+      font-size: 0.8rem;
+      color: var(--c-text-muted);
     }
-    .myreset-lockup {
-      display: block;
-      width: 100%;
-      max-width: 15rem;
-      height: auto;
-    }
-    .lifeline-988-logo {
-      display: block;
-      width: 100%;
-      max-width: 12rem;
-      height: auto;
+    .state-hero__title {
+      margin-top: var(--space-5);
     }
 
     .lead {

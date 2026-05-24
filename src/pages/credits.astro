@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getAllCapitolImages } from "../lib/jurisdictions";
+
+const images = getAllCapitolImages();
+---
+
+<BaseLayout
+  title="Image Credits"
+  description="Sources, photographers, and licenses for the statehouse and capitol photographs used across this site."
+>
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">About</p>
+      <h1>Image credits</h1>
+      <p class="page-header__lead">
+        Each state and territory page shows a photograph of its capitol or
+        statehouse. Here is the source, photographer, and license for every
+        image we use.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      {
+        images.length > 0 ? (
+          <table class="credits-table">
+            <thead>
+              <tr>
+                <th scope="col">Jurisdiction</th>
+                <th scope="col">Photographer</th>
+                <th scope="col">Source</th>
+                <th scope="col">License</th>
+              </tr>
+            </thead>
+            <tbody>
+              {images.map((img) => (
+                <tr>
+                  <th scope="row">{img.jurisdiction ?? img.code.toUpperCase()}</th>
+                  <td>{img.photographer ?? "—"}</td>
+                  <td>
+                    {img.sourceUrl ? (
+                      <a href={img.sourceUrl}>
+                        {img.sourceUrl.includes("loc.gov")
+                          ? "Library of Congress"
+                          : img.sourceUrl.includes("wikimedia")
+                            ? "Wikimedia Commons"
+                            : "Source"}
+                      </a>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                  <td>
+                    {img.licenseUrl ? (
+                      <a href={img.licenseUrl}>{img.license ?? "License"}</a>
+                    ) : (
+                      img.license ?? "—"
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>
+            Capitol and statehouse photographs are being added. Each image will
+            be listed here with its photographer, source, and license once it is
+            published.
+          </p>
+        )
+      }
+
+      <h2>About the images</h2>
+      <p>
+        Most capitol photographs come from the{" "}
+        <a href="https://www.loc.gov/collections/carol-m-highsmith/">
+          Carol M. Highsmith Archive at the Library of Congress
+        </a>, released to the public domain with{" "}
+        <a href="https://www.loc.gov/rr/print/res/482_high.html">
+          no known restrictions on publication
+        </a>. Images for jurisdictions not covered by that archive come from
+        Wikimedia Commons under a public-domain or Creative Commons license, as
+        noted above.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .credits-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-5) 0;
+    }
+    .credits-table th,
+    .credits-table td {
+      text-align: left;
+      padding: var(--space-3);
+      border-bottom: 1px solid var(--c-border);
+      vertical-align: top;
+    }
+    .credits-table thead th {
+      border-bottom: 2px solid var(--c-border-strong);
+    }
+    .credits-table tbody th {
+      font-weight: 700;
+    }
+  </style>
+</BaseLayout>

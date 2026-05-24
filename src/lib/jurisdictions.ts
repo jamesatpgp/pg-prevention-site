@@ -528,3 +528,55 @@ export function getAllJurisdictions(): Jurisdiction[] {
 export function getJurisdiction(slug: string): Jurisdiction | undefined {
   return build().get(slug);
 }
+
+// ---- Capitol / statehouse image manifest (audit trail) ----
+// `capitol-images.csv` documents the source/license of each hero photo. A hero
+// is only rendered when BOTH the image file and a manifest row exist, so the
+// attribution trail is never missing.
+export interface CapitolImage {
+  code: string;
+  jurisdiction: string | null;
+  filename: string | null;
+  photographer: string | null;
+  sourceUrl: string | null;
+  license: string | null;
+  licenseUrl: string | null;
+  notes: string | null;
+}
+
+let capitolCache: Map<string, CapitolImage> | null = null;
+
+function capitolRows(): Map<string, CapitolImage> {
+  if (capitolCache) return capitolCache;
+  const m = new Map<string, CapitolImage>();
+  try {
+    for (const r of readCsv("capitol-images.csv")) {
+      const code = (r.code ?? "").trim().toLowerCase();
+      if (!code) continue;
+      m.set(code, {
+        code,
+        jurisdiction: clean(r.jurisdiction),
+        filename: clean(r.filename),
+        photographer: clean(r.photographer),
+        sourceUrl: clean(r.source_url),
+        license: clean(r.license),
+        licenseUrl: clean(r.license_url),
+        notes: clean(r.notes),
+      });
+    }
+  } catch {
+    // Manifest is optional; absence simply means no hero images yet.
+  }
+  capitolCache = m;
+  return m;
+}
+
+export function getCapitolImage(code: string): CapitolImage | undefined {
+  return capitolRows().get(code.toLowerCase());
+}
+
+export function getAllCapitolImages(): CapitolImage[] {
+  return [...capitolRows().values()].sort((a, b) =>
+    (a.jurisdiction ?? a.code).localeCompare(b.jurisdiction ?? b.code),
+  );
+}
