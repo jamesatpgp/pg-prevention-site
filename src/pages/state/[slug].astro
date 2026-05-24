@@ -58,34 +58,28 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
     <div class="container">
       <h1>{j.name}</h1>
       <div class="helpline-grid">
-        <div class="helpline-card helpline-card--national">
+        <a
+          class="helpline-card helpline-card--national"
+          href={`tel:${j.helpline.national.tel}`}
+        >
           <img
             class="myreset-lockup"
             src="/brand/myreset-horizontal-color.png"
             width="640"
             height="162"
-            alt="1-800-MY-RESET, the National Problem Gambling Helpline"
+            alt="Call or text 1-800-MY-RESET, the National Problem Gambling Helpline"
           />
-          <p class="helpline-card__note">
-            {j.helpline.national.digits} · Free. 24/7. Call or text.
-          </p>
-          <a class="btn btn-primary" href={`tel:${j.helpline.national.tel}`}>
-            Call or text {j.helpline.national.label}
-          </a>
-        </div>
+        </a>
 
-        <div class="helpline-card helpline-card--988">
-          <p class="helpline-card__eyebrow">In a crisis?</p>
+        <a class="helpline-card helpline-card--988" href="tel:988">
           <img
             class="lifeline-988-logo"
             src="/brand/988-horizontal-navy.png"
             width="640"
             height="124"
-            alt="988 Suicide & Crisis Lifeline"
+            alt="Call or text 988, the Suicide & Crisis Lifeline"
           />
-          <p class="helpline-card__note">Call or text any time for support.</p>
-          <a class="btn btn-outline" href="tel:988">Call or text 988</a>
-        </div>
+        </a>
       </div>
     </div>
   </section>
@@ -407,10 +401,14 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       }
     }
     .helpline-card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       background: var(--c-surface);
       border: 1px solid var(--c-border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
+      text-decoration: none;
     }
     .helpline-card--national {
       border: 2px solid var(--c-primary);
@@ -420,41 +418,12 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
       width: 100%;
       max-width: 15rem;
       height: auto;
-      margin-bottom: var(--space-3);
     }
     .lifeline-988-logo {
       display: block;
       width: 100%;
       max-width: 12rem;
       height: auto;
-      margin: var(--space-1) 0 var(--space-3);
-    }
-    .helpline-card__eyebrow {
-      margin: 0;
-      font-weight: 700;
-      color: var(--c-text-muted);
-      font-size: 0.9rem;
-    }
-    .helpline-card__number {
-      margin: var(--space-1) 0 0;
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--c-heading);
-    }
-    .helpline-card__number--state {
-      font-size: 1.25rem;
-    }
-    .helpline-card__digits {
-      margin: 0;
-      color: var(--c-text-muted);
-      font-weight: 600;
-    }
-    .helpline-card__note {
-      margin: var(--space-2) 0 var(--space-4);
-    }
-    .helpline-foot {
-      margin: var(--space-5) 0 0;
-      color: var(--c-text-muted);
     }
 
     .lead {
