@@ -1,14 +1,62 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout
   title="Sitemap"
-  description="A complete list of the pages on this site."
+  description="Every page on the Problem Gambling Prevention resource center."
 >
-  <ComingSoon
-    heading="Sitemap"
-    blurb="A complete, plain list of every page on this site will appear here as pages are published."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">About</p>
+      <h1>Sitemap</h1>
+      <p class="page-header__lead">Every section of this site, in one place.</p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      <h2><a href="/">Home</a></h2>
+
+      <h2><a href="/get-help">Get Help Now</a></h2>
+
+      <h2><a href="/understand-gambling">Understand Gambling</a></h2>
+      <ul>
+        <li><a href="/understand-gambling/what-is-gambling">What is gambling?</a></li>
+        <li><a href="/understand-gambling/what-is-problem-gambling">What is problem gambling?</a></li>
+        <li><a href="/understand-gambling/signs-and-screening">Signs &amp; screening</a></li>
+        <li><a href="/understand-gambling/risk-and-protective-factors">Risk &amp; protective factors</a></li>
+        <li><a href="/understand-gambling/myths-vs-facts">Myths vs. facts</a></li>
+        <li><a href="/understand-gambling/for-families">For families &amp; loved ones</a></li>
+        <li><a href="/understand-gambling/for-youth">For youth &amp; young adults</a></li>
+      </ul>
+
+      <h2><a href="/find-your-state">Find Your State</a></h2>
+      <ul>
+        <li>Pages for all 50 states, the District of Columbia, and five U.S. territories</li>
+      </ul>
+
+      <h2><a href="/professionals">For Prevention Professionals</a></h2>
+      <ul>
+        <li><a href="/professionals/planning-evaluation">Planning &amp; Evaluation</a></li>
+        <li><a href="/professionals/prevention-education">Prevention Education &amp; Service Delivery</a></li>
+        <li><a href="/professionals/communication">Communication</a></li>
+        <li><a href="/professionals/community-organization">Community Organization</a></li>
+        <li><a href="/professionals/public-policy">Public Policy &amp; Environmental Change</a></li>
+        <li><a href="/professionals/professional-growth">Professional Growth &amp; Responsibility</a></li>
+      </ul>
+
+      <h2><a href="/resources">Resource Library</a></h2>
+
+      <h2>About</h2>
+      <ul>
+        <li><a href="/about">About this resource center</a></li>
+        <li><a href="/methodology">Methodology &amp; data sources</a></li>
+        <li><a href="/sponsors">Sponsors &amp; partners</a></li>
+        <li><a href="/consulting">Consulting, Training &amp; Prevention Services</a></li>
+        <li><a href="/accessibility">Accessibility statement</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+      </ul>
+    </div>
+  </section>
 </BaseLayout>

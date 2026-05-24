@@ -1,14 +1,67 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import ComingSoon from "../components/ComingSoon.astro";
 ---
 
 <BaseLayout
   title="Sponsors & Partners"
-  description="Our sponsors and partners, and the ethics policy that governs sponsorship."
+  description="How sponsorship supports this free resource center, the ethics policy that governs it, and our partners."
 >
-  <ComingSoon
-    heading="Sponsors & Partners"
-    blurb="Our sponsors and partners, and the ethics policy that governs sponsorship, will be listed here. Sponsorship does not constitute endorsement of any treatment provider."
-  />
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">About</p>
+      <h1>Sponsors &amp; partners</h1>
+      <p class="page-header__lead">
+        This site is free for everyone. Sponsorship and partnerships help keep it
+        that way — without ever influencing the content.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container prose">
+      <h2>How sponsorship works here</h2>
+      <p>
+        Sponsorship supports the cost of building and maintaining a free, open
+        resource center. <strong>Sponsorship buys visibility, not influence over
+        content.</strong> Sponsors are recognized in a dedicated band below and on
+        this page; they do not shape what the site says.
+      </p>
+
+      <h2>Our ethics policy</h2>
+      <ul>
+        <li>No gambling, debt-consolidation, payday-loan, or treatment-lead-generation advertising — ever, regardless of revenue.</li>
+        <li>All sponsorship arrangements are disclosed transparently here.</li>
+        <li>Pages discussing financial harm carry no advertising.</li>
+      </ul>
+      <p>
+        <strong>Sponsorship does not constitute endorsement of any treatment
+        provider.</strong>
+      </p>
+
+      <h2>Our sponsors</h2>
+      <div class="sponsor-band" role="img" aria-label="Sponsor logos will appear here">
+        <span>Sponsor logos will appear here.</span>
+      </div>
+
+      <h2>Interested in sponsoring or partnering?</h2>
+      <p>
+        We welcome conversations with organizations aligned to neutral,
+        evidence-based prevention. <em>[Sponsorship contact details to be added.]</em>
+        See <a href="/about">About</a> for more on the site's mission and stance.
+      </p>
+    </div>
+  </section>
+
+  <style>
+    .sponsor-band {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 110px;
+      border: 2px dashed var(--c-border-strong);
+      border-radius: var(--radius-lg);
+      color: var(--c-text-muted);
+      font-weight: 600;
+    }
+  </style>
 </BaseLayout>
