@@ -243,6 +243,13 @@ const REG_VERTICAL_KW: Record<string, RegExp> = {
   dfs: /fantasy|dfs/,
 };
 
+// Stable grouping key for a regulator name: collapses parenthetical
+// clarifiers, dashes, and punctuation so "Maine Gambling Control Unit" and
+// "Maine Gambling Control Unit (Dept. of Public Safety)" group as one.
+export function agencyKey(agency: string | null | undefined): string {
+  return normName(agency ?? "") || "__none__";
+}
+
 // Resolve a statute's regulator to a website. Two complementary passes — the
 // statute's `agency_governed` name rarely matches a body name exactly
 // ("Ohio Lottery Commission" vs "Ohio Lottery", "(OCCC)" suffixes, em-dashes),
