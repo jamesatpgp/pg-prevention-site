@@ -271,6 +271,11 @@ function build(): Map<string, Jurisdiction> {
           .replace(/\s+/g, " ")
           .trim();
       }
+      // No revenue / taxation / funding figures for now: drop any summary that
+      // mentions money, so financial figures never slip through the auto-extract.
+      if (summary && /\$|\bmillion\b|\bbillion\b|\brevenue\b|\btax(es|ed|ation)?\b|appropriat|per-slot|\bfee\b/i.test(summary)) {
+        summary = null;
+      }
     }
 
     result.set(slug, {

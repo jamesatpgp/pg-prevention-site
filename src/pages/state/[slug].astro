@@ -1,5 +1,4 @@
 ---
-import { getEntry, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import {
   getAllJurisdictions,
@@ -14,10 +13,6 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const j = getJurisdiction(slug!);
 if (!j) return Astro.redirect("/find-your-state");
-
-// Render the history markdown (collection entry id === slug).
-const historyEntry = await getEntry("history", slug!);
-const History = historyEntry ? (await render(historyEntry)).Content : null;
 
 const statusLabel: Record<LegalStatus, string> = {
   authorized: "Authorized",
@@ -107,8 +102,7 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
         </li>
       </ul>
       <p class="fine-print">
-        Population-level statistics (adult and youth prevalence, treatment
-        access, appropriations) are coming soon for {j.name}.
+        Adult and youth prevalence data for {j.name} is coming soon.
       </p>
     </div>
   </section>
@@ -335,44 +329,15 @@ const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "aut
     </div>
   </section>
 
-  <!-- 8. Funding & transparency -->
-  {
-    (j.funding.mechanism || j.funding.budgetDisclosed) && (
-      <section class="section" aria-labelledby="fund-h">
-        <div class="container">
-          <h2 id="fund-h">Funding &amp; transparency</h2>
-          {j.funding.mechanism && (
-            <p>
-              <strong>How {j.name} funds problem-gambling services:</strong>{" "}
-              {j.funding.mechanism}
-            </p>
-          )}
-          {j.funding.budgetDisclosed && (
-            <p>
-              <strong>Annual budget disclosed:</strong> {j.funding.budgetDisclosed}
-            </p>
-          )}
-        </div>
-      </section>
-    )
-  }
+  <!-- Funding & transparency intentionally omitted for now: no revenue /
+       taxation / funding figures until that content is handled deliberately.
+       The funding data is retained in the archive + data layer. -->
 
-  <!-- 9. Brief history (collapsible) -->
-  {
-    History && (
-      <section class="section section-alt" aria-labelledby="hist-h">
-        <div class="container">
-          <h2 id="hist-h">A brief history of gambling in {j.name}</h2>
-          <details class="history">
-            <summary>Read the full history</summary>
-            <div class="history__body">
-              <History />
-            </div>
-          </details>
-        </div>
-      </section>
-    )
-  }
+  <!-- Brief history intentionally hidden for now: the archival narratives
+       contain revenue / taxation / funding figures (e.g., PGNO funding amounts)
+       that can't be surgically removed from verbatim prose. The history files
+       and the `history` content collection are retained; re-enable after a
+       figure review. -->
 
   <style>
     .breadcrumb {
