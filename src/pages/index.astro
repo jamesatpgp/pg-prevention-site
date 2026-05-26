@@ -10,6 +10,13 @@ const learnTopics = [
   { title: "Myths vs. facts", body: "Common misunderstandings, corrected.", href: "/understand-gambling/myths-vs-facts" },
 ];
 
+const familyTopics = [
+  { title: "For parents", body: "Navigating a family member's gambling — or your own.", href: "/family-and-friends/for-parents" },
+  { title: "For children of older adults", body: "Concerned about an aging parent's gambling.", href: "/family-and-friends/for-children-of-older-adults" },
+  { title: "For friends", body: "Supporting a friend whose gambling may be causing harm.", href: "/family-and-friends/for-friends" },
+  { title: "For veterans", body: "Gambling-harm resources for those who have served.", href: "/family-and-friends/for-veterans" },
+];
+
 const proTiles = [
   {
     title: "Browse the Resource Library",
@@ -75,6 +82,32 @@ const proTiles = [
       </ul>
       <p class="learn-all">
         <a href="/understand-gambling">See all Understand Gambling topics →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Family & Friends -->
+  <section class="section section-alt" aria-labelledby="family-heading">
+    <div class="container">
+      <h2 id="family-heading">Family &amp; friends</h2>
+      <p class="section-lead">
+        Support and information for the people around someone affected by
+        gambling.
+      </p>
+      <ul class="card-grid">
+        {
+          familyTopics.map((t) => (
+            <li>
+              <a class="card-link" href={t.href}>
+                <span class="card-link__title">{t.title}</span>
+                <span>{t.body}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="learn-all">
+        <a href="/family-and-friends">See all Family &amp; friends resources →</a>
       </p>
     </div>
   </section>

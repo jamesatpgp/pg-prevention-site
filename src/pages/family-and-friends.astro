@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HelpCallout from "../components/HelpCallout.astro";
+
+const audiences = [
+  { title: "For parents", body: "For parents navigating a family member's gambling — or their own.", href: "/family-and-friends/for-parents" },
+  { title: "For children of older adults", body: "For adult children concerned about an aging parent's gambling.", href: "/family-and-friends/for-children-of-older-adults" },
+  { title: "For friends", body: "For friends of someone whose gambling may be causing harm.", href: "/family-and-friends/for-friends" },
+  { title: "For veterans", body: "Gambling-harm resources for those who have served.", href: "/family-and-friends/for-veterans" },
+];
+---
+
+<BaseLayout
+  title="Family & Friends"
+  description="Support and information for the people around someone affected by gambling — parents, adult children, friends, and veterans."
+>
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">Family &amp; friends</p>
+      <h1>Family &amp; friends</h1>
+      <p class="page-header__lead">
+        Gambling harm reaches more than one person. These pages gather support
+        and information for the people around someone whose gambling may be
+        causing harm — organized by who they are for.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <ul class="card-grid">
+        {
+          audiences.map((a) => (
+            <li>
+              <a class="card-link" href={a.href}>
+                <span class="card-link__title">{a.title}</span>
+                <span>{a.body}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <HelpCallout />
+    </div>
+  </section>
+</BaseLayout>
