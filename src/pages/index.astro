@@ -48,7 +48,7 @@ const professionalsTopics = [
   <!-- Understand Gambling featured -->
   <section class="section" aria-labelledby="learn-heading">
     <div class="container">
-      <h2 id="learn-heading">Understand gambling</h2>
+      <h2 id="learn-heading"><a class="section-link" href="/understand-gambling">Understand gambling</a></h2>
       <p class="section-lead">
         Clear, judgment-free information about gambling and gambling harm.
       </p>
@@ -64,16 +64,13 @@ const professionalsTopics = [
           ))
         }
       </ul>
-      <p class="learn-all">
-        <a href="/understand-gambling">See all Understand Gambling topics →</a>
-      </p>
     </div>
   </section>
 
   <!-- Family & Friends -->
   <section class="section section-alt" aria-labelledby="family-heading">
     <div class="container">
-      <h2 id="family-heading">Family &amp; friends</h2>
+      <h2 id="family-heading"><a class="section-link" href="/family-and-friends">Family &amp; friends</a></h2>
       <p class="section-lead">
         Support and information for the people around someone affected by
         gambling.
@@ -90,16 +87,13 @@ const professionalsTopics = [
           ))
         }
       </ul>
-      <p class="learn-all">
-        <a href="/family-and-friends">See all Family &amp; friends resources →</a>
-      </p>
     </div>
   </section>
 
   <!-- Professionals -->
   <section class="section" aria-labelledby="pro-heading">
     <div class="container">
-      <h2 id="pro-heading">Professionals</h2>
+      <h2 id="pro-heading"><a class="section-link" href="/professionals">Professionals</a></h2>
       <p class="section-lead">
         Problem gambling prevention resources, organized by the profession
         they're for.
@@ -116,9 +110,6 @@ const professionalsTopics = [
           ))
         }
       </ul>
-      <p class="learn-all">
-        <a href="/professionals">See all Professionals resources →</a>
-      </p>
     </div>
   </section>
 
@@ -128,9 +119,13 @@ const professionalsTopics = [
       max-width: 60ch;
       margin-bottom: var(--space-6);
     }
-    .learn-all {
-      margin-top: var(--space-5);
-      font-weight: 700;
+    /* Section headings double as links to their hub — styled as the heading */
+    .section-link {
+      color: inherit;
+      text-decoration: none;
+    }
+    .section-link:hover {
+      color: var(--c-primary);
     }
 
     /* Find Your State: map beside the picker */
