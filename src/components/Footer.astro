@@ -1,7 +1,4 @@
 ---
-// Helpline lockups below are placeholder text. The approved NCPG MYRESET and
-// SAMHSA 988 image lockups must not be recreated; drop in the official assets
-// when supplied.
 const year = new Date().getFullYear();
 
 const quickLinks = [
@@ -15,29 +12,6 @@ const quickLinks = [
 
 <footer class="site-footer surface-dark">
   <div class="container footer-grid">
-    <div class="footer-helpline">
-      <a class="footer-helpline__lockup" href="tel:+18006973738">
-        <img
-          src="/brand/myreset-horizontal-white.png"
-          width="640"
-          height="199"
-          loading="lazy"
-          decoding="async"
-          alt="Call or text 1-800-MY-RESET, the National Problem Gambling Helpline"
-        />
-      </a>
-      <a class="footer-988-lockup" href="tel:988">
-        <img
-          src="/brand/988-horizontal-white.png"
-          width="640"
-          height="124"
-          loading="lazy"
-          decoding="async"
-          alt="Call or text 988, the Suicide & Crisis Lifeline"
-        />
-      </a>
-    </div>
-
     <nav class="footer-links" aria-label="Footer">
       <h2 class="footer-heading">Site</h2>
       <ul>
@@ -82,7 +56,7 @@ const quickLinks = [
 
   @media (min-width: 48em) {
     .footer-grid {
-      grid-template-columns: 1.2fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
     }
   }
 
@@ -92,24 +66,6 @@ const quickLinks = [
     letter-spacing: 0.08em;
     color: var(--c-band-pro-muted);
     margin-bottom: var(--space-3);
-  }
-
-  /* Helpline lockups */
-  .footer-helpline {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-5);
-  }
-  .footer-helpline__lockup img {
-    width: 100%;
-    max-width: 16rem;
-    height: auto;
-  }
-  .footer-988-lockup img {
-    width: 100%;
-    max-width: 12rem;
-    height: auto;
   }
 
   /* Links */
@@ -142,22 +98,10 @@ const quickLinks = [
     color: var(--c-band-pro-muted);
     font-size: 0.85rem;
   }
-  .footer-fine {
-    margin: var(--space-3) 0 0;
-    font-size: 0.85rem;
-    color: var(--c-band-pro-muted);
-    max-width: 40ch;
-  }
-
   .footer-bottom {
     margin-top: var(--space-8);
     padding-top: var(--space-5);
     border-top: 1px solid var(--c-band-pro-border);
-  }
-  .footer-access {
-    margin: 0 0 var(--space-2);
-    font-weight: 700;
-    color: #fff;
   }
   .footer-copyright {
     margin: 0;
