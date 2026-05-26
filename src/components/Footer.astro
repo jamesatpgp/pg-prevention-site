@@ -6,7 +6,6 @@ const quickLinks = [
   { label: "Accessibility statement", href: "/accessibility" },
   { label: "Privacy", href: "/privacy" },
   { label: "Sponsors & partners", href: "/sponsors" },
-  { label: "Consulting & training services", href: "/consulting" },
 ];
 ---
 
@@ -27,9 +26,9 @@ const quickLinks = [
 
     <div class="footer-sponsors">
       <h2 class="footer-heading">Sponsors</h2>
-      <div class="sponsor-placeholder" role="img" aria-label="Sponsor logos will appear here">
-        <span>Sponsor logos</span>
-      </div>
+      <a class="sponsor-placeholder" href="mailto:james@pgprevention.com">
+        <span>Your Logo Here</span>
+      </a>
     </div>
   </div>
 
@@ -97,6 +96,11 @@ const quickLinks = [
     border-radius: var(--radius);
     color: var(--c-band-pro-muted);
     font-size: 0.85rem;
+    text-decoration: none;
+  }
+  .sponsor-placeholder:hover {
+    border-color: #fff;
+    color: #fff;
   }
   .footer-bottom {
     margin-top: var(--space-8);

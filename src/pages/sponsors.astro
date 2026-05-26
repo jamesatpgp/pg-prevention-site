@@ -25,9 +25,9 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       </p>
 
       <h2>Our sponsors</h2>
-      <div class="sponsor-band" role="img" aria-label="Sponsor logos will appear here">
-        <span>Sponsor logos will appear here.</span>
-      </div>
+      <a class="sponsor-band" href="mailto:james@pgprevention.com">
+        <span>Your Logo Here</span>
+      </a>
 
       <h2>Interested in sponsoring or partnering?</h2>
       <p>
@@ -48,6 +48,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       border-radius: var(--radius-lg);
       color: var(--c-text-muted);
       font-weight: 600;
+      text-decoration: none;
+    }
+    .sponsor-band:hover {
+      border-color: var(--c-primary);
+      color: var(--c-link);
     }
   </style>
 </BaseLayout>
