@@ -12,9 +12,8 @@ const current = Astro.url.pathname.replace(/\/$/, "") || "/";
 
 <header class="site-header">
   <div class="container header-inner">
-    <a class="wordmark" href="/" aria-label="Problem Gambling Prevention, home">
-      <span class="wordmark__line1">Problem Gambling</span>
-      <span class="wordmark__line2">Prevention</span>
+    <a class="site-wordmark pgp-wordmark" href="/" aria-label="PGPrevention.com, home">
+      <span class="pgp-wordmark__pg">PG</span><span class="pgp-wordmark__prevention">Prevention</span><span class="pgp-wordmark__tld">.com</span>
     </a>
 
     <button
@@ -81,23 +80,10 @@ const current = Astro.url.pathname.replace(/\/$/, "") || "/";
     padding-block: var(--space-4);
   }
 
-  /* Wordmark */
-  .wordmark {
+  /* Wordmark — PG[Prevention].com lockup (visual styles in global .pgp-wordmark) */
+  .site-wordmark {
     grid-area: brand;
-    display: inline-flex;
-    flex-direction: column;
-    text-decoration: none;
-    line-height: 1.05;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-  .wordmark__line1 {
-    color: var(--c-heading);
-    font-size: 1.35rem;
-  }
-  .wordmark__line2 {
-    color: var(--c-primary);
-    font-size: 1.35rem;
+    font-size: 1.5rem;
   }
 
   /* Hamburger toggle */

@@ -1,52 +1,130 @@
 /*
   Problem Gambling Prevention — global styles.
-  Placeholder palette (neutral blues + warm grays). Brand deferred per blueprint.
+  Design system: Sage + antique-gold on Bone, Montserrat (self-hosted).
+  Tokens below are the source of truth from the PGPrevention design system.
   All color pairs target WCAG 2.2 AA: 4.5:1 body text, 3:1 large text / UI.
+  Inline links + sage body text use --c-link (#445e43): plain sage (#5c7e5a)
+  is 4.38:1 on bone, under the 4.5:1 floor. --c-primary sage is reserved for
+  large headings, button fills, eyebrows, focus rings, and borders.
   Red is reserved for true crisis alerts only (trauma-informed design).
 */
 
+/* ---------- Montserrat (self-hosted, latin, six weights) ---------- */
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/montserrat-400.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/montserrat-500.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/montserrat-600.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/montserrat-700.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/montserrat-800.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/fonts/montserrat-900.woff2") format("woff2");
+}
+
 :root {
-  /* Surfaces — warm off-white + warm grays */
-  --c-bg: #faf9f7;
+  /* Surfaces — bone bg, white cards, warm sand alt */
+  --c-bg: #fbfaf6;
   --c-surface: #ffffff;
-  --c-surface-alt: #f1ede8;
-  --c-border: #d9d3ca;
-  --c-border-strong: #b9b1a4;
+  --c-surface-alt: #f3f1ea;
+  --c-border: #e8e5dc;
+  --c-border-strong: #c9c5b8;
 
-  /* Text — warm near-black on warm bg (~13:1) */
-  --c-text: #23201c;
-  --c-text-muted: #565049;        /* ~7:1 on --c-bg */
-  --c-heading: #0b3a53;           /* deep blue */
+  /* Text — warm near-black body, deep-forest headings */
+  --c-text: #2a2620;
+  --c-text-muted: #5d5847; /* ~7:1 on --c-bg */
+  --c-heading: #1f3024; /* deep forest */
 
-  /* Brand blues */
-  --c-primary: #0b5077;           /* links / primary accent — ~7:1 on white */
-  --c-primary-hover: #08405f;
-  --c-primary-tint: #e7eef3;
+  /* Brand sage + gold */
+  --c-primary: #5c7e5a; /* sage — fills, eyebrows, focus, borders */
+  --c-primary-hover: #445e43;
+  --c-primary-tint: #e6ecdf;
 
-  /* Crisis CTAs — high contrast, calm (not alarm-red) */
-  --c-cta-help-bg: #0b5077;       /* MYRESET (primary) — white text ~7:1 */
-  --c-cta-help-bg-hover: #08405f;
-  --c-cta-988-bg: #334155;        /* 988 (secondary) — white text ~9:1 */
+  /* Inline link / sage body text — AA on bone (6.87:1) */
+  --c-link: #445e43;
+  --c-link-hover: #2f4530;
+
+  --c-accent: #c89b3c; /* antique gold — non-CTA highlights only */
+  --c-accent-hover: #a88121;
+  --c-accent-tint: #f3e7c8;
+
+  /* Crisis CTAs — MYRESET on sage, 988 on slate (calm, not alarm) */
+  --c-cta-help-bg: #5c7e5a;
+  --c-cta-help-bg-hover: #445e43;
+  --c-cta-988-bg: #334155;
   --c-cta-988-bg-hover: #29333f;
 
-  /* Professional-hub band (visually distinct, deep blue) */
-  --c-band-pro-bg: #0b3a53;
+  /* Professional band — full-bleed deep forest; footer */
+  --c-band-pro-bg: #1f3024;
   --c-band-pro-text: #ffffff;
+  --c-band-pro-muted: #b5c4ab; /* dimmed text on forest */
+  --c-band-pro-border: #2f4a3a; /* hairline on forest */
 
-  /* Reserved: true crisis alerts only — not used as brand color */
+  /* Reserved: true crisis alerts only — not a brand color */
   --c-crisis: #a01a13;
 
   /* Focus indicators (SC 2.4.11) */
-  --c-focus: #0b5077;             /* on light backgrounds */
-  --c-focus-dark: #ffd24a;        /* on dark backgrounds */
+  --c-focus: #5c7e5a; /* on light backgrounds */
+  --c-focus-dark: #ffd24a; /* on dark backgrounds */
 
-  /* Typography — system stack (web fonts deferred to Phase 3) */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
-    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
-  --fs-base: 1.125rem;            /* 18px for readability */
+  /* Typography — Montserrat, system fallback during webfont load */
+  --font-sans:
+    "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+
+  --fs-base: 1.125rem; /* 18px for readability */
   --lh-base: 1.6;
 
-  /* Spacing scale */
+  --fs-h1: clamp(2rem, 5vw, 3rem); /* 32 → 48 */
+  --fs-h2: clamp(1.6rem, 3.5vw, 2.25rem); /* 25.6 → 36 */
+  --fs-h3: clamp(1.25rem, 2.5vw, 1.5rem); /* 20 → 24 */
+  --fs-lead: 1.25rem;
+  --fs-eyebrow: 0.9rem;
+  --fs-small: 0.85rem;
+
+  --fw-body: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-strong: 700;
+  --fw-heading: 800;
+  --fw-display: 900;
+
+  --ls-heading: -0.01em;
+  --ls-wordmark: -0.025em;
+  --ls-eyebrow: 0.08em;
+
+  /* Spacing scale (4px grounded) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -85,6 +163,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--fs-base);
   line-height: var(--lh-base);
+  font-weight: var(--fw-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -94,21 +173,21 @@ h2,
 h3,
 h4 {
   color: var(--c-heading);
-  line-height: 1.2;
+  line-height: 1.15;
   margin: 0 0 var(--space-4);
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-weight: var(--fw-heading);
+  letter-spacing: var(--ls-heading);
   text-wrap: balance;
 }
 
 h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: var(--fs-h1);
 }
 h2 {
-  font-size: clamp(1.6rem, 3.5vw, 2.25rem);
+  font-size: var(--fs-h2);
 }
 h3 {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-size: var(--fs-h3);
 }
 
 p {
@@ -117,11 +196,11 @@ p {
 }
 
 a {
-  color: var(--c-primary);
+  color: var(--c-link);
   text-underline-offset: 2px;
 }
 a:hover {
-  color: var(--c-primary-hover);
+  color: var(--c-link-hover);
 }
 
 img,
@@ -146,6 +225,57 @@ ul {
   outline-color: var(--c-focus-dark);
 }
 
+/* ---------- Eyebrow + lead (design-system semantic helpers) ---------- */
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  font-weight: var(--fw-strong);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-eyebrow);
+  color: var(--c-link);
+  font-size: var(--fs-eyebrow);
+}
+.lead {
+  font-size: var(--fs-lead);
+  max-width: 60ch;
+  color: var(--c-text);
+}
+
+/* ---------- Wordmark — PG[Prevention].com ---------- */
+.pgp-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+  font-family: var(--font-sans);
+  letter-spacing: var(--ls-wordmark);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.pgp-wordmark__pg {
+  font-weight: var(--fw-display);
+  color: var(--c-heading);
+}
+.pgp-wordmark__prevention {
+  font-weight: var(--fw-body);
+  color: var(--c-primary);
+  letter-spacing: -0.02em;
+}
+.pgp-wordmark__tld {
+  font-weight: var(--fw-body);
+  color: var(--c-text-muted);
+  letter-spacing: -0.01em;
+  font-size: 0.5em; /* relative to parent — auto-scales */
+}
+/* Reversed-out variant for use on .surface-dark */
+.surface-dark .pgp-wordmark__pg {
+  color: #fff;
+}
+.surface-dark .pgp-wordmark__prevention {
+  color: var(--c-primary-tint);
+}
+.surface-dark .pgp-wordmark__tld {
+  color: var(--c-band-pro-muted);
+}
+
 /* ---------- Skip link ---------- */
 .skip-link {
   position: absolute;
@@ -153,7 +283,7 @@ ul {
   top: -100%;
   z-index: 1000;
   background: var(--c-surface);
-  color: var(--c-primary);
+  color: var(--c-link);
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius);
   border: 2px solid var(--c-primary);
@@ -200,7 +330,9 @@ ul {
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease,
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
     border-color 0.15s ease;
 }
 
@@ -213,14 +345,15 @@ ul {
   color: #fff;
 }
 
+/* Outline label uses --c-link (sage text fails 4.5:1 on bone); border stays sage */
 .btn-outline {
   background: transparent;
-  color: var(--c-primary);
+  color: var(--c-link);
   border-color: var(--c-primary);
 }
 .btn-outline:hover {
   background: var(--c-primary-tint);
-  color: var(--c-primary-hover);
+  color: var(--c-link-hover);
 }
 
 /* ---------- Sections ---------- */
@@ -240,7 +373,7 @@ ul {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--c-primary);
+  color: var(--c-link);
   font-size: 0.9rem;
 }
 .page-header__lead {
