@@ -28,7 +28,16 @@ const navItems: NavNode[] = [
       { label: "For veterans", href: "/family-and-friends/for-veterans" },
     ],
   },
-  { label: "For professionals", href: "/professionals" },
+  {
+    label: "Professionals",
+    href: "/professionals",
+    children: [
+      { label: "Prevention Specialists", href: "/professionals/prevention-specialists" },
+      { label: "Treatment Providers", href: "/professionals/treatment-providers" },
+      { label: "Healthcare Providers", href: "/professionals/healthcare-providers" },
+      { label: "Teachers", href: "/professionals/teachers" },
+    ],
+  },
 ];
 
 const current = Astro.url.pathname.replace(/\/$/, "") || "/";

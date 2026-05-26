@@ -17,22 +17,11 @@ const familyTopics = [
   { title: "For veterans", body: "Gambling-harm resources for those who have served.", href: "/family-and-friends/for-veterans" },
 ];
 
-const proTiles = [
-  {
-    title: "Browse the Resource Library",
-    body: "Rack cards, fact sheets, and graphics you can download and use today.",
-    href: "/resources",
-  },
-  {
-    title: "Download state-customized materials",
-    body: "Resources carrying your state's helpline, regulator, and local context.",
-    href: "/professionals",
-  },
-  {
-    title: "Find training & CEUs",
-    body: "A curated directory of training mapped to the IC&RC PS domains.",
-    href: "/professionals",
-  },
+const professionalsTopics = [
+  { title: "Prevention Specialists", body: "For credentialed prevention specialists.", href: "/professionals/prevention-specialists" },
+  { title: "Treatment Providers", body: "Screening and referral for treatment providers.", href: "/professionals/treatment-providers" },
+  { title: "Healthcare Providers", body: "For doctors, dentists, and other clinicians.", href: "/professionals/healthcare-providers" },
+  { title: "Teachers", body: "Classroom-ready resources for educators.", href: "/professionals/teachers" },
 ];
 ---
 
@@ -112,29 +101,29 @@ const proTiles = [
     </div>
   </section>
 
-  <!-- For Prevention Professionals (visually distinct band) -->
-  <section class="pro-band surface-dark" aria-labelledby="pro-heading">
+  <!-- Professionals -->
+  <section class="section" aria-labelledby="pro-heading">
     <div class="container">
-      <p class="pro-band__eyebrow">For prevention professionals</p>
-      <h2 id="pro-heading" class="pro-band__heading">
-        Resources for your work.
-      </h2>
-      <p class="pro-band__intro">
-        Prevention materials organized around the work prevention specialists
-        actually do.
+      <h2 id="pro-heading">Professionals</h2>
+      <p class="section-lead">
+        Problem gambling prevention resources, organized by the profession
+        they're for.
       </p>
-      <ul class="pro-tiles">
+      <ul class="card-grid">
         {
-          proTiles.map((tile) => (
-            <li class="pro-tile">
-              <a class="pro-tile__link" href={tile.href}>
-                <span class="pro-tile__title">{tile.title}</span>
-                <span class="pro-tile__body">{tile.body}</span>
+          professionalsTopics.map((t) => (
+            <li>
+              <a class="card-link" href={t.href}>
+                <span class="card-link__title">{t.title}</span>
+                <span>{t.body}</span>
               </a>
             </li>
           ))
         }
       </ul>
+      <p class="learn-all">
+        <a href="/professionals">See all Professionals resources →</a>
+      </p>
     </div>
   </section>
 
@@ -191,63 +180,6 @@ const proTiles = [
     }
     .hero__finder {
       margin-top: var(--space-2);
-    }
-
-    /* Professional band */
-    .pro-band {
-      background: var(--c-band-pro-bg);
-      color: var(--c-band-pro-text);
-      padding-block: var(--space-10);
-    }
-    .pro-band__eyebrow {
-      margin: 0 0 var(--space-2);
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--c-band-pro-muted);
-    }
-    .pro-band__heading {
-      color: #fff;
-      max-width: 22ch;
-    }
-    .pro-band__intro {
-      color: var(--c-band-pro-muted);
-      max-width: 54ch;
-      font-size: 1.15rem;
-      margin-bottom: var(--space-6);
-    }
-    .pro-tiles {
-      list-style: none;
-      display: grid;
-      gap: var(--space-4);
-    }
-    @media (min-width: 48em) {
-      .pro-tiles {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    .pro-tile__link {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-      height: 100%;
-      padding: var(--space-5);
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      color: #fff;
-    }
-    .pro-tile__link:hover {
-      background: rgba(255, 255, 255, 0.16);
-      color: #fff;
-    }
-    .pro-tile__title {
-      font-weight: 800;
-      font-size: 1.15rem;
-    }
-    .pro-tile__body {
-      color: var(--c-band-pro-muted);
     }
   </style>
 </BaseLayout>

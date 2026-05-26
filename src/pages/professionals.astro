@@ -1,72 +1,45 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const domains = [
-  { n: 1, title: "Planning & Evaluation", slug: "planning-evaluation", body: "Needs assessments, logic models, and evaluation tools for PG prevention plans." },
-  { n: 2, title: "Prevention Education & Service Delivery", slug: "prevention-education", body: "Curriculum modules, youth lesson plans, parent decks, and screening overviews." },
-  { n: 3, title: "Communication", slug: "communication", body: "Rack cards, fact sheets, social graphics, talking points, and press templates." },
-  { n: 4, title: "Community Organization", slug: "community-organization", body: "Coalition toolkits, stakeholder mapping, sample MOUs, and event guides." },
-  { n: 5, title: "Public Policy & Environmental Change", slug: "public-policy", body: "Statute summaries, advocacy briefs, model policy language, environmental scans." },
-  { n: 6, title: "Professional Growth & Responsibility", slug: "professional-growth", body: "Curated training and CEUs, ethics resources, and credentialing links." },
+const audiences = [
+  { title: "Prevention Specialists", body: "Resources for credentialed prevention specialists working in problem gambling prevention.", href: "/professionals/prevention-specialists" },
+  { title: "Treatment Providers", body: "Screening, referral, and prevention resources for treatment providers.", href: "/professionals/treatment-providers" },
+  { title: "Healthcare Providers", body: "Brief screening and referral for doctors, dentists, and other clinicians.", href: "/professionals/healthcare-providers" },
+  { title: "Teachers", body: "Classroom-ready awareness and prevention resources for educators.", href: "/professionals/teachers" },
 ];
 ---
 
 <BaseLayout
-  title="For Prevention Professionals"
-  description="Problem gambling prevention resources organized around the six IC&RC Prevention Specialist domains."
+  title="Professionals"
+  description="Problem gambling prevention resources organized by profession — prevention specialists, treatment providers, healthcare providers, and teachers."
 >
   <header class="page-header">
     <div class="container">
-      <p class="page-header__eyebrow">For prevention professionals</p>
-      <h1>Resources for your work</h1>
+      <p class="page-header__eyebrow">Resources by profession</p>
+      <h1>Professionals</h1>
       <p class="page-header__lead">
-        Downloadable problem gambling prevention resources —
-        organized around the six IC&amp;RC Prevention Specialist performance
-        domains, so you can map materials to your scope of practice and cite them
-        for documentation.
+        Problem gambling prevention resources, organized by the profession
+        they're for.
       </p>
     </div>
   </header>
 
   <section class="section">
     <div class="container">
-      <h2>Browse by IC&amp;RC PS domain</h2>
       <ul class="card-grid">
         {
-          domains.map((d) => (
+          audiences.map((a) => (
             <li>
-              <a class="card-link" href={`/professionals/${d.slug}`}>
-                <span class="card-link__title">
-                  {d.n}. {d.title}
-                </span>
-                <span>{d.body}</span>
+              <a class="card-link" href={a.href}>
+                <span class="card-link__title">{a.title}</span>
+                <span>{a.body}</span>
               </a>
             </li>
           ))
         }
       </ul>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container prose">
-      <h2>Other ways to find resources</h2>
-      <p>
-        Resources are also being organized so you can browse them by type (rack
-        cards, fact sheets, slide decks, social graphics, infographics), by
-        audience, and by state — with state-customized variants carrying each
-        state's helpline and context. See the
-        <a href="/resources">Resource Library</a> as it fills in.
-      </p>
-      <h2>Grounded in established frameworks</h2>
-      <p>
-        Materials are designed to support SAMHSA's Strategic Prevention Framework
-        (SPF) and the six CSAP prevention strategies, so they slot directly into
-        your prevention plans and block-grant reporting.
-      </p>
-      <p>
-        These materials are available for non-commercial prevention and
-        education.
+      <p style="margin-top: var(--space-6); font-weight: 700;">
+        <a href="/resources">Browse the Resource Library →</a>
       </p>
     </div>
   </section>
