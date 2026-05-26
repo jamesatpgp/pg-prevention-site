@@ -40,7 +40,10 @@ const { variant = "nav" } = Astro.props;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-3) var(--space-4);
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 3.1rem;
+    padding: var(--space-2) var(--space-4);
     border-radius: var(--radius);
     text-decoration: none;
     transition: background-color 0.15s ease;
@@ -60,15 +63,18 @@ const { variant = "nav" } = Astro.props;
     background: var(--c-cta-988-bg-hover);
   }
 
-  /* Both lockups share a width so the stacked pair reads as a balanced set. */
+  /* Equal-size buttons; logos sized by HEIGHT so the numbers read at a
+     comparable scale (988 is a larger glyph, so its lockup sits a bit shorter). */
   .cta__logo {
+    width: auto;
     height: auto;
     max-width: 100%;
+    display: block;
   }
   .cta__logo--myreset {
-    width: 7.5rem;
+    height: 2.1rem;
   }
   .cta__logo--988 {
-    width: 7.5rem;
+    height: 1.2rem;
   }
 </style>
