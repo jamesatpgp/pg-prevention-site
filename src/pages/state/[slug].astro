@@ -28,7 +28,6 @@ const statusLabel: Record<LegalStatus, string> = {
 const hasPrevention =
   j.help.affiliateName ||
   j.help.preventionOrg ||
-  j.help.treatmentDirectoryUrl ||
   j.help.affiliateUrl;
 
 // Derived structural stats (real archive data; population stats are a gap).
@@ -334,7 +333,7 @@ const capitol =
   <!-- 5. Get help in [State] -->
   <section class="section section-alt" aria-labelledby="help-h">
     <div class="container">
-      <h2 id="help-h">Get help in {j.name}</h2>
+      <h2 id="help-h">Problem gambling organizations in {j.name}</h2>
       {
         hasPrevention ? (
           <ul class="help-list">
@@ -350,7 +349,7 @@ const capitol =
             )}
             {j.help.preventionOrg && j.help.preventionOrg !== j.help.affiliateName && (
               <li>
-                <strong>Prevention &amp; treatment:</strong>{" "}
+                <strong>Prevention:</strong>{" "}
                 {j.help.preventionUrl ? (
                   <a href={j.help.preventionUrl}>{j.help.preventionOrg}</a>
                 ) : (
@@ -358,21 +357,11 @@ const capitol =
                 )}
               </li>
             )}
-            {j.help.treatmentDirectoryUrl && (
-              <li>
-                <strong>Find treatment:</strong>{" "}
-                <a href={j.help.treatmentDirectoryUrl}>Treatment directory</a>
-              </li>
-            )}
           </ul>
         ) : (
           <p>
-            No state-specific organization is listed for {j.name}. The national
-            helpline above and the{" "}
-            <a href="https://www.ncpgambling.org/help-treatment/treatment-facilities/">
-              NCPG treatment directory
-            </a>{" "}
-            can still help.
+            No state-specific organization is listed for {j.name} yet. The
+            national helpline above is available any time.
           </p>
         )
       }

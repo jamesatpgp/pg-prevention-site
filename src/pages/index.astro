@@ -30,7 +30,7 @@ const proTiles = [
 ---
 
 <BaseLayout>
-  <!-- Hero -->
+  <!-- Hero: the map is the hero; find your state -->
   <section class="hero">
     <div class="container">
       <p class="hero__eyebrow">
@@ -40,14 +40,16 @@ const proTiles = [
         Information you can trust about gambling and gambling harm.
       </h1>
       <p class="hero__subhead">
-        For two audiences: people looking for help or answers, and the
-        prevention professionals who serve them.
+        For two audiences: people looking for answers, and the prevention
+        professionals who serve them. Start with your state.
       </p>
-      <div class="hero__ctas">
-        <a class="btn btn-primary hero__cta" href="/get-help">I need help</a>
-        <a class="btn btn-outline hero__cta" href="/professionals">
-          I'm a prevention professional
-        </a>
+      <div class="state-finder hero__finder">
+        <div class="state-finder__map">
+          <USGeoMap />
+        </div>
+        <div class="state-finder__pick">
+          <StateSelect />
+        </div>
       </div>
     </div>
   </section>
@@ -74,26 +76,6 @@ const proTiles = [
       <p class="learn-all">
         <a href="/understand-gambling">See all Understand Gambling topics →</a>
       </p>
-    </div>
-  </section>
-
-  <!-- Find Your State -->
-  <section class="section section-alt" aria-labelledby="find-your-state-heading">
-    <div class="container">
-      <h2 id="find-your-state-heading">Find your state or territory</h2>
-      <p class="section-lead">
-        Select your state or territory for local helplines, who regulates
-        gambling there, what's legal, and where to find help — all 50 states,
-        DC, and five U.S. territories.
-      </p>
-      <div class="state-finder">
-        <div class="state-finder__map">
-          <USGeoMap />
-        </div>
-        <div class="state-finder__pick">
-          <StateSelect />
-        </div>
-      </div>
     </div>
   </section>
 
@@ -174,29 +156,8 @@ const proTiles = [
       color: var(--c-text);
       margin-bottom: var(--space-6);
     }
-    .hero__ctas {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-4);
-    }
-    .hero__cta {
-      font-size: 1.1rem;
-      padding-inline: var(--space-6);
-    }
-
-    /* Find Your State */
-    .state-placeholder {
-      margin-top: var(--space-6);
-      padding: var(--space-8) var(--space-5);
-      background: var(--c-surface);
-      border: 2px dashed var(--c-border-strong);
-      border-radius: var(--radius-lg);
-      text-align: center;
-    }
-    .state-placeholder__label {
-      font-weight: 600;
-      color: var(--c-text-muted);
-      margin-bottom: var(--space-5);
+    .hero__finder {
+      margin-top: var(--space-2);
     }
 
     /* Professional band */
