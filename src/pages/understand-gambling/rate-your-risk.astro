@@ -1,0 +1,268 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// The Problem Gambling Severity Index (PGSI) — a widely used 9-item self-check.
+// Each item is scored 0 (Never) to 3 (Almost always); total 0–27.
+const questions = [
+  "Have you bet more than you could really afford to lose?",
+  "Have you needed to gamble with larger amounts of money to get the same feeling of excitement?",
+  "When you gambled, did you go back another day to try to win back the money you lost?",
+  "Have you borrowed money or sold anything to get money to gamble?",
+  "Have you felt that you might have a problem with gambling?",
+  "Has gambling caused you any health problems, including stress or anxiety?",
+  "Have people criticized your betting, or told you that you had a gambling problem — whether or not you thought it was true?",
+  "Has your gambling caused any financial problems for you or your household?",
+  "Have you felt guilty about the way you gamble, or what happens when you gamble?",
+];
+const options = [
+  { label: "Never", value: 0 },
+  { label: "Sometimes", value: 1 },
+  { label: "Most of the time", value: 2 },
+  { label: "Almost always", value: 3 },
+];
+---
+
+<BaseLayout
+  title="Rate your risk"
+  description="A quick, private nine-question self-check to gauge whether your gambling may be causing harm. Your answers stay on your device — nothing is saved or sent."
+>
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">Understand Gambling</p>
+      <h1>Rate your risk</h1>
+      <p class="page-header__lead">
+        Nine quick questions about your gambling over the past 12 months. It is a
+        self-check, not a diagnosis — and your answers never leave your device.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <p class="quiz-privacy">
+        <strong>Private by design.</strong> This runs entirely in your browser.
+        Nothing you choose here is saved, sent, or seen by anyone — close the tab
+        and it is gone.
+      </p>
+
+      <form id="risk-quiz" class="quiz" novalidate>
+        {
+          questions.map((q, i) => (
+            <fieldset class="quiz-q">
+              <legend>
+                <span class="quiz-q__num">{i + 1}.</span> {q}
+              </legend>
+              <div class="quiz-q__opts">
+                {options.map((o) => (
+                  <label class="quiz-opt">
+                    <input type="radio" name={`q${i}`} value={o.value} />
+                    <span>{o.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          ))
+        }
+
+        <p id="quiz-error" class="quiz-error" role="alert" hidden>
+          Please answer all nine questions to see your result.
+        </p>
+        <div class="quiz-actions">
+          <button type="submit" class="btn btn-primary">See my result</button>
+          <button type="reset" class="btn btn-outline">Start over</button>
+        </div>
+      </form>
+
+      <div id="risk-result" class="quiz-result" tabindex="-1" aria-live="polite" hidden></div>
+
+      <div class="sources">
+        <h2>About this self-check</h2>
+        <p>
+          These nine questions are the Problem Gambling Severity Index (PGSI), a
+          self-assessment used widely in public health. It can flag whether
+          gambling may be causing harm, but it cannot diagnose a gambling
+          disorder — only a qualified professional can do that.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .quiz-privacy {
+      max-width: 65ch;
+      padding: var(--space-4) var(--space-5);
+      background: var(--c-primary-tint);
+      border-left: 4px solid var(--c-primary);
+      border-radius: var(--radius);
+      margin-bottom: var(--space-8);
+    }
+
+    .quiz {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-6);
+      max-width: 44rem;
+    }
+    .quiz-q {
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+      margin: 0;
+      min-width: 0;
+    }
+    .quiz-q legend {
+      font-weight: 700;
+      color: var(--c-heading);
+      padding: 0;
+      margin-bottom: var(--space-4);
+      line-height: 1.4;
+    }
+    .quiz-q__num {
+      color: var(--c-text-muted);
+    }
+    .quiz-q__opts {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .quiz-opt {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      min-height: var(--target-min);
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .quiz-opt:hover {
+      background: var(--c-surface-alt);
+    }
+    .quiz-opt:has(input:checked) {
+      border-color: var(--c-primary);
+      background: var(--c-primary-tint);
+      font-weight: 700;
+    }
+    .quiz-opt input {
+      width: 1.25rem;
+      height: 1.25rem;
+      accent-color: var(--c-primary);
+      flex: none;
+    }
+
+    .quiz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      margin-top: var(--space-2);
+    }
+    .quiz-error {
+      font-weight: 700;
+      color: var(--c-heading);
+      margin: 0;
+    }
+
+    .quiz-result {
+      margin-top: var(--space-8);
+      padding: var(--space-6);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-left: 6px solid var(--c-primary);
+      border-radius: var(--radius-lg);
+      max-width: 44rem;
+      scroll-margin-top: var(--space-5);
+    }
+    .quiz-result h2 {
+      margin-top: 0;
+    }
+    .quiz-result__score {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--c-heading);
+    }
+    .quiz-result__note {
+      color: var(--c-text-muted);
+      font-size: var(--fs-small, 0.9rem);
+    }
+  </style>
+
+  <script>
+    const QN = 9;
+    const form = document.getElementById("risk-quiz") as HTMLFormElement | null;
+    const result = document.getElementById("risk-result");
+    const errorEl = document.getElementById("quiz-error");
+
+    function bandFor(score: number) {
+      if (score === 0)
+        return {
+          level: "No current signs of harm",
+          summary:
+            "Based on your answers, your gambling is not showing signs of harm right now. It is still worth checking in with yourself now and then.",
+        };
+      if (score <= 2)
+        return {
+          level: "Low level of risk",
+          summary:
+            "Your answers suggest a low level of risk. Keeping an eye on your gambling now can help keep small things from growing.",
+        };
+      if (score <= 7)
+        return {
+          level: "Moderate level of risk",
+          summary:
+            "Your answers point to a moderate level of risk — some signs of gambling-related harm that are worth paying attention to.",
+        };
+      return {
+        level: "Higher level of risk",
+        summary:
+          "Your answers point to a higher level of risk, with signs of significant gambling-related harm. You do not have to wait, or reach a low point, to talk to someone.",
+      };
+    }
+
+    if (form && result && errorEl) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let score = 0;
+        let answered = 0;
+        for (let i = 0; i < QN; i++) {
+          const sel = form.querySelector<HTMLInputElement>(
+            `input[name="q${i}"]:checked`,
+          );
+          if (sel) {
+            score += Number(sel.value);
+            answered++;
+          }
+        }
+        if (answered < QN) {
+          errorEl.hidden = false;
+          return;
+        }
+        errorEl.hidden = true;
+        const b = bandFor(score);
+        result.innerHTML = `
+          <h2>Your result: ${b.level}</h2>
+          <p class="quiz-result__score">You scored ${score} out of 27.</p>
+          <p>${b.summary}</p>
+          <p class="quiz-result__note">This is a self-check, not a diagnosis.</p>
+          <div class="help-callout">
+            <p>
+              The <strong>National Problem Gambling Helpline</strong> is free and
+              available 24/7 — call or text
+              <a href="tel:+18006973738">1-800-MY-RESET (1-800-697-3738)</a>.
+              If you are in crisis, call or text
+              <a href="tel:988">988</a>, the Suicide &amp; Crisis Lifeline.
+            </p>
+          </div>`;
+        result.hidden = false;
+        (result as HTMLElement).focus();
+        result.scrollIntoView({ block: "start" });
+      });
+
+      form.addEventListener("reset", () => {
+        result.hidden = true;
+        result.innerHTML = "";
+        errorEl.hidden = true;
+      });
+    }
+  </script>
+</BaseLayout>
