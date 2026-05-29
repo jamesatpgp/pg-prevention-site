@@ -1,11 +1,13 @@
 ---
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getEntry, render } from "astro:content";
+import fs from "node:fs";
+import path from "node:path";
 import {
   getAllJurisdictions,
   getJurisdiction,
-  getCapitolImage,
+  getCampaignsForJurisdiction,
+  firstSentence,
   agencyKey,
   type LegalStatus,
 } from "../../lib/jurisdictions";
@@ -74,31 +76,38 @@ const glanceItems = (
 const sePrograms = j.selfExclusion.programs;
 const seNoProgram = j.selfExclusion.noProgramFindings;
 
-// ---- Statehouse hero image ----
-// Eagerly collected at build time; a hero renders only when BOTH the optimized
-// image file and a manifest row (attribution) are present.
-const capitolFiles = import.meta.glob<{ default: ImageMetadata }>(
-  "../../assets/capitols/*.{jpg,jpeg,png}",
-  { eager: true },
-);
-const code = j.abbr.toLowerCase();
-const capEntry = Object.entries(capitolFiles).find(([p]) =>
-  p.endsWith(`/capitol-${code}.jpg`),
-);
-const capCredit = getCapitolImage(code);
-const capitol =
-  capEntry && capCredit
-    ? {
-        img: capEntry[1].default,
-        alt: `${j.name} ${j.isTerritory ? "Capitol Building" : "State Capitol"}`,
-        photographer: capCredit.photographer,
-        sourceUrl: capCredit.sourceUrl,
-        org: capCredit.sourceUrl?.includes("loc.gov")
-          ? "Library of Congress"
-          : "Wikimedia Commons",
-        license: capCredit.license,
-      }
-    : null;
+// ---- New top block: history + state resources + seal ----
+// History is now tight enough to render (no embedded revenue figures).
+const historyEntry = await getEntry("history", j.slug);
+const HistoryContent = historyEntry
+  ? (await render(historyEntry)).Content
+  : null;
+
+// State prevention campaigns (umbrella / prevention / responsible_gambling only —
+// helpline + treatment rows are filtered out at the lib layer per site policy).
+const campaigns = getCampaignsForJurisdiction(j.name);
+const umbrellaCampaign =
+  campaigns.find((c) => c.category === "umbrella") ?? null;
+
+// One-sentence intro above the campaign cards, derived strictly from CSV fields.
+const resourcesIntro = umbrellaCampaign?.fundingAgency
+  ? `Problem gambling prevention in ${j.name} is led by ${umbrellaCampaign.fundingAgency}.`
+  : campaigns.length > 0
+    ? `Recognized prevention programs and campaigns in ${j.name}:`
+    : `${j.name} does not currently have a recognized statewide problem-gambling prevention campaign on file.`;
+
+// State seal image: SVG preferred, PNG fallback. Renders only when on disk.
+const publicSealsDir = path.resolve(process.cwd(), "public/seals");
+const sealHit = ["svg", "png"]
+  .map((ext) => ({ ext, abs: path.join(publicSealsDir, `${j.slug}.${ext}`) }))
+  .find((s) => {
+    try {
+      return fs.existsSync(s.abs);
+    } catch {
+      return false;
+    }
+  });
+const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
 ---
 
 <BaseLayout
@@ -109,38 +118,89 @@ const capitol =
     <a href="/find-your-state">← All states &amp; territories</a>
   </div>
 
-  <!-- 1. Statehouse hero -->
-  <section class="state-hero">
-    <div class="container">
-      {
-        capitol && (
-          <figure class="state-hero__figure">
-            <Image
-              class="state-hero__img"
-              src={capitol.img}
-              alt={capitol.alt}
-              widths={[400, 800, 1600]}
-              sizes="(max-width: 768px) 100vw, 1100px"
-              format="avif"
-              quality={80}
-              loading="eager"
-            />
-            <figcaption class="state-hero__credit">
-              Photo: {capitol.photographer ?? "Unknown"}
-              {capitol.sourceUrl ? (
-                <>
-                  {" / "}
-                  <a href={capitol.sourceUrl}>{capitol.org}</a>
-                </>
-              ) : (
-                <> / {capitol.org}</>
-              )}
-              {capitol.license ? ` (${capitol.license})` : ""}
-            </figcaption>
-          </figure>
-        )
-      }
-      <h1 class="state-hero__title">{j.name}</h1>
+  <!-- 1. Top block: history + resources (left) · seal + legal forms (right) -->
+  <section class="state-top">
+    <div class="container state-top__grid">
+      <div class="state-top__main">
+        <p class="state-top__eyebrow">Gambling in {j.name}</p>
+        <h1 class="state-top__title">{j.name}</h1>
+
+        {
+          HistoryContent && (
+            <div class="state-top__history">
+              <HistoryContent />
+            </div>
+          )
+        }
+
+        <section class="state-top__resources" aria-labelledby="resources-h">
+          <h2 id="resources-h" class="state-top__h2">
+            Prevention resources in {j.name}
+          </h2>
+          <p class="lead">{resourcesIntro}</p>
+          {
+            campaigns.length > 0 && (
+              <ul class="campaign-grid">
+                {campaigns.map((c) => {
+                  const blurb = firstSentence(c.blurb);
+                  return (
+                    <li>
+                      <a class="campaign-card" href={c.url} rel="noopener">
+                        <span class="campaign-card__title">{c.name} →</span>
+                        {blurb && (
+                          <span class="campaign-card__blurb">{blurb}</span>
+                        )}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )
+          }
+        </section>
+      </div>
+
+      <aside class="state-top__aside">
+        {
+          sealSrc && (
+            <figure class="state-seal-wrap">
+              <img
+                class="state-seal"
+                src={sealSrc}
+                alt={`${j.name} state seal`}
+                width="240"
+                height="240"
+              />
+            </figure>
+          )
+        }
+
+        <section class="legal-card" aria-labelledby="legal-card-h">
+          <h2 id="legal-card-h" class="legal-card__h">
+            Legal gambling in {j.name}
+          </h2>
+          {
+            shownForms.length > 0 ? (
+              <ul class="legal-card__list">
+                {shownForms.map((v) => (
+                  <li class={`legal-card__item legal-card__item--${v.status}`}>
+                    <span class="legal-card__label">{v.label}</span>
+                    <span class="legal-card__status">
+                      {v.year
+                        ? `${statusLabel[v.status]} since ${v.year}`
+                        : statusLabel[v.status]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="legal-card__none">
+                No form of gambling is currently authorized.
+              </p>
+            )
+          }
+        </section>
+      </aside>
     </div>
   </section>
 
@@ -178,44 +238,8 @@ const capitol =
     )
   }
 
-  <!-- 3. Legal gambling types -->
-  <section class="section section-alt" aria-labelledby="legal-h">
-    <div class="container">
-      <h2 id="legal-h">What kinds of gambling are legal in {j.name}?</h2>
-      {
-        shownForms.length > 0 ? (
-          <ul class="legal-grid">
-            {shownForms.map((v) => (
-              <li class={`legal-cell legal-cell--${v.status}`}>
-                <span class="legal-cell__status" aria-hidden="true">
-                  {v.status === "authorized" ? "✓" : "•"}
-                </span>
-                <span class="legal-cell__label">{v.label}</span>
-                <span class="legal-cell__state">
-                  {v.year ? `${statusLabel[v.status]} (since ${v.year})` : statusLabel[v.status]}
-                </span>
-                {v.citation && (
-                  <span class="legal-cell__cite">
-                    {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
-                  </span>
-                )}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p class="lead">
-            No form of gambling is currently authorized in {j.name}. People in
-            {j.name} can still experience gambling harm — including from online or
-            out-of-state activity — and free help is always available.
-          </p>
-        )
-      }
-      <p class="fine-print">
-        Based on our statute inventory{j.retrievalDate ? `, retrieved ${j.retrievalDate}` : ""}.
-        See each citation for the source.
-      </p>
-    </div>
-  </section>
+  <!-- Legal gambling types: moved into the right sidebar of the top block above.
+       Statute citations remain visible in the regulation-process section below. -->
 
   <!-- 4. How gambling is regulated (the process) -->
   <section class="section" aria-labelledby="reg-h">
@@ -495,11 +519,9 @@ const capitol =
        taxation / funding figures until that content is handled deliberately.
        The funding data is retained in the archive + data layer. -->
 
-  <!-- Brief history intentionally hidden for now: the archival narratives
-       contain revenue / taxation / funding figures (e.g., PGNO funding amounts)
-       that can't be surgically removed from verbatim prose. The history files
-       and the `history` content collection are retained; re-enable after a
-       figure review. -->
+  <!-- Brief history is now rendered in the top block above (sourced from
+       src/data/history/<slug>.md). Old archival narratives were rewritten into
+       tight ~230-word summaries with no embedded revenue figures. -->
 
   <style>
     .breadcrumb {
@@ -509,28 +531,113 @@ const capitol =
       font-weight: 600;
     }
 
-    /* Statehouse hero */
-    .state-hero {
-      padding-block: var(--space-6) var(--space-2);
+    /* Top block: history + resources (left) · seal + legal-forms (right) */
+    .state-top {
+      padding-block: var(--space-7) var(--space-6);
     }
-    .state-hero__figure {
-      margin: 0 auto;
-      max-width: 56rem;
+    .state-top__grid {
+      display: grid;
+      gap: var(--space-7);
     }
-    .state-hero__img {
+    @media (min-width: 56em) {
+      .state-top__grid {
+        grid-template-columns: 1fr 16rem;
+        gap: var(--space-8);
+        align-items: start;
+      }
+    }
+    .state-top__main {
+      min-width: 0;
+    }
+    .state-top__eyebrow {
+      margin: 0;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--c-link);
+      font-size: 0.85rem;
+    }
+    .state-top__title {
+      margin: var(--space-2) 0 var(--space-5);
+    }
+    .state-top__history {
+      margin-bottom: var(--space-7);
+    }
+    .state-top__history :global(p) {
+      margin-bottom: var(--space-4);
+      line-height: 1.65;
+      max-width: 70ch;
+    }
+    .state-top__history :global(p):last-child {
+      margin-bottom: 0;
+    }
+    .state-top__h2 {
+      margin: 0 0 var(--space-3);
+    }
+    .state-top__resources .lead {
+      margin-bottom: var(--space-5);
+    }
+
+    /* Campaign cards (left column) */
+    .campaign-grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-3);
+    }
+    .campaign-card {
+      display: block;
+      padding: var(--space-4) var(--space-5);
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s ease;
+    }
+    .campaign-card:hover,
+    .campaign-card:focus-visible {
+      border-color: var(--c-primary);
+      outline: none;
+    }
+    .campaign-card__title {
+      display: block;
+      font-weight: 700;
+      color: var(--c-link);
+      margin-bottom: var(--space-1);
+    }
+    .campaign-card__blurb {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--c-text);
+      line-height: 1.5;
+    }
+
+    /* Sidebar: seal + legal-forms card */
+    .state-top__aside {
+      display: grid;
+      gap: var(--space-5);
+    }
+    @media (max-width: 55.99em) {
+      /* On narrow viewports, surface the seal+legal card ABOVE the history. */
+      .state-top__grid .state-top__main { order: 2; }
+      .state-top__grid .state-top__aside { order: 1; }
+    }
+    .state-seal-wrap {
+      margin: 0;
+      text-align: center;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
+    }
+    .state-seal {
       display: block;
       width: 100%;
       height: auto;
-      border-radius: var(--radius-lg);
-      background: var(--c-surface-alt);
-    }
-    .state-hero__credit {
-      margin-top: var(--space-2);
-      font-size: 0.8rem;
-      color: var(--c-text-muted);
-    }
-    .state-hero__title {
-      margin-top: var(--space-5);
+      max-width: 13rem;
+      margin: 0 auto;
     }
 
     .lead {
@@ -701,57 +808,49 @@ const capitol =
       font-size: 1.2rem;
     }
 
-    /* Legal grid */
-    .legal-grid {
-      list-style: none;
-      display: grid;
-      gap: var(--space-3);
-      grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
-    }
-    .legal-cell {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      grid-template-areas: "icon label" "icon state" "cite cite";
-      gap: 0 var(--space-3);
-      padding: var(--space-4);
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius);
+    /* Sidebar legal-forms card */
+    .legal-card {
       background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-5);
     }
-    .legal-cell--authorized {
-      border-left: 4px solid var(--c-primary);
-    }
-    .legal-cell--not-authorized {
-      background: var(--c-surface-alt);
-    }
-    .legal-cell--tribal-only,
-    .legal-cell--limited {
-      border-left: 4px solid var(--c-border-strong);
-    }
-    .legal-cell__status {
-      grid-area: icon;
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--c-primary);
-    }
-    .legal-cell--not-authorized .legal-cell__status {
-      color: var(--c-text-muted);
-    }
-    .legal-cell__label {
-      grid-area: label;
-      font-weight: 700;
+    .legal-card__h {
+      margin: 0 0 var(--space-4);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       color: var(--c-heading);
     }
-    .legal-cell__state {
-      grid-area: state;
-      color: var(--c-text-muted);
-      font-size: 0.95rem;
+    .legal-card__list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-3);
     }
-    .legal-cell__cite {
-      grid-area: cite;
-      margin-top: var(--space-2);
-      font-size: 0.8rem;
-      word-break: break-word;
+    .legal-card__item {
+      display: grid;
+      gap: 0.2rem;
+      padding-left: var(--space-3);
+      border-left: 3px solid var(--c-primary);
+    }
+    .legal-card__item--limited,
+    .legal-card__item--tribal-only {
+      border-left-color: var(--c-accent);
+    }
+    .legal-card__label {
+      font-weight: 700;
+      color: var(--c-text);
+    }
+    .legal-card__status {
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+    }
+    .legal-card__none {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--c-text-muted);
     }
 
     .fine-print {

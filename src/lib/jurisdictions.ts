@@ -606,3 +606,99 @@ export function getAllCapitolImages(): CapitolImage[] {
     (a.jurisdiction ?? a.code).localeCompare(b.jurisdiction ?? b.code),
   );
 }
+
+// ---- State prevention campaigns ----
+// CSV at src/data/state_pg_campaigns.csv (one row per campaign per jurisdiction).
+// Per site policy we surface only umbrella / prevention / responsible_gambling
+// categories; helpline rows duplicate the MY-RESET/988 CTA we already promote,
+// and treatment rows conflict with the no-treatment-directory stance.
+
+export interface StateCampaign {
+  jurisdiction: string;
+  name: string;
+  url: string;
+  category: "umbrella" | "prevention" | "responsible_gambling";
+  fundingAgency: string | null;
+  fundingAgencyUrl: string | null;
+  fundingChain: string | null;
+  audience: string[];
+  blurb: string | null;
+  lastVerified: string | null;
+}
+
+// CSV jurisdiction names that differ from the canonical names used elsewhere.
+const CAMPAIGN_JURISDICTION_ALIASES: Record<string, string> = {
+  "U.S. Virgin Islands": "US Virgin Islands",
+};
+
+const CAMPAIGN_ALLOWED_CATEGORIES = new Set([
+  "umbrella",
+  "prevention",
+  "responsible_gambling",
+]);
+
+let campaignsCache: Map<string, StateCampaign[]> | null = null;
+
+function loadCampaigns(): Map<string, StateCampaign[]> {
+  if (campaignsCache) return campaignsCache;
+  const byJ = new Map<string, StateCampaign[]>();
+  try {
+    for (const r of readCsv("state_pg_campaigns.csv")) {
+      const cat = (r.category ?? "").trim();
+      if (!CAMPAIGN_ALLOWED_CATEGORIES.has(cat)) continue;
+      let jurisdiction = (r.jurisdiction ?? "").trim();
+      jurisdiction = CAMPAIGN_JURISDICTION_ALIASES[jurisdiction] ?? jurisdiction;
+      const name = (r.campaign_name ?? "").trim();
+      const url = (r.url ?? "").trim();
+      if (!jurisdiction || !name || !url) continue;
+      const campaign: StateCampaign = {
+        jurisdiction,
+        name,
+        url,
+        category: cat as StateCampaign["category"],
+        fundingAgency: clean(r.funding_agency),
+        fundingAgencyUrl: clean(r.funding_agency_url),
+        fundingChain: clean(r.funding_chain),
+        audience: (r.audience ?? "")
+          .split("|")
+          .map((s) => s.trim())
+          .filter(Boolean),
+        blurb: clean(r.blurb),
+        lastVerified: clean(r.last_verified),
+      };
+      const list = byJ.get(jurisdiction) ?? [];
+      list.push(campaign);
+      byJ.set(jurisdiction, list);
+    }
+  } catch {
+    // CSV absent in some environments — return empty index rather than failing the build.
+  }
+  // Stable order: umbrella first, then prevention, then responsible_gambling.
+  const categoryOrder: Record<StateCampaign["category"], number> = {
+    umbrella: 0,
+    prevention: 1,
+    responsible_gambling: 2,
+  };
+  for (const list of byJ.values()) {
+    list.sort((a, b) => {
+      const co = categoryOrder[a.category] - categoryOrder[b.category];
+      if (co !== 0) return co;
+      return a.name.localeCompare(b.name);
+    });
+  }
+  campaignsCache = byJ;
+  return campaignsCache;
+}
+
+export function getCampaignsForJurisdiction(name: string): StateCampaign[] {
+  return loadCampaigns().get(name) ?? [];
+}
+
+// First sentence of a blurb — used to keep campaign cards skim-able.
+export function firstSentence(text: string | null): string | null {
+  if (!text) return null;
+  const trimmed = text.trim();
+  if (!trimmed) return null;
+  const m = trimmed.match(/^.*?[.!?](?=\s|$)/);
+  return (m ? m[0] : trimmed).trim();
+}
