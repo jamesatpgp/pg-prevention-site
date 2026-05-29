@@ -36,10 +36,6 @@ const hasPrevention =
 const authorizedCount = j.legal.filter((v) => v.status === "authorized").length;
 // Only reference forms the state actually has — hide "not authorized".
 const shownForms = j.legal.filter((v) => v.status !== "not-authorized");
-const years = j.legal
-  .map((v) => (v.year ? parseInt(v.year, 10) : null))
-  .filter((y): y is number => y !== null && !Number.isNaN(y));
-const earliestYear = years.length ? Math.min(...years) : null;
 // Authorized types with a statute citation, for the regulation-process view.
 const processItems = j.legal.filter(
   (v) => v.status === "authorized" && v.citation && v.id !== "tribal",
@@ -62,15 +58,8 @@ for (const v of processItems) {
 }
 const tribalAuthorized = j.legal.find((v) => v.id === "tribal")?.status === "authorized";
 
-// At-a-glance stats: drop any zero/empty value (don't surface nil counts).
-const glanceItems = (
-  [
-    { num: authorizedCount, one: "gambling type authorized", many: "gambling types authorized" },
-    { num: j.regulators.primary.length, one: "state-level regulator", many: "state-level regulators" },
-    { num: j.regulators.tribalCount, one: "tribal gaming commission", many: "tribal gaming commissions" },
-    { num: earliestYear, one: "earliest authorization", many: "earliest authorization" },
-  ] as { num: number | null; one: string; many: string }[]
-).filter((s) => s.num != null && s.num > 0);
+// (At-a-glance stats removed per James — counts moved into the new top-block
+// sidebar via the legal-forms list and regulators list.)
 
 // Self-exclusion: enrollable programs vs. documented "no program" findings.
 const sePrograms = j.selfExclusion.programs;
@@ -200,43 +189,30 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
             )
           }
         </section>
+
+        {
+          j.regulators.primary.length > 0 && (
+            <section class="legal-card" aria-labelledby="regulators-card-h">
+              <h2 id="regulators-card-h" class="legal-card__h">
+                Regulators in {j.name}
+              </h2>
+              <ul class="regulators-list">
+                {j.regulators.primary.map((r) => (
+                  <li>
+                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
       </aside>
     </div>
   </section>
 
-  <!-- At a glance (structural stats) -->
-  <section class="section glance-section" aria-labelledby="glance-h">
-    <div class="container">
-      <h2 id="glance-h" class="visually-hidden">{j.name} at a glance</h2>
-      {
-        glanceItems.length > 0 && (
-          <ul class="glance">
-            {glanceItems.map((s) => (
-              <li class="glance__item">
-                <span class="glance__num">{s.num}</span>
-                <span class="glance__label">{s.num === 1 ? s.one : s.many}</span>
-              </li>
-            ))}
-          </ul>
-        )
-      }
-      <p class="fine-print">
-        Adult and youth prevalence data for {j.name} is coming soon.
-      </p>
-    </div>
-  </section>
-
-  <!-- 2. Gambling in [State] -->
-  {
-    j.summary && (
-      <section class="section" aria-labelledby="summary-h">
-        <div class="container">
-          <h2 id="summary-h">Gambling in {j.name}</h2>
-          <p class="lead">{j.summary}</p>
-        </div>
-      </section>
-    )
-  }
+  <!-- At-a-glance stats and "Gambling in [State]" summary intentionally removed:
+       the new top block above provides the same context via the history narrative,
+       the sidebar legal-forms list, and the sidebar regulators list. -->
 
   <!-- Legal gambling types: moved into the right sidebar of the top block above.
        Statute citations remain visible in the regulation-process section below. -->
@@ -255,56 +231,47 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       {
         regGroups.length > 0 && (
           <ol class="process-list">
-            {regGroups.map((g) => (
-              <li class:list={["process", g.items.length > 1 && "process--grouped"]}>
-                <div class="process__forms">
-                  {g.items.map((v) => (
-                    <div class="process__form">
-                      <p class="process__type">
-                        {v.year ? `${v.label} · since ${v.year}` : v.label}
-                      </p>
-                      <ol class="process__chain">
-                        <li class="proc">
-                          <span class="proc__step">Law</span>
-                          <span class="proc__body">
-                            {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
-                          </span>
-                        </li>
-                        <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
-                          <span class="proc__step">Rules</span>
-                          <span class="proc__body">
-                            {v.adminCodeVerified && v.adminCodeCitation ? (
-                              v.adminCodeUrl ? (
-                                <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
-                              ) : (
-                                v.adminCodeCitation
-                              )
-                            ) : (
-                              "Not separately codified"
-                            )}
-                          </span>
-                        </li>
-                      </ol>
-                    </div>
-                  ))}
-                </div>
-                {g.url ? (
-                  <a class="proc proc--regulator proc--reglink" href={g.url}>
-                    <span class="proc__step">
-                      {g.items.length > 1 ? "Regulator (shared)" : "Regulator"}
-                    </span>
-                    <span class="proc__body">{g.agency ?? "—"}</span>
-                  </a>
-                ) : (
-                  <div class="proc proc--regulator">
-                    <span class="proc__step">
-                      {g.items.length > 1 ? "Regulator (shared)" : "Regulator"}
-                    </span>
-                    <span class="proc__body">{g.agency ?? "—"}</span>
-                  </div>
-                )}
-              </li>
-            ))}
+            {regGroups.flatMap((g) =>
+              g.items.map((v) => (
+                <li class="process">
+                  <p class="process__type">
+                    {v.year ? `${v.label} · since ${v.year}` : v.label}
+                  </p>
+                  <ol class="process__chain">
+                    <li class="proc">
+                      <span class="proc__step">Law</span>
+                      <span class="proc__body">
+                        {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+                      </span>
+                    </li>
+                    <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
+                      <span class="proc__step">Rules</span>
+                      <span class="proc__body">
+                        {v.adminCodeVerified && v.adminCodeCitation ? (
+                          v.adminCodeUrl ? (
+                            <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
+                          ) : (
+                            v.adminCodeCitation
+                          )
+                        ) : (
+                          "Not separately codified"
+                        )}
+                      </span>
+                    </li>
+                    <li class="proc proc--regulator">
+                      <span class="proc__step">Regulator</span>
+                      <span class="proc__body">
+                        {g.url ? (
+                          <a href={g.url}>{g.agency ?? "—"}</a>
+                        ) : (
+                          (g.agency ?? "—")
+                        )}
+                      </span>
+                    </li>
+                  </ol>
+                </li>
+              )),
+            )}
           </ol>
         )
       }
@@ -645,47 +612,15 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       max-width: 70ch;
     }
 
-    /* At a glance */
-    .glance-section {
-      padding-block: var(--space-6);
-    }
-    .glance {
-      list-style: none;
-      display: grid;
-      gap: var(--space-4);
-      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
-    }
-    .glance__item {
-      padding: var(--space-4);
-      background: var(--c-surface);
-      border: 1px solid var(--c-border);
-      border-radius: var(--radius-lg);
-      text-align: center;
-    }
-    .glance__num {
-      display: block;
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: var(--c-heading);
-      line-height: 1.1;
-    }
-    .glance__den {
-      font-size: 1.2rem;
-      color: var(--c-text-muted);
-    }
-    .glance__label {
-      display: block;
-      margin-top: var(--space-2);
-      color: var(--c-text-muted);
-      font-size: 0.9rem;
-    }
+    /* At-a-glance stats removed (section gone). */
 
-    /* Regulation process */
+    /* Regulation process — chain row: Law → Rules → Regulator (same height by grid). */
     .process-list {
       list-style: none;
       display: grid;
       gap: var(--space-4);
       margin: var(--space-6) 0;
+      padding: 0;
     }
     .process {
       padding: var(--space-5);
@@ -693,24 +628,6 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       border: 1px solid var(--c-border);
       border-left: 4px solid var(--c-primary);
       border-radius: var(--radius-lg);
-      display: grid;
-      gap: var(--space-4);
-    }
-    @media (min-width: 48em) {
-      .process {
-        grid-template-columns: 1fr minmax(11rem, 15rem);
-        align-items: stretch;
-        column-gap: var(--space-5);
-      }
-    }
-    .process__forms {
-      display: grid;
-      gap: var(--space-4);
-      min-width: 0;
-    }
-    .process__form + .process__form {
-      border-top: 1px solid var(--c-border);
-      padding-top: var(--space-4);
     }
     .process__type {
       margin: 0 0 var(--space-3);
@@ -722,43 +639,22 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       list-style: none;
       display: grid;
       gap: var(--space-3);
+      margin: 0;
+      padding: 0;
     }
     @media (min-width: 48em) {
       .process__chain {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         align-items: stretch;
       }
     }
-    /* Regulator endpoint: shown once per regulator, spanning the full height of
-       all the forms (feeds) it governs, and linking to the regulator's site. */
+    /* Regulator cell: distinct tinted background, same grid row as Law/Rules. */
     .proc--regulator {
       background: var(--c-primary-tint);
-      justify-content: center;
     }
-    .proc--reglink {
-      text-decoration: none;
-      color: inherit;
-      transition: background-color 0.15s ease;
-    }
-    .proc--reglink .proc__body {
-      color: var(--c-primary);
+    .proc--regulator .proc__body a {
+      color: var(--c-link);
       font-weight: 700;
-      text-decoration: underline;
-    }
-    .proc--reglink:hover,
-    .proc--reglink:focus-visible {
-      background: var(--c-surface-alt);
-    }
-    @media (min-width: 48em) {
-      .proc--regulator::before {
-        content: "→";
-        position: absolute;
-        left: calc(var(--space-5) * -1 - 0.1em);
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--c-border-strong);
-        font-weight: 800;
-      }
     }
     .proc {
       display: flex;
@@ -851,6 +747,21 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       margin: 0;
       font-size: 0.9rem;
       color: var(--c-text-muted);
+    }
+    /* Sidebar regulators list (shares the .legal-card chrome). */
+    .regulators-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+    .regulators-list li {
+      font-size: 0.95rem;
+      line-height: 1.35;
+    }
+    .regulators-list a {
+      font-weight: 600;
     }
 
     .fine-print {
