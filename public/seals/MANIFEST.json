@@ -1,0 +1,521 @@
+{
+  "generated_at": "2026-05-29",
+  "seals": [
+    {
+      "slug": "alabama",
+      "jurisdiction": "Alabama",
+      "file": "alabama.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Alabama.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Alabama; PD as a US state government insignia",
+      "source_filename": "Seal_of_Alabama.svg"
+    },
+    {
+      "slug": "alaska",
+      "jurisdiction": "Alaska",
+      "file": "alaska.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Alaska.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Alaska; PD as a US state government insignia",
+      "source_filename": "Seal_of_Alaska.svg"
+    },
+    {
+      "slug": "arizona",
+      "jurisdiction": "Arizona",
+      "file": "arizona.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Arizona.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Arizona; PD as a US state government insignia",
+      "source_filename": "Seal_of_Arizona.svg"
+    },
+    {
+      "slug": "arkansas",
+      "jurisdiction": "Arkansas",
+      "file": "arkansas.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Arkansas.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Arkansas; PD as a US state government insignia",
+      "source_filename": "Seal_of_Arkansas.svg"
+    },
+    {
+      "slug": "california",
+      "jurisdiction": "California",
+      "file": "california.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_California.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of California; PD as a US state government insignia",
+      "source_filename": "Seal_of_California.svg"
+    },
+    {
+      "slug": "colorado",
+      "jurisdiction": "Colorado",
+      "file": "colorado.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Colorado.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Colorado; PD as a US state government insignia",
+      "source_filename": "Seal_of_Colorado.svg"
+    },
+    {
+      "slug": "connecticut",
+      "jurisdiction": "Connecticut",
+      "file": "connecticut.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Connecticut.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Connecticut; PD as a US state government insignia",
+      "source_filename": "Seal_of_Connecticut.svg"
+    },
+    {
+      "slug": "delaware",
+      "jurisdiction": "Delaware",
+      "file": "delaware.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Delaware.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Delaware; PD as a US state government insignia",
+      "source_filename": "Seal_of_Delaware.svg"
+    },
+    {
+      "slug": "florida",
+      "jurisdiction": "Florida",
+      "file": "florida.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Florida.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Florida; PD as a US state government insignia",
+      "source_filename": "Seal_of_Florida.svg"
+    },
+    {
+      "slug": "georgia",
+      "jurisdiction": "Georgia",
+      "file": "georgia.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Georgia.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Georgia; PD as a US state government insignia",
+      "source_filename": "Seal_of_Georgia.svg"
+    },
+    {
+      "slug": "hawaii",
+      "jurisdiction": "Hawaii",
+      "file": "hawaii.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_the_State_of_Hawaii.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Hawaii; PD as a US state government insignia",
+      "source_filename": "Seal_of_the_State_of_Hawaii.svg"
+    },
+    {
+      "slug": "idaho",
+      "jurisdiction": "Idaho",
+      "file": "idaho.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Idaho.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Idaho; PD as a US state government insignia",
+      "source_filename": "Seal_of_Idaho.svg"
+    },
+    {
+      "slug": "illinois",
+      "jurisdiction": "Illinois",
+      "file": "illinois.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Illinois.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Illinois; PD as a US state government insignia",
+      "source_filename": "Seal_of_Illinois.svg"
+    },
+    {
+      "slug": "indiana",
+      "jurisdiction": "Indiana",
+      "file": "indiana.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_the_State_of_Indiana.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Indiana; PD (CDC-published US Government work, pre-1978 without copyright notice)",
+      "source_filename": "Seal_of_the_State_of_Indiana.svg"
+    },
+    {
+      "slug": "iowa",
+      "jurisdiction": "Iowa",
+      "file": "iowa.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:State_seal_of_Iowa.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Iowa; PD as CDC/US federal government work",
+      "source_filename": "State_seal_of_Iowa.svg"
+    },
+    {
+      "slug": "kansas",
+      "jurisdiction": "Kansas",
+      "file": "kansas.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Kansas.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Kansas; PD as a US state government insignia",
+      "source_filename": "Seal_of_Kansas.svg"
+    },
+    {
+      "slug": "kentucky",
+      "jurisdiction": "Kentucky",
+      "file": "kentucky.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Kentucky.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Kentucky; PD as a US state government insignia",
+      "source_filename": "Seal_of_Kentucky.svg"
+    },
+    {
+      "slug": "louisiana",
+      "jurisdiction": "Louisiana",
+      "file": "louisiana.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Louisiana.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Louisiana; PD as a US state government insignia",
+      "source_filename": "Seal_of_Louisiana.svg"
+    },
+    {
+      "slug": "maine",
+      "jurisdiction": "Maine",
+      "file": "maine.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Maine.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Maine; PD as a US state government insignia",
+      "source_filename": "Seal_of_Maine.svg"
+    },
+    {
+      "slug": "maryland",
+      "jurisdiction": "Maryland",
+      "file": "maryland.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Maryland_(reverse).svg",
+      "license": "Public domain",
+      "license_note": "Great Seal of Maryland (reverse). Maryland's reverse seal is its publicly used Great Seal. PD as a US state government insignia (also published by CDC, a US federal work).",
+      "source_filename": "Seal_of_Maryland_(reverse).svg"
+    },
+    {
+      "slug": "massachusetts",
+      "jurisdiction": "Massachusetts",
+      "file": "massachusetts.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Massachusetts.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Massachusetts; PD as a US state government insignia",
+      "source_filename": "Seal_of_Massachusetts.svg"
+    },
+    {
+      "slug": "michigan",
+      "jurisdiction": "Michigan",
+      "file": "michigan.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Michigan.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Michigan; PD as a US state government insignia",
+      "source_filename": "Seal_of_Michigan.svg"
+    },
+    {
+      "slug": "minnesota",
+      "jurisdiction": "Minnesota",
+      "file": "minnesota.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Minnesota.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Minnesota; PD as a US state government insignia. Verified as the May 2024 redesign (loon, wild rice, North Star) \u2014 sourced from the State Emblems Redesign Commission via Wikimedia Commons.",
+      "source_filename": "Seal_of_Minnesota.svg"
+    },
+    {
+      "slug": "mississippi",
+      "jurisdiction": "Mississippi",
+      "file": "mississippi.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Mississippi.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Mississippi; PD as a US state government insignia",
+      "source_filename": "Seal_of_Mississippi.svg"
+    },
+    {
+      "slug": "missouri",
+      "jurisdiction": "Missouri",
+      "file": "missouri.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Missouri.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Missouri; PD as a US state government insignia",
+      "source_filename": "Seal_of_Missouri.svg"
+    },
+    {
+      "slug": "montana",
+      "jurisdiction": "Montana",
+      "file": "montana.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Montana.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Montana; PD as a US state government insignia",
+      "source_filename": "Seal_of_Montana.svg"
+    },
+    {
+      "slug": "nebraska",
+      "jurisdiction": "Nebraska",
+      "file": "nebraska.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Nebraska.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Nebraska; PD as a US state government insignia",
+      "source_filename": "Seal_of_Nebraska.svg"
+    },
+    {
+      "slug": "nevada",
+      "jurisdiction": "Nevada",
+      "file": "nevada.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Nevada.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Nevada; PD as a US state government insignia",
+      "source_filename": "Seal_of_Nevada.svg"
+    },
+    {
+      "slug": "new-hampshire",
+      "jurisdiction": "New Hampshire",
+      "file": "new-hampshire.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_New_Hampshire.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of New Hampshire; PD as a US state government insignia",
+      "source_filename": "Seal_of_New_Hampshire.svg"
+    },
+    {
+      "slug": "new-jersey",
+      "jurisdiction": "New Jersey",
+      "file": "new-jersey.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_New_Jersey.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of New Jersey; PD as a US state government insignia",
+      "source_filename": "Seal_of_New_Jersey.svg"
+    },
+    {
+      "slug": "new-mexico",
+      "jurisdiction": "New Mexico",
+      "file": "new-mexico.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_New_Mexico.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of New Mexico; PD as a US state government insignia",
+      "source_filename": "Seal_of_New_Mexico.svg"
+    },
+    {
+      "slug": "new-york",
+      "jurisdiction": "New York",
+      "file": "new-york.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_New_York.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of New York; PD as a US state government insignia",
+      "source_filename": "Seal_of_New_York.svg"
+    },
+    {
+      "slug": "north-carolina",
+      "jurisdiction": "North Carolina",
+      "file": "north-carolina.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_North_Carolina.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of North Carolina; PD as a US state government insignia",
+      "source_filename": "Seal_of_North_Carolina.svg"
+    },
+    {
+      "slug": "north-dakota",
+      "jurisdiction": "North Dakota",
+      "file": "north-dakota.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_North_Dakota.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of North Dakota; PD as a US state government insignia",
+      "source_filename": "Seal_of_North_Dakota.svg"
+    },
+    {
+      "slug": "ohio",
+      "jurisdiction": "Ohio",
+      "file": "ohio.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Ohio.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Ohio; PD as a US state government insignia",
+      "source_filename": "Seal_of_Ohio.svg"
+    },
+    {
+      "slug": "oklahoma",
+      "jurisdiction": "Oklahoma",
+      "file": "oklahoma.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Oklahoma.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Oklahoma; PD as a US state government insignia",
+      "source_filename": "Seal_of_Oklahoma.svg"
+    },
+    {
+      "slug": "oregon",
+      "jurisdiction": "Oregon",
+      "file": "oregon.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Oregon.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Oregon; PD as a US state government insignia",
+      "source_filename": "Seal_of_Oregon.svg"
+    },
+    {
+      "slug": "pennsylvania",
+      "jurisdiction": "Pennsylvania",
+      "file": "pennsylvania.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Pennsylvania.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Pennsylvania; PD as a US state government insignia",
+      "source_filename": "Seal_of_Pennsylvania.svg"
+    },
+    {
+      "slug": "rhode-island",
+      "jurisdiction": "Rhode Island",
+      "file": "rhode-island.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Rhode_Island.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Rhode Island; PD as a US state government insignia",
+      "source_filename": "Seal_of_Rhode_Island.svg"
+    },
+    {
+      "slug": "south-carolina",
+      "jurisdiction": "South Carolina",
+      "file": "south-carolina.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_South_Carolina.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of South Carolina; PD as a US state government insignia",
+      "source_filename": "Seal_of_South_Carolina.svg"
+    },
+    {
+      "slug": "south-dakota",
+      "jurisdiction": "South Dakota",
+      "file": "south-dakota.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_South_Dakota.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of South Dakota; PD as a US state government insignia",
+      "source_filename": "Seal_of_South_Dakota.svg"
+    },
+    {
+      "slug": "tennessee",
+      "jurisdiction": "Tennessee",
+      "file": "tennessee.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Tennessee.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Tennessee; PD as a US state government insignia",
+      "source_filename": "Seal_of_Tennessee.svg"
+    },
+    {
+      "slug": "texas",
+      "jurisdiction": "Texas",
+      "file": "texas.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Texas.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Texas; PD as a US state government insignia",
+      "source_filename": "Seal_of_Texas.svg"
+    },
+    {
+      "slug": "utah",
+      "jurisdiction": "Utah",
+      "file": "utah.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Utah.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Utah; PD as a US state government insignia",
+      "source_filename": "Seal_of_Utah.svg"
+    },
+    {
+      "slug": "vermont",
+      "jurisdiction": "Vermont",
+      "file": "vermont.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Vermont.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Vermont; PD as a US state government insignia",
+      "source_filename": "Seal_of_Vermont.svg"
+    },
+    {
+      "slug": "virginia",
+      "jurisdiction": "Virginia",
+      "file": "virginia.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Virginia.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Virginia; PD as a US state government insignia",
+      "source_filename": "Seal_of_Virginia.svg"
+    },
+    {
+      "slug": "washington",
+      "jurisdiction": "Washington",
+      "file": "washington.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Washington.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Washington; PD as a US state government insignia",
+      "source_filename": "Seal_of_Washington.svg"
+    },
+    {
+      "slug": "west-virginia",
+      "jurisdiction": "West Virginia",
+      "file": "west-virginia.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_West_Virginia.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of West Virginia; PD as a US state government insignia",
+      "source_filename": "Seal_of_West_Virginia.svg"
+    },
+    {
+      "slug": "wisconsin",
+      "jurisdiction": "Wisconsin",
+      "file": "wisconsin.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Wisconsin.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Wisconsin; PD as a US state government insignia",
+      "source_filename": "Seal_of_Wisconsin.svg"
+    },
+    {
+      "slug": "wyoming",
+      "jurisdiction": "Wyoming",
+      "file": "wyoming.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Wyoming.svg",
+      "license": "Public domain",
+      "license_note": "Official state seal of Wyoming; PD as a US state government insignia",
+      "source_filename": "Seal_of_Wyoming.svg"
+    },
+    {
+      "slug": "district-of-columbia",
+      "jurisdiction": "District of Columbia",
+      "file": "district-of-columbia.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_the_District_of_Columbia.svg",
+      "license": "Public domain",
+      "license_note": "Official seal of the District of Columbia; PD as a US government insignia",
+      "source_filename": "Seal_of_the_District_of_Columbia.svg"
+    },
+    {
+      "slug": "american-samoa",
+      "jurisdiction": "American Samoa",
+      "file": "american-samoa.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_American_Samoa.svg",
+      "license": "Public domain",
+      "license_note": "Official seal of American Samoa (US territory); PD as a US government insignia",
+      "source_filename": "Seal_of_American_Samoa.svg"
+    },
+    {
+      "slug": "guam",
+      "jurisdiction": "Guam",
+      "file": "guam.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Guam.svg",
+      "license": "Public domain (CC0)",
+      "license_note": "Official seal of Guam (US territory); CC0 from Open Clipart Library; also PD as US government insignia",
+      "source_filename": "Seal_of_Guam.svg"
+    },
+    {
+      "slug": "northern-mariana-islands",
+      "jurisdiction": "Northern Mariana Islands",
+      "file": "northern-mariana-islands.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_the_Northern_Mariana_Islands.svg",
+      "license": "Public domain",
+      "license_note": "Official seal of the Commonwealth of the Northern Mariana Islands; PD as a US government insignia",
+      "source_filename": "Seal_of_the_Northern_Mariana_Islands.svg"
+    },
+    {
+      "slug": "puerto-rico",
+      "jurisdiction": "Puerto Rico",
+      "file": "puerto-rico.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Puerto_Rico.svg",
+      "license": "Public domain",
+      "license_note": "Official seal of the Commonwealth of Puerto Rico; PD as a US government insignia",
+      "source_filename": "Seal_of_Puerto_Rico.svg"
+    },
+    {
+      "slug": "us-virgin-islands",
+      "jurisdiction": "U.S. Virgin Islands",
+      "file": "us-virgin-islands.svg",
+      "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_the_United_States_Virgin_Islands.svg",
+      "license": "Public domain",
+      "license_note": "Official seal of the United States Virgin Islands; PD as a US government insignia",
+      "source_filename": "Seal_of_the_United_States_Virgin_Islands.svg"
+    }
+  ],
+  "flagged": [
+    {
+      "slug": "minnesota",
+      "jurisdiction": "Minnesota",
+      "reason": "RESOLVED: Wikimedia Commons file confirms this is the post-2024 redesign (loon + North Star + wild rice), not the historical seal. No action needed."
+    },
+    {
+      "slug": "maryland",
+      "jurisdiction": "Maryland",
+      "reason": "Maryland's seal has obverse and reverse sides; the reverse is what is publicly displayed as the Great Seal of Maryland (showing the Calvert/Crossland coat of arms with crown). The downloaded file is the reverse (Great Seal). If the design requires the obverse instead, a re-source is needed; otherwise this is the correct, commonly-used version."
+    }
+  ]
+}
