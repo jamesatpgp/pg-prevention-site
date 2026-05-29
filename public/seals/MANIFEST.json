@@ -475,7 +475,7 @@
       "file": "guam.svg",
       "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Guam.svg",
       "license": "Public domain (CC0)",
-      "license_note": "Official seal of Guam (US territory); CC0 from Open Clipart Library; also PD as US government insignia",
+      "license_note": "Official seal of Guam (US territory); CC0 from Open Clipart Library; also PD as US government insignia viewBox cropped from 44504x66756 to 24878x56009 (original SVG had ~44% horizontal and ~16% vertical empty padding around the artwork).",
       "source_filename": "Seal_of_Guam.svg"
     },
     {

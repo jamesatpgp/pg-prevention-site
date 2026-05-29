@@ -635,18 +635,22 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
     }
     .state-seal-wrap {
       margin: 0;
-      text-align: center;
       background: var(--c-surface);
       border: 1px solid var(--c-border);
       border-radius: var(--radius-lg);
       padding: var(--space-5);
+      display: grid;
+      place-items: center;
     }
+    /* Every seal renders in a uniform square slot regardless of its SVG's
+       intrinsic aspect ratio. Tall seals (CT oval, Guam ovoid) and wide ones
+       (OK) get whitespace on the off-axis but match the others in slot size. */
     .state-seal {
       display: block;
       width: 100%;
-      height: auto;
-      max-width: 13rem;
-      margin: 0 auto;
+      max-width: 11rem;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
     }
 
     .lead {
