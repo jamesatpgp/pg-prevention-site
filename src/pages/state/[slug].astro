@@ -78,12 +78,10 @@ const campaigns = getCampaignsForJurisdiction(j.name);
 const umbrellaCampaign =
   campaigns.find((c) => c.category === "umbrella") ?? null;
 
-// One-sentence intro above the campaign cards, derived strictly from CSV fields.
-const resourcesIntro = umbrellaCampaign?.fundingAgency
-  ? `Problem gambling prevention in ${j.name} is led by ${umbrellaCampaign.fundingAgency}.`
-  : campaigns.length > 0
-    ? `Recognized prevention programs and campaigns in ${j.name}:`
-    : `${j.name} does not currently have a recognized statewide problem-gambling prevention campaign on file.`;
+// Non-umbrella campaigns shown as cards below the umbrella narrative.
+const otherCampaigns = umbrellaCampaign
+  ? campaigns.filter((c) => c !== umbrellaCampaign)
+  : campaigns;
 
 // State seal image: SVG preferred, PNG fallback. Renders only when on disk.
 const publicSealsDir = path.resolve(process.cwd(), "public/seals");
@@ -126,11 +124,31 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
           <h2 id="resources-h" class="state-top__h2">
             Prevention resources in {j.name}
           </h2>
-          <p class="lead">{resourcesIntro}</p>
           {
-            campaigns.length > 0 && (
+            umbrellaCampaign && umbrellaCampaign.blurb ? (
+              <article class="state-top__umbrella">
+                <p class="state-top__umbrella-blurb">{umbrellaCampaign.blurb}</p>
+                <p class="state-top__umbrella-cta">
+                  <a href={umbrellaCampaign.url} rel="noopener">
+                    Visit {umbrellaCampaign.name} →
+                  </a>
+                </p>
+              </article>
+            ) : campaigns.length > 0 ? (
+              <p class="lead">
+                Recognized prevention programs and campaigns in {j.name}:
+              </p>
+            ) : (
+              <p class="lead">
+                {j.name} does not currently have a recognized statewide
+                problem-gambling prevention campaign on file.
+              </p>
+            )
+          }
+          {
+            otherCampaigns.length > 0 && (
               <ul class="campaign-grid">
-                {campaigns.map((c) => {
+                {otherCampaigns.map((c) => {
                   const blurb = firstSentence(c.blurb);
                   return (
                     <li>
@@ -579,6 +597,30 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       font-size: 0.95rem;
       color: var(--c-text);
       line-height: 1.5;
+    }
+
+    /* Umbrella narrative paragraph (replaces the one-sentence intro). */
+    .state-top__umbrella {
+      margin: 0 0 var(--space-5);
+    }
+    .state-top__umbrella-blurb {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      max-width: 70ch;
+      margin: 0 0 var(--space-3);
+      color: var(--c-text);
+    }
+    .state-top__umbrella-cta {
+      margin: 0;
+    }
+    .state-top__umbrella-cta a {
+      font-weight: 700;
+      color: var(--c-link);
+      text-decoration: none;
+    }
+    .state-top__umbrella-cta a:hover,
+    .state-top__umbrella-cta a:focus-visible {
+      text-decoration: underline;
     }
 
     /* Sidebar: seal + legal-forms card */
