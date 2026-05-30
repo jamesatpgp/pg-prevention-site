@@ -684,19 +684,14 @@ const prevalenceIsTerritory =
       place-items: center;
     }
     /* Every seal renders in a uniform square slot regardless of its SVG's
-       intrinsic aspect ratio. Tall seals (CT — the only ellipse seal in the
-       union; Guam ovoid) and wide ones (OK) get whitespace on the off-axis
-       but match the others in slot size. The smaller cap leaves visible
-       padding inside the slot so the CT ellipse sits "framed" rather than
-       filling its slot floor-to-ceiling next to the circular majority. */
+       intrinsic aspect ratio. Tall seals (CT oval, Guam ovoid) and wide ones
+       (OK) get whitespace on the off-axis but match the others in slot size. */
     .state-seal {
       display: block;
       width: 100%;
-      max-width: 8rem;
-      max-height: 8rem;
+      max-width: 11rem;
       aspect-ratio: 1 / 1;
       object-fit: contain;
-      margin: 0 auto;
     }
 
     .lead {
