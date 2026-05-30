@@ -1,46 +1,183 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import HelpCallout from "../components/HelpCallout.astro";
 
 const audiences = [
-  { title: "Youth", body: "Worried about a young person? How to recognize it and talk with them.", href: "/family-and-friends/youth" },
-  { title: "Young Adults", body: "Concerned about a young adult? How to raise it and what to say.", href: "/family-and-friends/young-adults" },
-  { title: "Older Adults", body: "Concerned about an older adult? How to bring it up with care.", href: "/family-and-friends/older-adults" },
-  { title: "Veterans", body: "Supporting a veteran? How to talk about gambling.", href: "/family-and-friends/veterans" },
+  {
+    slug: "youth",
+    title: "Youth",
+    tagline: "Worried about a young person in your life.",
+    alt: "A parent and teenage child sit together on a bench in quiet conversation.",
+    stats: [
+      "Most exposure happens long before the legal gambling age — through video games with loot boxes, social-casino apps on phones, and bets through a friend's adult account.",
+      "Research consistently finds gambling-problem rates among adolescents are roughly two to three times the adult rate (National Council on Problem Gambling, 2024).",
+      "People who start gambling before age 18 are more likely to develop gambling problems as adults — and to develop related problems with money, substances, and mental health.",
+    ],
+    narrative:
+      "Gambling for young people in 2026 doesn't follow the path it did a generation ago. The earliest exposure is usually a video game — paying real money to open a loot box with a chance of getting a rare item. By high school, that exposure often extends to social-casino apps that look exactly like real slot machines, sports prediction games, fantasy contests, and bets placed through a friend's adult account. The harm is real even when no traditional casino is involved: lost school time, money drained from families, and a developing brain learning to chase the next win.",
+    earlyHelp:
+      "What makes this group worth focused attention is that habits formed in the teen years carry forward. A young person who develops a gambling problem before they leave high school is more likely to carry it into adult life. Catching the patterns early — and having the conversation early — is the single most useful thing the adults around a young person can do. The conversation doesn't have to be perfect. It does have to happen.",
+    ctaText: "How to talk with a young person →",
+    href: "/family-and-friends/youth",
+  },
+  {
+    slug: "young-adults",
+    title: "Young Adults",
+    tagline: "Concerned about a young adult in your life.",
+    alt: "Two adults in close, thoughtful conversation indoors.",
+    stats: [
+      "Ages 18–25 are the highest-risk age group for gambling problems among adults — partly because the brain's reward and impulse-control systems are still maturing into the mid-twenties.",
+      "Mobile sports betting has expanded rapidly since 2018, putting an always-on betting platform in every pocket and dramatically increasing exposure for this age group.",
+      "College students show higher rates of risky gambling than older adults in published studies (NCPG; SAMHSA national surveys).",
+    ],
+    narrative:
+      "The years from late teens through mid-twenties are when most gambling problems either take hold or pass. The reasons run together: this is the developmental window when the brain's reward and impulse-control systems are still maturing. It's also the age group most exposed to the marketing, easy account creation, and 24/7 availability of mobile sports betting and online casinos. A young adult moving away from home for the first time — with a phone, an account, and no parent in the next room — faces a different kind of risk than the same person did at sixteen.",
+    earlyHelp:
+      "Young adulthood is also the window when help is most likely to stick. People in their twenties are usually flexible enough — in living situation, in routines, in identity — to make real changes when they recognize a problem and have someone in their corner. People in recovery repeatedly name a calm, non-judgmental person in their life as the thing that made the difference. That person can be a parent, a partner, a sibling, a friend. The role doesn't matter. Showing up does.",
+    ctaText: "How to talk with a young adult →",
+    href: "/family-and-friends/young-adults",
+  },
+  {
+    slug: "older-adults",
+    title: "Older Adults",
+    tagline: "Concerned about an older parent, partner, or friend.",
+    alt: "An older parent and adult child sit together in conversation in a cozy home setting.",
+    stats: [
+      "Older adults gamble at lower rates overall, but when problems develop, the financial damage is often more severe — retirement savings can't be earned back the way an income can.",
+      "Casino gambling has become a leading social activity for many retirees: well-lit, climate-controlled, friendly staff, free coffee. It meets a real need that's not really about money.",
+      "Loneliness, recent loss (a spouse, a role, mobility), and early cognitive decline are among the strongest risk factors in this age group.",
+    ],
+    narrative:
+      "Older adults face a different gambling-harm landscape. The rate of gambling problems is actually lower than in younger age groups, but when problems do develop, the damage is often more severe. A retirement account drained over six months at a casino can't be earned back the way it could at thirty. Cognitive changes can make it harder to track losses or recognize patterns. And the social context of casinos meets a real need for older adults who are increasingly isolated, recently bereaved, or feeling unmoored after retirement. The activity that started as a way out of an empty afternoon can become the thing the empty afternoon is for.",
+    earlyHelp:
+      "For older adults, the people who notice first are usually adult children or longtime friends. The signs are different from the ones in a teen: not missing curfew, but missing the rent. Not vanishing into the basement to game, but vanishing for the day with no clear plan. The most useful thing the people around an older adult can do is treat them like the adult they are — without taking over their decisions, but also without ignoring what they see. Direct conversations, respectful boundaries, and an open door work better than fear-driven control.",
+    ctaText: "How to talk with an older adult →",
+    href: "/family-and-friends/older-adults",
+  },
+  {
+    slug: "veterans",
+    title: "Veterans",
+    tagline: "Supporting a veteran in your family or unit.",
+    alt: "A senior couple share a quiet, thoughtful conversation, looking at each other.",
+    stats: [
+      "Gambling problems show up in veterans at roughly two to three times the rate of the general adult population (Department of Veterans Affairs; published clinical literature).",
+      "PTSD and traumatic brain injury are strongly associated with gambling problems — both conditions affect brain regions involved in impulse control and reward processing.",
+      "The transition from active duty to civilian life is a particular risk window: structured time gives way to unstructured time, and high-stakes risk-taking can fill the gap that mission used to fill.",
+    ],
+    narrative:
+      "Gambling problems show up at higher rates among veterans than among the general population, and the reasons run together. PTSD and traumatic brain injury both affect brain regions involved in impulse control and reward — the same regions gambling activates. Long stretches of structured time followed by sudden unstructured time create a window where high-stakes risk-taking can fill what used to be filled by mission. Treatment systems built around substance use don't always have a clear answer for gambling, even when the two travel together. And the cultural pressure to handle things on your own can keep veterans from raising the subject until losses, debts, or thoughts of suicide are already part of the picture.",
+    earlyHelp:
+      "Veterans often respond best to peer-led approaches and to people who don't make the conversation about veterans-as-a-category. The most effective conversations come from people in their own family or unit who can say what they've seen, ask a direct question, and not flinch at the answer. Bringing it up early — before debts, divorce, or thoughts of self-harm are part of the picture — has the best outcomes.",
+    ctaText: "How to talk with a veteran →",
+    href: "/family-and-friends/veterans",
+  },
 ];
 ---
 
 <BaseLayout
   title="Family & Friends"
-  description="Support and information for the people around someone affected by gambling — parents, adult children, friends, and veterans."
+  description="Worried about someone's gambling? Information and guidance for the people around them — by who you're concerned about, written in plain language."
 >
   <header class="page-header">
     <div class="container">
-      <p class="page-header__eyebrow">Family &amp; friends</p>
       <h1>Family &amp; friends</h1>
       <p class="page-header__lead">
-        Worried about someone's gambling? These pages help you understand the
-        risk and talk with them about it — starting with who you're concerned
+        Worried about someone's gambling? This section is for the people around
+        them — written in plain language, organized by who you're concerned
         about.
       </p>
     </div>
   </header>
 
-  <section class="section">
+  <section class="section section-alt">
     <div class="container">
-      <ul class="card-grid">
-        {
-          audiences.map((a) => (
-            <li>
-              <a class="card-link" href={a.href}>
-                <span class="card-link__title">{a.title}</span>
-                <span>{a.body}</span>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-      <HelpCallout />
+      <div class="fnf-hub-content fnf-hub-intro prose">
+        <h2>How we talk about this</h2>
+        <p>
+          Before getting into the specifics for each group, two ideas shape
+          every page in this section. They sound small. They aren't.
+        </p>
+
+        <h3>Use person-first language</h3>
+        <p>
+          When we talk about gambling problems, it matters how we describe the
+          person. <strong>"Person with a gambling problem"</strong> or
+          <strong>"person with gambling disorder"</strong> puts the person
+          first and the condition second. It does the same kind of work as
+          saying "person with diabetes" instead of "diabetic" — it doesn't
+          reduce someone to their condition.
+        </p>
+        <p>
+          Words like "compulsive gambler," "addict," or "degenerate" do
+          something different. They merge the person and the problem into a
+          single label. They make change feel like a personal identity shift
+          instead of a treatable health condition. That distinction matters,
+          both to the person hearing it and to the conversation that follows.
+        </p>
+
+        <h3>Stay non-judgmental</h3>
+        <p>
+          A gambling problem is a medical condition. It isn't a moral failure,
+          a character flaw, or a lack of willpower. The brain pathways involved
+          overlap with those in substance use disorders, and the response to
+          treatment is comparable.
+        </p>
+        <p>
+          Judgment — even well-intentioned judgment from people who love the
+          person — is one of the biggest reasons people don't ask for help.
+          Shame is heavy. If a conversation feels like an interrogation or a
+          verdict, the next conversation usually doesn't happen. Curiosity
+          works better. So does patience. So does showing up again the next
+          day, after the first conversation didn't go well.
+        </p>
+      </div>
     </div>
   </section>
+
+  {
+    audiences.map((a, i) => (
+      <section
+        class:list={[
+          "section fnf-hub-section",
+          i % 2 === 1 && "section-alt",
+        ]}
+        aria-labelledby={`hub-${a.slug}`}
+      >
+        <div class="container">
+          <figure class="fnf-hub-banner">
+            <img
+              src={`/photos/family-and-friends/${a.slug}.jpg`}
+              alt={a.alt}
+              width="1200"
+              height="480"
+              loading="lazy"
+            />
+            <figcaption class="fnf-hub-banner__overlay">
+              <h2 id={`hub-${a.slug}`} class="fnf-hub-banner__title">
+                {a.title}
+              </h2>
+              <p class="fnf-hub-banner__tagline">{a.tagline}</p>
+            </figcaption>
+          </figure>
+
+          <ul class="fnf-stats">
+            {a.stats.map((s) => (
+              <li>{s}</li>
+            ))}
+          </ul>
+
+          <div class="fnf-hub-content prose">
+            <h3>What this looks like for {a.title.toLowerCase()}</h3>
+            <p>{a.narrative}</p>
+
+            <h3>Why catching it early helps</h3>
+            <p>{a.earlyHelp}</p>
+
+            <p class="fnf-hub-cta">
+              <a href={a.href}>{a.ctaText}</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    ))
+  }
 </BaseLayout>

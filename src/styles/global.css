@@ -526,3 +526,102 @@ ul {
   .fnf-top__grid > .fnf-top__main { order: 2; }
   .fnf-top__grid > .fnf-top__aside { order: 1; }
 }
+
+/* ---------- Family & Friends hub — per-cohort banner + stats ---------- */
+.fnf-hub-section {
+  padding-block: var(--space-7);
+}
+.fnf-hub-banner {
+  position: relative;
+  margin: 0 0 var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--c-surface-alt);
+}
+.fnf-hub-banner img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 2;
+  object-fit: cover;
+}
+@media (max-width: 47.99em) {
+  .fnf-hub-banner img {
+    aspect-ratio: 4 / 3;
+  }
+}
+.fnf-hub-banner__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--space-6) var(--space-7);
+  background: linear-gradient(
+    to right,
+    rgba(31, 48, 36, 0.82) 0%,
+    rgba(31, 48, 36, 0.55) 50%,
+    rgba(31, 48, 36, 0.05) 100%
+  );
+  color: #fff;
+}
+.fnf-hub-banner__title {
+  margin: 0 0 var(--space-2);
+  color: #fff;
+  font-size: clamp(2rem, 4vw + 1rem, 3rem);
+  line-height: 1.05;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+.fnf-hub-banner__tagline {
+  margin: 0;
+  color: #fff;
+  font-size: 1.15rem;
+  max-width: 32ch;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.fnf-stats {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+}
+@media (min-width: 48em) {
+  .fnf-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.fnf-stats li {
+  background: var(--c-surface);
+  border-left: 4px solid var(--c-primary);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--c-text);
+}
+.fnf-hub-content {
+  max-width: 70ch;
+}
+.fnf-hub-cta {
+  margin-top: var(--space-5);
+}
+.fnf-hub-cta a {
+  display: inline-block;
+  padding: var(--space-3) var(--space-5);
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: var(--radius);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.fnf-hub-cta a:hover,
+.fnf-hub-cta a:focus-visible {
+  background: var(--c-heading);
+  outline: none;
+}
+.fnf-hub-intro :global(h3) {
+  margin-top: var(--space-6);
+  margin-bottom: var(--space-3);
+  font-size: 1.15rem;
+}
