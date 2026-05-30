@@ -25,6 +25,7 @@ const images = getAllCapitolImages();
     <div class="container prose">
       {
         images.length > 0 ? (
+          <div class="table-wrap">
           <table class="credits-table">
             <thead>
               <tr>
@@ -63,6 +64,7 @@ const images = getAllCapitolImages();
               ))}
             </tbody>
           </table>
+          </div>
         ) : (
           <p>
             Capitol and statehouse photographs are being added. Each image will

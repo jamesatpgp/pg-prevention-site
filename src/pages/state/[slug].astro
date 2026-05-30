@@ -559,11 +559,11 @@ const prevalenceIsTerritory =
 
     /* Top block: history + resources (left) · seal + legal-forms (right) */
     .state-top {
-      padding-block: var(--space-7) var(--space-6);
+      padding-block: var(--space-8) var(--space-6);
     }
     .state-top__grid {
       display: grid;
-      gap: var(--space-7);
+      gap: var(--space-8);
     }
     @media (min-width: 56em) {
       .state-top__grid {
@@ -581,13 +581,13 @@ const prevalenceIsTerritory =
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--c-link);
-      font-size: 0.85rem;
+      font-size: var(--fs-eyebrow);
     }
     .state-top__title {
       margin: var(--space-2) 0 var(--space-5);
     }
     .state-top__history {
-      margin-bottom: var(--space-7);
+      margin-bottom: var(--space-8);
     }
     .state-top__history :global(p) {
       margin-bottom: var(--space-4);
@@ -692,11 +692,6 @@ const prevalenceIsTerritory =
       max-width: 11rem;
       aspect-ratio: 1 / 1;
       object-fit: contain;
-    }
-
-    .lead {
-      font-size: 1.2rem;
-      max-width: 70ch;
     }
 
     /* At-a-glance stats removed (section gone). */
