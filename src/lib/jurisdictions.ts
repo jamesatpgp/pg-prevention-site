@@ -828,3 +828,64 @@ export function prevalenceCardHeading(
     ? `Adults with a gambling problem in ${stateName}`
     : `Adults who may have a gambling problem in ${stateName}`;
 }
+
+// Strip trailing parenthetical from display_stat ("52% (composite)" -> "52%",
+// "~1.0% (adj.)" -> "~1.0%") so we can locate it inside snippet prose for bolding.
+function bareDisplayValue(display: string): string {
+  if (!display) return "";
+  return display.replace(/\s*\([^)]*\)\s*$/, "").trim();
+}
+
+// Wrap the first occurrence of `target` in <strong>. Returns text unchanged if
+// the target isn't present — never invents emphasis.
+function boldFirst(text: string, target: string): string {
+  if (!target || !text || !text.includes(target)) return text;
+  return text.replace(target, `<strong>${target}</strong>`);
+}
+
+// Single-paragraph narrative (replaces the card/disclosure structure).
+// Uses the canonical snippet sentences James curated, with the headline %
+// bolded and a short framing opener that names the state's surveillance posture.
+export function prevalenceNarrativeHtml(
+  rec: PrevalenceRecord,
+  stateName: string,
+): string {
+  const youth = rec.youth;
+  const adult = rec.adult;
+  const territory =
+    youth.stat_type === "no data" && adult.stat_type === "no data";
+
+  if (territory) {
+    // Single prose paragraph from the canonical unavailability snippet.
+    return rec.snippets.body;
+  }
+
+  const adultMeasured = adult.stat_type.startsWith("measured");
+  const youthMeasured = youth.stat_type.startsWith("measured");
+
+  // Opener only when it adds context the snippets don't already carry.
+  // For modeled-both, the snippets already start with "No {state}-specific
+  // ... has been identified" — an opener would duplicate that framing.
+  let opener = "";
+  if (adultMeasured && youthMeasured) {
+    opener = `${stateName} has measured prevalence data for both adults (${adult.year}) and youth (${youth.year}). `;
+  } else if (adultMeasured && !youthMeasured) {
+    opener = `${stateName}'s most recent adult prevalence study is from ${adult.year}; no state-specific youth gambling survey has been identified. `;
+  } else if (!adultMeasured && youthMeasured) {
+    opener = `${stateName}'s most recent youth gambling measurement is from ${youth.year}; no state-specific adult prevalence study has been identified. `;
+  }
+  // (both modeled -> no opener; snippets carry the framing)
+
+  const adultSentence = boldFirst(
+    rec.snippets.adult_sentence,
+    bareDisplayValue(adult.display_stat),
+  );
+  const youthSentence = boldFirst(
+    rec.snippets.youth_sentence,
+    bareDisplayValue(youth.display_stat),
+  );
+
+  const closer = `The two figures measure different things — youth participation in any gambling, and adult problem gambling — and should not be directly compared.`;
+
+  return `${opener}${adultSentence} ${youthSentence} ${closer}`;
+}
