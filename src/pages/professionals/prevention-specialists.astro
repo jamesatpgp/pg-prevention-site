@@ -1,10 +1,43 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const domains = [
+  {
+    title: "Planning & Evaluation",
+    body: "Add problem gambling to needs assessment, data review, and your prevention plan.",
+    href: "/professionals/planning-evaluation",
+  },
+  {
+    title: "Prevention Education",
+    body: "Build gambling content into the curricula and skill-based programs you already deliver.",
+    href: "/professionals/prevention-education",
+  },
+  {
+    title: "Communication",
+    body: "Social marketing, media literacy, and helpline-visibility campaigns for gambling.",
+    href: "/professionals/communication",
+  },
+  {
+    title: "Community Organization",
+    body: "Bring problem gambling into existing coalitions and cross-sector planning.",
+    href: "/professionals/community-organization",
+  },
+  {
+    title: "Public Policy & Environmental Change",
+    body: "Access, advertising, and policy levers that reduce gambling harm population-wide.",
+    href: "/professionals/public-policy",
+  },
+  {
+    title: "Professional Growth & Responsibility",
+    body: "Ethics, cultural responsiveness, and the science behind gambling prevention.",
+    href: "/professionals/professional-growth",
+  },
+];
 ---
 
 <BaseLayout
   title="Prevention Specialists"
-  description="How credentialed prevention specialists can build problem gambling prevention into their work."
+  description="Credentialed prevention specialists can adapt the CSAP strategies and the SPF they already use for substance misuse to address problem gambling — no separate framework required."
 >
   <header class="page-header">
     <div class="container">
@@ -13,15 +46,147 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       </p>
       <h1>Prevention Specialists</h1>
       <p class="page-header__lead">
-        How credentialed prevention specialists (IC&amp;RC PS) can build problem
-        gambling prevention into their work.
+        You already have the framework. Problem gambling fits the same CSAP
+        strategies, the same Strategic Prevention Framework, and the same risk
+        and protective factors you use for substance misuse — you do not have to
+        reinvent the wheel.
       </p>
     </div>
   </header>
 
   <section class="section">
     <div class="container prose">
-      <p>Specifics for prevention specialists on building problem gambling prevention into their work are being developed. <em>[Content coming soon.]</em></p>
+      <h2>Why this fits the work you already do</h2>
+      <p>
+        Federal prevention infrastructure was built for alcohol and other drugs.
+        Congress wrote the six prevention strategy categories into law in 1981,
+        and the Center for Substance Abuse Prevention (CSAP) has organized the
+        field around them ever since. Problem gambling never got a parallel
+        build-out — no separate institute, no separate block grant, no separate
+        framework. So the field adopted the infrastructure already standing. The
+        six strategies are our strategies because they are the ones that exist.
+      </p>
+      <p>
+        That is good news for prevention specialists: the credential you hold and
+        the tools you already use transfer directly. In most cases, adding
+        problem gambling is not a new program — it is one or two deliberate
+        additions to work that is already running.
+      </p>
+
+      <h2>The case for shared risk and protective factors</h2>
+      <p>
+        Many of the factors that drive substance misuse also drive gambling harm.
+        A single factor can predict multiple outcomes — substance use, mental
+        health problems, and gambling alike. This is the shared risk and
+        protective factor (SRPF) approach, and it is why cross-cutting prevention
+        works. Across the social-ecological model, the overlap is consistent:
+      </p>
+      <ul>
+        <li>
+          <strong>Individual:</strong> early first use or early first wager,
+          impulsivity and sensation-seeking, co-occurring depression, anxiety, or
+          ADHD, trauma and adverse childhood experiences.
+        </li>
+        <li>
+          <strong>Relationship:</strong> low parental monitoring, the behavior
+          normalized in the home, pro-use or pro-betting peer norms, family
+          conflict and weak family bonds.
+        </li>
+        <li>
+          <strong>Community:</strong> high density of outlets or betting venues,
+          targeted local marketing, weak school climate, limited prosocial
+          activities, neighborhood disorganization.
+        </li>
+        <li>
+          <strong>Societal:</strong> regulatory and pricing gaps, advertising
+          volume and placement, a cultural narrative that the behavior is normal
+          or harmless, economic precarity, and stigma that delays help-seeking.
+        </li>
+      </ul>
+      <p>
+        When you address a shared factor, you are very often preventing more than
+        one harm at once.
+      </p>
+
+      <h2>The six CSAP strategies, applied to problem gambling</h2>
+      <p>
+        Each strategy you already use has a low-lift gambling adaptation:
+      </p>
+      <ul>
+        <li>
+          <strong>Information Dissemination:</strong> add Problem Gambling
+          Awareness Month messaging and helpline cards at venues, lottery
+          retailers, and sportsbooks alongside your existing campaigns.
+        </li>
+        <li>
+          <strong>Prevention Education:</strong> add probability, marketing
+          literacy, and personal-risk content to the skill-based curricula you
+          already deliver.
+        </li>
+        <li>
+          <strong>Alternatives:</strong> offer no-stakes game nights and
+          recovery-oriented activities that build the same protective factors.
+        </li>
+        <li>
+          <strong>Problem Identification &amp; Referral:</strong> add a brief
+          gambling screen and a warm referral to the helpline. This is screening
+          and referral — not diagnosis or treatment.
+        </li>
+        <li>
+          <strong>Community-Based Process:</strong> stand up a problem gambling
+          sub-committee inside an existing substance use coalition.
+        </li>
+        <li>
+          <strong>Environmental:</strong> use the CAMP pillars — community norms,
+          access &amp; availability, media messages, and policy &amp; enforcement
+          — to change the conditions everyone moves through.
+        </li>
+      </ul>
+
+      <h2>Work it through your domains</h2>
+      <p>
+        The guidance here is organized by the IC&amp;RC Prevention Specialist
+        domains, so it maps to the certification and the day-to-day work:
+      </p>
+      <ul class="card-grid">
+        {
+          domains.map((d) => (
+            <li>
+              <a class="card-link" href={d.href}>
+                <span class="card-link__title">{d.title}</span>
+                <span>{d.body}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+
+      <div class="sources">
+        <h2>Learn more</h2>
+        <ul>
+          <li>
+            <a href="https://pttcnetwork.org/">
+              Prevention Technology Transfer Center (PTTC) — the six CSAP strategies
+            </a>
+          </li>
+          <li>
+            <a href="https://www.samhsa.gov/substance-use/prevention">
+              SAMHSA — Center for Substance Abuse Prevention and the Strategic Prevention Framework
+            </a>
+          </li>
+          <li>
+            <a href="https://internationalcredentialing.org/">
+              IC&amp;RC — Prevention Specialist credential
+            </a>
+          </li>
+          <li>
+            <a href="https://www.ncpgambling.org/">
+              National Council on Problem Gambling
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </section>
 </BaseLayout>
