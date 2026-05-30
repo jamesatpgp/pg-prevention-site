@@ -3,14 +3,14 @@
   "license_note": "All photos sourced from Pexels under the Pexels License (free for commercial use; attribution appreciated but not required). Photo IDs link back to the source page on pexels.com.",
   "photos": [
     {
-      "slug": "prevention-specialists",
-      "page": "professionals/prevention-specialists",
-      "file": "prevention-specialists.jpg",
+      "slug": "human-resources",
+      "page": "professionals/human-resources",
+      "file": "human-resources.jpg",
       "source": "Pexels",
-      "source_url": "https://www.pexels.com/photo/presentation-adult-learning-15377735/",
-      "photo_id": "15377735",
+      "source_url": "https://www.pexels.com/photo/4342125/",
+      "photo_id": "4342125",
       "license": "Pexels License",
-      "alt": "A diverse group of adults attending a community workshop or training session."
+      "alt": "A small group of professionals in conversation at an office table."
     },
     {
       "slug": "treatment-providers",
