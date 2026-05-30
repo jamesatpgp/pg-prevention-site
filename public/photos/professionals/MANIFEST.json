@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-05-29",
+  "license_note": "All photos sourced from Pexels under the Pexels License (free for commercial use; attribution appreciated but not required). Photo IDs link back to the source page on pexels.com.",
+  "photos": [
+    {
+      "slug": "prevention-specialists",
+      "page": "professionals/prevention-specialists",
+      "file": "prevention-specialists.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/presentation-adult-learning-15377735/",
+      "photo_id": "15377735",
+      "license": "Pexels License",
+      "alt": "A diverse group of adults attending a community workshop or training session."
+    },
+    {
+      "slug": "treatment-providers",
+      "page": "professionals/treatment-providers",
+      "file": "treatment-providers.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/professional-counseling-session-in-modern-office-36729385/",
+      "photo_id": "36729385",
+      "license": "Pexels License",
+      "alt": "A therapist sits attentively across from a client in a quiet office, listening."
+    },
+    {
+      "slug": "healthcare-providers",
+      "page": "professionals/healthcare-providers",
+      "file": "healthcare-providers.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/a-doctor-talking-the-patient-7579831/",
+      "photo_id": "7579831",
+      "license": "Pexels License",
+      "alt": "A doctor and adult patient in calm conversation in a bright clinic."
+    },
+    {
+      "slug": "teachers",
+      "page": "professionals/teachers",
+      "file": "teachers.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/a-teacher-talking-to-the-students-8419491/",
+      "photo_id": "8419491",
+      "license": "Pexels License",
+      "alt": "A high-school teacher in conversation with students in a classroom."
+    }
+  ]
+}
