@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-05-29",
+  "license_note": "All photos sourced from Pexels under the Pexels License (free for commercial use; attribution appreciated but not required). Photo IDs link back to the source page on pexels.com.",
+  "photos": [
+    {
+      "slug": "youth",
+      "page": "family-and-friends/youth",
+      "file": "youth.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/mother-talking-with-teen-child-12887063/",
+      "photo_id": "12887063",
+      "license": "Pexels License",
+      "alt": "A parent and teenage child sit together on a bench in quiet conversation."
+    },
+    {
+      "slug": "young-adults",
+      "page": "family-and-friends/young-adults",
+      "file": "young-adults.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/a-man-and-woman-talking-together-8841344/",
+      "photo_id": "8841344",
+      "license": "Pexels License",
+      "alt": "Two adults in close, thoughtful conversation indoors."
+    },
+    {
+      "slug": "older-adults",
+      "page": "family-and-friends/older-adults",
+      "file": "older-adults.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/an-elderly-woman-sitting-on-a-woven-chair-while-talking-to-her-daughter-6148904/",
+      "photo_id": "6148904",
+      "license": "Pexels License",
+      "alt": "An older parent and adult child sit together in conversation in a cozy home setting."
+    },
+    {
+      "slug": "veterans",
+      "page": "family-and-friends/veterans",
+      "file": "veterans.jpg",
+      "source": "Pexels",
+      "source_url": "https://www.pexels.com/photo/elderly-couple-looking-at-each-other-8770146/",
+      "photo_id": "8770146",
+      "license": "Pexels License",
+      "alt": "A senior couple share a quiet, thoughtful conversation, looking at each other."
+    }
+  ]
+}
