@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Claude Code session-local preview config
 .claude/
+
+# Visual site-directory PDF output (regenerable via scripts/build-site-directory.sh)
+site-directory/
