@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="currentColor" role="img" aria-label="Horse / parimutuel racing">
+  <path d="M10 38C16 30 24 22 34 18L38 16L40 7L46 16C52 20 56 34 52 50L38 54C34 50 28 48 22 45C16 43 11 41 10 38Z"/>
+  <path d="M46 16c4 3 5 9 3 13 3 4 3 9 0 13l-3-2c2-3 2-7 0-10 2-3 1-8-2-11z" fill="#fff"/>
+  <circle cx="30" cy="27" r="1.7" fill="#fff"/>
+</svg>

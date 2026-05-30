@@ -1,10 +1,53 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const types = [
+  {
+    slug: "lottery",
+    title: "Lottery",
+    body: "A lottery is a game where you pay a small amount for a chance to win a prize based on randomly drawn numbers or symbols. Most U.S. lotteries are run by state governments, and the money raised often goes to public programs. Common forms include draw games (you pick numbers and wait for a drawing — Powerball, Mega Millions), instant scratch tickets, and keno. Lotteries are regulated state by state.",
+  },
+  {
+    slug: "commercial-casino",
+    title: "Commercial casino",
+    body: "A commercial casino is a privately owned, for-profit business — licensed by a state — that offers games of chance under one roof. Common offerings include slot machines and other electronic games, table games (such as blackjack, roulette, and craps), and poker rooms. Casinos can be standalone buildings, resorts, or riverboats, depending on the state. Commercial casinos are regulated state by state.",
+  },
+  {
+    slug: "tribal-gaming",
+    title: "Tribal gaming",
+    body: "Tribal gaming is gambling operated by federally recognized Native American tribes on tribal lands. It runs under a framework set by a federal law — the Indian Gaming Regulatory Act of 1988 — along with tribal rules and, for casino-style games, agreements (called \"compacts\") between a tribe and the state. Tribes operate gaming as sovereign governments, and the revenue supports tribal services and communities.",
+  },
+  {
+    slug: "sports-betting",
+    title: "Sports betting",
+    body: "Sports betting means placing a wager on the outcome of a sporting event or on things that happen within it. Common bets include picking which team will win, betting on the combined score being over or under a set number, and \"prop\" bets on specific events (like which player scores first). It can happen in person at a sportsbook or, in many states, on a mobile app. Sports betting is regulated state by state.",
+  },
+  {
+    slug: "online-casino-igaming",
+    title: "Online casino (iGaming)",
+    body: "Online casino gambling — often called \"iGaming\" — means playing real-money casino games over the internet, on a website or mobile app, rather than in a physical casino. Common games include online slots, video poker, table games, and live-dealer games. In the U.S., real-money online casinos are legal in only a small number of states, and a state regulator licenses and oversees them.",
+  },
+  {
+    slug: "charitable-gaming",
+    title: "Charitable gaming",
+    body: "Charitable gaming refers to games of chance run to raise money for a nonprofit or community cause — a church, school, or volunteer group. Common forms include bingo (prizes for matching randomly drawn numbers), raffles (winners drawn from sold tickets), and pull-tabs (paper tickets you open to see if you've won). The activity is regulated state by state, and groups usually need a license to run it.",
+  },
+  {
+    slug: "horse-racing",
+    title: "Horse / parimutuel racing",
+    body: "Horse racing is betting on the outcome of races. Many race bets use a \"parimutuel\" system: everyone's bets of the same kind go into a shared pool, the operator takes a cut, and the rest is split among the winners — so the final payout odds aren't locked in until betting closes. Bets can be simple (which horse wins) or more complex (picking the order of finish). Bets may be placed at a track or, in many states, online.",
+  },
+  {
+    slug: "daily-fantasy-dfs",
+    title: "Daily fantasy (DFS)",
+    body: "Daily fantasy sports are short-term contests where you pay an entry fee, build a lineup of real professional athletes — usually under a salary \"budget\" — and score points based on how those athletes actually perform in real games. Unlike season-long fantasy leagues, DFS contests can last a single day or week. Winners share a prize pool funded by the entry fees. How DFS is treated and regulated varies state by state.",
+  },
+];
 ---
 
 <BaseLayout
   title="What is gambling?"
-  description="Gambling means risking something of value on an uncertain outcome. Here are the common forms and how access has changed."
+  description="A plain-language definition of gambling — a stake, chance, and a prize — and the eight main forms used across the U.S."
 >
   <header class="page-header">
     <div class="container">
@@ -13,52 +56,148 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       </p>
       <h1>What is gambling?</h1>
       <p class="page-header__lead">
-        Gambling means risking something of value — usually money — on an
-        uncertain outcome, hoping to win more. Most adults who gamble do not
-        experience harm, but knowing the forms helps you understand the risks.
+        Gambling means risking something of value on an outcome that depends
+        at least partly on chance, hoping to win something worth more. The
+        setting changes — a phone, a casino, a corner store. The basic idea
+        stays the same.
       </p>
     </div>
   </header>
 
   <section class="section">
     <div class="container prose">
-      <h2>Common forms of gambling</h2>
+      <h2>A simple definition</h2>
+      <p>
+        Gambling means risking something of value — usually money — on an
+        outcome that depends at least partly on chance, in the hope of
+        winning something worth more.
+      </p>
+      <p>
+        That's it. Three pieces have to be present. If any one is missing,
+        it isn't gambling.
+      </p>
+      <p>
+        This is true whether you buy a $2 lottery ticket, place a bet on a
+        game on your phone, or play a slot machine in a casino. The setting
+        changes. The basic idea stays the same.
+      </p>
+
+      <h2>The three core elements</h2>
+      <p>Every form of gambling shares the same three parts.</p>
+      <ol>
+        <li>
+          <strong>A stake.</strong> You put up something of value and
+          accept that you might lose it. This is sometimes called
+          "consideration." Usually it's money — a few dollars on a scratch
+          ticket, the buy-in for a poker game, the cost of a bet. The key
+          is that it's truly at risk.
+        </li>
+        <li>
+          <strong>Chance.</strong> The result is not fully in your
+          control. It depends, at least in part, on luck — the spin of a
+          wheel, the roll of the outcome, which horse crosses the line
+          first. Some forms involve skill too, but if luck plays a real
+          part in who wins, the element of chance is there.
+        </li>
+        <li>
+          <strong>A prize.</strong> There's a reward you're hoping to win —
+          usually money or something worth more than what you put in.
+        </li>
+      </ol>
+      <p>
+        A quick way to test it: <em>Am I risking something of value, on an
+        uncertain result, for the chance to win something?</em> If yes to
+        all three, that's gambling.
+      </p>
+
+      <h2>Gambling is a spectrum — and it's common</h2>
+      <p>
+        Gambling is not all-or-nothing, and it's not rare. About 85% of
+        U.S. adults have gambled at least once in their lives, and roughly
+        60% have gambled in the past year (NCPG, 2026). Some form of legal
+        gambling is available in 48 states plus Washington, D.C.; only
+        Hawaii and Utah have none.
+      </p>
+      <p>
+        Most people who gamble do so without serious problems. For some,
+        though, gambling can start to cause harm — to their money,
+        relationships, work, or health. That harm sits on a spectrum, from
+        none, to mild, to severe. Where someone falls can shift over time,
+        in either direction.
+      </p>
+
+      <h2>The main types of gambling</h2>
+      <p>
+        Below are the eight main types of gambling. Each definition is
+        written to stand on its own. Each type is <strong>regulated state
+        by state</strong>, which means the rules — what's allowed, who can
+        offer it, and the minimum age — depend on where you are. See <a
+        href="/find-your-state">your state or territory</a> for the local
+        picture.
+      </p>
+      <ul class="gambling-types" aria-label="The eight main types of gambling">
+        {types.map((t) => (
+          <li>
+            <img
+              class="gambling-types__icon"
+              src={`/icons/gambling-types/${t.slug}.svg`}
+              alt=""
+              width="40"
+              height="40"
+              loading="lazy"
+            />
+            <h3 class="gambling-types__title">{t.title}</h3>
+            <p>{t.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <h2>The modern shift</h2>
+      <p>
+        The biggest change in recent years is <em>where</em> and
+        <em>how</em> people gamble. Much of it has moved online and onto
+        phones. In states that allow it, you can bet on sports, play
+        casino games, or enter DFS contests from an app in your pocket,
+        any time of day.
+      </p>
+      <p>
+        At the same time, the line between "gambling" and "playing a
+        game" has gotten blurrier. Some examples:
+      </p>
       <ul>
-        <li><strong>Lottery and scratch tickets</strong></li>
-        <li><strong>Casino games</strong> — slot machines, table games like blackjack and roulette</li>
-        <li><strong>Sports betting</strong> — in person and on phones and apps</li>
-        <li><strong>Online casino and poker</strong></li>
-        <li><strong>Charitable gaming</strong> — bingo, raffles, pull-tabs</li>
-        <li><strong>Horse and dog racing</strong> (parimutuel wagering)</li>
-        <li><strong>Daily fantasy sports</strong></li>
+        <li>
+          <strong>Social casino games</strong> — apps that look and feel
+          like slots or poker but use virtual coins instead of real money
+          for play.
+        </li>
+        <li>
+          <strong>Loot boxes</strong> — in-game purchases where you pay
+          real money for a random reward, common in video games.
+        </li>
+        <li>
+          <strong>Other gambling-like features</strong> — spinning
+          wheels, "mystery" rewards, and prize draws built into games and
+          apps.
+        </li>
       </ul>
       <p>
-        Not all gambling looks like a casino. Buying scratch tickets, betting on a
-        game with an app, or opening a paid "loot box" in a video game are all
-        forms of risking money on chance.
+        These features can feel a lot like gambling, even when they
+        aren't legally classified that way. They're worth understanding
+        as context. But the eight types above remain the canonical,
+        defined forms of gambling used throughout this site. For more on
+        what's changed and why, see <a href="/understand-gambling/why-now">
+        Why gambling is everywhere now</a>.
       </p>
-
-      <h2>How access has changed</h2>
-      <p>
-        Gambling used to mean going somewhere — a casino, a track, a store. Today a
-        phone can be a 24-hour gambling device. Since 2018, legal sports betting has
-        expanded to many states, and online betting has grown quickly. More access
-        and more advertising mean more chances to gamble — and more chances for
-        gambling to become harmful.
-      </p>
-
-      <h2>What's legal where you live</h2>
-      <p>
-        The forms of gambling that are legal, and who regulates them, vary by state
-        and territory. See <a href="/find-your-state">your state or territory</a>
-        for the local picture.
-      </p>
-
 
       <div class="sources">
-        <h2>Learn more</h2>
+        <h2>References</h2>
         <ul>
-          <li><a href="https://www.ncpgambling.org/">National Council on Problem Gambling</a></li>
+          <li>National Council on Problem Gambling (NCPG). <em>FAQs: What is Problem Gambling?</em> <a href="https://www.ncpgambling.org/help-treatment/faqs-what-is-problem-gambling/">ncpgambling.org</a></li>
+          <li>National Indian Gaming Commission (NIGC). <em>Indian Gaming Regulatory Act.</em> <a href="https://www.nigc.gov/office-of-general-counsel/laws-and-regulations/indian-gaming-regulatory-act/">nigc.gov</a></li>
+          <li>Library of Congress, Congressional Research Service (2023). <em>Indian Gaming Regulatory Act: Gaming on "Indian Lands."</em> <a href="https://www.congress.gov/crs-product/IF12527">congress.gov</a></li>
+          <li>National Council of Nonprofits. <em>Games of chance, raffles, and charity auctions.</em> <a href="https://www.councilofnonprofits.org/running-nonprofit/fundraising-and-resource-development/games-chance-raffles-and-charity-auctions">councilofnonprofits.org</a></li>
+          <li>Britannica. <em>Pari-mutuel.</em> <a href="https://www.britannica.com/topic/pari-mutuel">britannica.com</a></li>
+          <li>CBS Sports (2026). <em>U.S. online casinos: where all 50 states currently stand.</em> <a href="https://www.cbssports.com/betting/news/u-s-online-casinos-here-is-where-all-50-states-currently-stand-on-legalizing-internet-gambling-casino-play/">cbssports.com</a></li>
         </ul>
       </div>
     </div>
