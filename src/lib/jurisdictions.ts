@@ -702,3 +702,129 @@ export function firstSentence(text: string | null): string | null {
   const m = trimmed.match(/^.*?[.!?](?=\s|$)/);
   return (m ? m[0] : trimmed).trim();
 }
+
+// ---- State prevalence (youth + adult past-year figures) ----
+// Source: src/data/state_prevalence.json. Per the data file's rendering
+// contract, the youth and adult figures measure different constructs and must
+// never be combined, compared, or ranked. Methodology (instrument + year +
+// measured/estimated label) must accompany every number displayed.
+
+export interface PrevalenceMeasure {
+  stat_type: string; // "measured" | "measured (range)" | "modeled estimate" | "national reference" | "no data"
+  value_pct: number | string;
+  display_stat: string;
+  metric: string;
+  instrument: string;
+  year: string;
+  source: string;
+  source_url: string;
+  caveat: string;
+}
+
+export interface PrevalenceRecord {
+  jurisdiction: string;
+  abbrev: string;
+  jurisdiction_type: string;
+  snippets: {
+    sidebar: string;
+    body: string;
+    youth_sentence: string;
+    adult_sentence: string;
+  };
+  youth: PrevalenceMeasure;
+  adult: PrevalenceMeasure;
+  sources: { label: string; url: string }[];
+  epi_review_note: string;
+}
+
+const PREVALENCE_JURISDICTION_ALIASES: Record<string, string> = {
+  "U.S. Virgin Islands": "US Virgin Islands",
+};
+
+let prevalenceCache: Map<string, PrevalenceRecord> | null = null;
+
+function loadPrevalence(): Map<string, PrevalenceRecord> {
+  if (prevalenceCache) return prevalenceCache;
+  const m = new Map<string, PrevalenceRecord>();
+  try {
+    const text = fs.readFileSync(
+      path.join(DATA_DIR, "state_prevalence.json"),
+      "utf-8",
+    );
+    const parsed = JSON.parse(text);
+    for (const rec of parsed.data ?? []) {
+      let j = String(rec.jurisdiction ?? "").trim();
+      j = PREVALENCE_JURISDICTION_ALIASES[j] ?? j;
+      if (!j) continue;
+      m.set(j, rec as PrevalenceRecord);
+    }
+  } catch {
+    // Missing/unreadable file: return empty index (graceful no-render).
+  }
+  prevalenceCache = m;
+  return prevalenceCache;
+}
+
+export function getPrevalenceForJurisdiction(
+  name: string,
+): PrevalenceRecord | null {
+  return loadPrevalence().get(name) ?? null;
+}
+
+// Strip the hedge from a display_stat ("~17.9% (est.)" -> "17.9%") for
+// the modeled-summary sentence, since "an estimated" already carries hedge.
+function stripDisplayHedge(s: string): string {
+  return s
+    .replace(/^~/, "")
+    .replace(/\s*\((est|adj)\.\)\s*$/i, "")
+    .trim();
+}
+
+// Plain-English summary (Option A). Generated only from structured fields.
+export function prevalencePlainSummary(
+  audience: "youth" | "adult",
+  rec: PrevalenceRecord,
+  stateName: string,
+): string {
+  const m = audience === "youth" ? rec.youth : rec.adult;
+  if (m.stat_type === "no data") return "";
+  const ageBand = audience === "youth" ? "teens" : "adults";
+  const subject =
+    audience === "youth"
+      ? "gambled at all in the past year"
+      : "have problems with gambling in any given year";
+  const isMeasured = m.stat_type.startsWith("measured");
+  if (isMeasured) {
+    return `About ${m.display_stat} of ${stateName} ${ageBand} ${subject}, based on a ${m.year} state survey.`;
+  }
+  const cleaned = stripDisplayHedge(m.display_stat);
+  const verb =
+    audience === "youth"
+      ? "may have gambled in the past year"
+      : "may have problems with gambling";
+  return `${stateName} doesn't have its own ${audience} gambling survey. Applying the national rate, an estimated ${cleaned} of ${ageBand} ${verb}.`;
+}
+
+export function prevalenceCaption(m: PrevalenceMeasure): string {
+  if (m.stat_type === "no data") return "";
+  if (m.stat_type.startsWith("measured")) {
+    return `${m.display_stat} · ${m.instrument}, ${m.year}`;
+  }
+  return `${m.display_stat} · national estimate applied to state, ${m.year}`;
+}
+
+export function prevalenceCardHeading(
+  audience: "youth" | "adult",
+  rec: PrevalenceRecord,
+  stateName: string,
+): string {
+  const measured = (audience === "youth" ? rec.youth : rec.adult).stat_type.startsWith("measured");
+  if (audience === "youth") {
+    return measured
+      ? `How many ${stateName} teens gambled in the past year`
+      : `How many ${stateName} teens may have gambled`;
+  }
+  return measured
+    ? `Adults with a gambling problem in ${stateName}`
+    : `Adults who may have a gambling problem in ${stateName}`;
+}

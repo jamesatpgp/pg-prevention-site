@@ -9,6 +9,10 @@ import {
   getCampaignsForJurisdiction,
   firstSentence,
   agencyKey,
+  getPrevalenceForJurisdiction,
+  prevalencePlainSummary,
+  prevalenceCaption,
+  prevalenceCardHeading,
   type LegalStatus,
 } from "../../lib/jurisdictions";
 
@@ -95,6 +99,14 @@ const sealHit = ["svg", "png"]
     }
   });
 const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
+
+// State prevalence (youth + adult). Render only when a record exists for
+// this jurisdiction. Territories with stat_type "no data" on both measures
+// degrade to a single prose block (no card scaffolding).
+const prevalence = getPrevalenceForJurisdiction(j.name);
+const prevalenceIsTerritory =
+  prevalence?.youth?.stat_type === "no data" &&
+  prevalence?.adult?.stat_type === "no data";
 ---
 
 <BaseLayout
@@ -338,6 +350,76 @@ const sealSrc = sealHit ? `/seals/${j.slug}.${sealHit.ext}` : null;
       }
     </div>
   </section>
+
+  <!-- Prevalence: youth + adult, never side-by-side, with firebreak. -->
+  {
+    prevalence && (
+      <section class="section state-prevalence" aria-labelledby="prev-h">
+        <div class="container state-prevalence__container">
+          {prevalenceIsTerritory ? (
+            <>
+              <h2 id="prev-h">Gambling prevalence data for {j.name}</h2>
+              <p class="lead">{prevalence.snippets.body}</p>
+            </>
+          ) : (
+            <>
+              <h2 id="prev-h">What we know about gambling in {j.name}</h2>
+              <p class="lead">
+                Two different things get measured here. The teen number is about
+                how many young people gambled at all. The adult number is about
+                whether adults have problems with gambling. We show them apart.
+              </p>
+
+              <article class="prev-card prev-card--youth">
+                <h3>{prevalenceCardHeading("youth", prevalence, j.name)}</h3>
+                <p class="prev-summary">
+                  {prevalencePlainSummary("youth", prevalence, j.name)}
+                </p>
+                <p class="prev-caption">{prevalenceCaption(prevalence.youth)}</p>
+                <details class="prev-disclosure">
+                  <summary>See the source and methodology</summary>
+                  <p>{prevalence.snippets.youth_sentence}</p>
+                  {prevalence.youth.source_url && (
+                    <p class="prev-source">
+                      <a href={prevalence.youth.source_url} rel="noopener">
+                        {prevalence.youth.source}, {prevalence.youth.year} →
+                      </a>
+                    </p>
+                  )}
+                </details>
+              </article>
+
+              <p class="prev-firebreak">
+                These two numbers measure different things and cannot be
+                compared, added, or averaged. The teen number is about whether
+                young people gambled at all. The adult number is about whether
+                adults are having problems with gambling.
+              </p>
+
+              <article class="prev-card prev-card--adult">
+                <h3>{prevalenceCardHeading("adult", prevalence, j.name)}</h3>
+                <p class="prev-summary">
+                  {prevalencePlainSummary("adult", prevalence, j.name)}
+                </p>
+                <p class="prev-caption">{prevalenceCaption(prevalence.adult)}</p>
+                <details class="prev-disclosure">
+                  <summary>See the source and methodology</summary>
+                  <p>{prevalence.snippets.adult_sentence}</p>
+                  {prevalence.adult.source_url && (
+                    <p class="prev-source">
+                      <a href={prevalence.adult.source_url} rel="noopener">
+                        {prevalence.adult.source}, {prevalence.adult.year} →
+                      </a>
+                    </p>
+                  )}
+                </details>
+              </article>
+            </>
+          )}
+        </div>
+      </section>
+    )
+  }
 
   <!-- 5. Get help in [State] -->
   <section class="section section-alt" aria-labelledby="help-h">

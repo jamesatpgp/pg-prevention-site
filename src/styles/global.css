@@ -697,3 +697,70 @@ ul {
   color: var(--c-link);
   font-weight: 600;
 }
+
+/* ---------- State prevalence section (Option A) ---------- */
+.state-prevalence__container {
+  max-width: 48rem;
+}
+.state-prevalence h2 {
+  margin-bottom: var(--space-3);
+}
+.state-prevalence .lead {
+  max-width: 60ch;
+  margin-bottom: var(--space-6);
+}
+.prev-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+}
+.prev-card--adult {
+  border-left-color: var(--c-accent);
+}
+.prev-card h3 {
+  margin: 0 0 var(--space-3);
+  font-size: 1.15rem;
+}
+.prev-summary {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  max-width: 60ch;
+  margin: 0 0 var(--space-3);
+}
+.prev-caption {
+  margin: 0 0 var(--space-3);
+  font-size: 0.9rem;
+  color: var(--c-text-muted);
+  font-weight: 700;
+}
+.prev-firebreak {
+  margin: var(--space-6) 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--c-surface);
+  border-left: 3px solid var(--c-border-strong);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--c-text);
+}
+.prev-disclosure {
+  margin-top: var(--space-3);
+  border-top: 1px solid var(--c-border);
+  padding-top: var(--space-3);
+}
+.prev-disclosure summary {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--c-link);
+}
+.prev-disclosure p {
+  margin-top: var(--space-3);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 65ch;
+}
+.prev-source a {
+  font-weight: 600;
+}
