@@ -245,110 +245,6 @@ const prevalenceIsTerritory =
   <!-- Legal gambling types: moved into the right sidebar of the top block above.
        Statute citations remain visible in the regulation-process section below. -->
 
-  <!-- 4. How gambling is regulated (the process) -->
-  <section class="section" aria-labelledby="reg-h">
-    <div class="container">
-      <h2 id="reg-h">How gambling is regulated in {j.name}</h2>
-      <p class="lead">
-        Each legal form of gambling moves through the same layered process: a
-        <strong>statute</strong> in the state code authorizes it,
-        <strong>administrative rules</strong> spell out the details, and a
-        <strong>commission or agency</strong> licenses and enforces it.
-      </p>
-
-      {
-        regGroups.length > 0 && (
-          <ol class="process-list">
-            {regGroups.flatMap((g) =>
-              g.items.map((v) => (
-                <li class="process">
-                  <p class="process__type">
-                    {v.year ? `${v.label} · since ${v.year}` : v.label}
-                  </p>
-                  <ol class="process__chain">
-                    <li class="proc">
-                      <span class="proc__step">Law</span>
-                      <span class="proc__body">
-                        {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
-                      </span>
-                    </li>
-                    <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
-                      <span class="proc__step">Rules</span>
-                      <span class="proc__body">
-                        {v.adminCodeVerified && v.adminCodeCitation ? (
-                          v.adminCodeUrl ? (
-                            <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
-                          ) : (
-                            v.adminCodeCitation
-                          )
-                        ) : (
-                          "Not separately codified"
-                        )}
-                      </span>
-                    </li>
-                    <li class="proc proc--regulator">
-                      <span class="proc__step">Regulator</span>
-                      <span class="proc__body">
-                        {g.url ? (
-                          <a href={g.url}>{g.agency ?? "—"}</a>
-                        ) : (
-                          (g.agency ?? "—")
-                        )}
-                      </span>
-                    </li>
-                  </ol>
-                </li>
-              )),
-            )}
-          </ol>
-        )
-      }
-
-      {
-        tribalAuthorized && (
-          <p class="tribal-note">
-            Tribal gaming is regulated under federal law (the Indian Gaming
-            Regulatory Act) through the National Indian Gaming Commission and
-            tribal–state compacts, with {j.regulators.tribalCount} tribal gaming
-            commission{j.regulators.tribalCount === 1 ? "" : "s"} on file (listed
-            below).
-          </p>
-        )
-      }
-
-      {
-        (j.regulators.tribalCount > 0 || j.regulators.county.length > 0) && (
-          <details class="reg-more">
-            <summary>
-              Show tribal and county regulators
-              {j.regulators.tribalCount > 0
-                ? ` (${j.regulators.tribalCount} tribal gaming commission${j.regulators.tribalCount === 1 ? "" : "s"})`
-                : ""}
-            </summary>
-            <ul class="reg-list reg-list--sub">
-              {j.regulators.county.map((r) => (
-                <li class="reg-item">
-                  <p class="reg-item__name">
-                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
-                  </p>
-                  <p class="reg-item__type">{r.type}</p>
-                </li>
-              ))}
-              {j.regulators.tribal.map((r) => (
-                <li class="reg-item">
-                  <p class="reg-item__name">
-                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
-                  </p>
-                  <p class="reg-item__type">{r.type}</p>
-                </li>
-              ))}
-            </ul>
-          </details>
-        )
-      }
-    </div>
-  </section>
-
   <!-- Prevalence: youth + adult, never side-by-side, with firebreak. -->
   {
     prevalence && (
@@ -539,6 +435,111 @@ const prevalenceIsTerritory =
       }
     </div>
   </section>
+
+  <!-- How gambling is regulated (the regulation process; rendered last per request). -->
+  <section class="section" aria-labelledby="reg-h">
+    <div class="container">
+      <h2 id="reg-h">How gambling is regulated in {j.name}</h2>
+      <p class="lead">
+        Each legal form of gambling moves through the same layered process: a
+        <strong>statute</strong> in the state code authorizes it,
+        <strong>administrative rules</strong> spell out the details, and a
+        <strong>commission or agency</strong> licenses and enforces it.
+      </p>
+
+      {
+        regGroups.length > 0 && (
+          <ol class="process-list">
+            {regGroups.flatMap((g) =>
+              g.items.map((v) => (
+                <li class="process">
+                  <p class="process__type">
+                    {v.year ? `${v.label} · since ${v.year}` : v.label}
+                  </p>
+                  <ol class="process__chain">
+                    <li class="proc">
+                      <span class="proc__step">Law</span>
+                      <span class="proc__body">
+                        {v.url ? <a href={v.url}>{v.citation}</a> : v.citation}
+                      </span>
+                    </li>
+                    <li class:list={["proc", !v.adminCodeVerified && "proc--pending"]}>
+                      <span class="proc__step">Rules</span>
+                      <span class="proc__body">
+                        {v.adminCodeVerified && v.adminCodeCitation ? (
+                          v.adminCodeUrl ? (
+                            <a href={v.adminCodeUrl}>{v.adminCodeCitation}</a>
+                          ) : (
+                            v.adminCodeCitation
+                          )
+                        ) : (
+                          "Not separately codified"
+                        )}
+                      </span>
+                    </li>
+                    <li class="proc proc--regulator">
+                      <span class="proc__step">Regulator</span>
+                      <span class="proc__body">
+                        {g.url ? (
+                          <a href={g.url}>{g.agency ?? "—"}</a>
+                        ) : (
+                          (g.agency ?? "—")
+                        )}
+                      </span>
+                    </li>
+                  </ol>
+                </li>
+              )),
+            )}
+          </ol>
+        )
+      }
+
+      {
+        tribalAuthorized && (
+          <p class="tribal-note">
+            Tribal gaming is regulated under federal law (the Indian Gaming
+            Regulatory Act) through the National Indian Gaming Commission and
+            tribal–state compacts, with {j.regulators.tribalCount} tribal gaming
+            commission{j.regulators.tribalCount === 1 ? "" : "s"} on file (listed
+            below).
+          </p>
+        )
+      }
+
+      {
+        (j.regulators.tribalCount > 0 || j.regulators.county.length > 0) && (
+          <details class="reg-more">
+            <summary>
+              Show tribal and county regulators
+              {j.regulators.tribalCount > 0
+                ? ` (${j.regulators.tribalCount} tribal gaming commission${j.regulators.tribalCount === 1 ? "" : "s"})`
+                : ""}
+            </summary>
+            <ul class="reg-list reg-list--sub">
+              {j.regulators.county.map((r) => (
+                <li class="reg-item">
+                  <p class="reg-item__name">
+                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
+                  </p>
+                  <p class="reg-item__type">{r.type}</p>
+                </li>
+              ))}
+              {j.regulators.tribal.map((r) => (
+                <li class="reg-item">
+                  <p class="reg-item__name">
+                    {r.website ? <a href={r.website}>{r.name}</a> : r.name}
+                  </p>
+                  <p class="reg-item__type">{r.type}</p>
+                </li>
+              ))}
+            </ul>
+          </details>
+        )
+      }
+    </div>
+  </section>
+
 
   <!-- Funding & transparency intentionally omitted for now: no revenue /
        taxation / funding figures until that content is handled deliberately.
