@@ -370,24 +370,45 @@ const prevalenceIsTerritory =
                 whether adults have problems with gambling. We show them apart.
               </p>
 
-              <article class="prev-card prev-card--youth">
-                <h3>{prevalenceCardHeading("youth", prevalence, j.name)}</h3>
-                <p class="prev-summary">
-                  {prevalencePlainSummary("youth", prevalence, j.name)}
-                </p>
-                <p class="prev-caption">{prevalenceCaption(prevalence.youth)}</p>
-                <details class="prev-disclosure">
-                  <summary>See the source and methodology</summary>
-                  <p>{prevalence.snippets.youth_sentence}</p>
-                  {prevalence.youth.source_url && (
-                    <p class="prev-source">
-                      <a href={prevalence.youth.source_url} rel="noopener">
-                        {prevalence.youth.source}, {prevalence.youth.year} →
-                      </a>
-                    </p>
-                  )}
-                </details>
-              </article>
+              <div class="prev-grid">
+                <article class="prev-card prev-card--youth">
+                  <h3>{prevalenceCardHeading("youth", prevalence, j.name)}</h3>
+                  <p class="prev-summary">
+                    {prevalencePlainSummary("youth", prevalence, j.name)}
+                  </p>
+                  <p class="prev-caption">{prevalenceCaption(prevalence.youth)}</p>
+                  <details class="prev-disclosure">
+                    <summary>See the source and methodology</summary>
+                    <p>{prevalence.snippets.youth_sentence}</p>
+                    {prevalence.youth.source_url && (
+                      <p class="prev-source">
+                        <a href={prevalence.youth.source_url} rel="noopener">
+                          {prevalence.youth.source}, {prevalence.youth.year} →
+                        </a>
+                      </p>
+                    )}
+                  </details>
+                </article>
+
+                <article class="prev-card prev-card--adult">
+                  <h3>{prevalenceCardHeading("adult", prevalence, j.name)}</h3>
+                  <p class="prev-summary">
+                    {prevalencePlainSummary("adult", prevalence, j.name)}
+                  </p>
+                  <p class="prev-caption">{prevalenceCaption(prevalence.adult)}</p>
+                  <details class="prev-disclosure">
+                    <summary>See the source and methodology</summary>
+                    <p>{prevalence.snippets.adult_sentence}</p>
+                    {prevalence.adult.source_url && (
+                      <p class="prev-source">
+                        <a href={prevalence.adult.source_url} rel="noopener">
+                          {prevalence.adult.source}, {prevalence.adult.year} →
+                        </a>
+                      </p>
+                    )}
+                  </details>
+                </article>
+              </div>
 
               <p class="prev-firebreak">
                 These two numbers measure different things and cannot be
@@ -395,25 +416,6 @@ const prevalenceIsTerritory =
                 young people gambled at all. The adult number is about whether
                 adults are having problems with gambling.
               </p>
-
-              <article class="prev-card prev-card--adult">
-                <h3>{prevalenceCardHeading("adult", prevalence, j.name)}</h3>
-                <p class="prev-summary">
-                  {prevalencePlainSummary("adult", prevalence, j.name)}
-                </p>
-                <p class="prev-caption">{prevalenceCaption(prevalence.adult)}</p>
-                <details class="prev-disclosure">
-                  <summary>See the source and methodology</summary>
-                  <p>{prevalence.snippets.adult_sentence}</p>
-                  {prevalence.adult.source_url && (
-                    <p class="prev-source">
-                      <a href={prevalence.adult.source_url} rel="noopener">
-                        {prevalence.adult.source}, {prevalence.adult.year} →
-                      </a>
-                    </p>
-                  )}
-                </details>
-              </article>
             </>
           )}
         </div>

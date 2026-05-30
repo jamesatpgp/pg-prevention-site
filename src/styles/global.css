@@ -699,9 +699,6 @@ ul {
 }
 
 /* ---------- State prevalence section (Option A) ---------- */
-.state-prevalence__container {
-  max-width: 48rem;
-}
 .state-prevalence h2 {
   margin-bottom: var(--space-3);
 }
@@ -709,6 +706,14 @@ ul {
   max-width: 60ch;
   margin-bottom: var(--space-6);
 }
+
+.prev-grid {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  max-width: 60rem;
+}
+
 .prev-card {
   background: var(--c-surface);
   border: 1px solid var(--c-border);
@@ -736,7 +741,8 @@ ul {
   font-weight: 700;
 }
 .prev-firebreak {
-  margin: var(--space-6) 0;
+  margin: 0 0 var(--space-3);
+  max-width: 60rem;
   padding: var(--space-4) var(--space-5);
   background: var(--c-surface);
   border-left: 3px solid var(--c-border-strong);
