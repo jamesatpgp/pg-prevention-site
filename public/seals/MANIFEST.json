@@ -112,10 +112,10 @@
     {
       "slug": "illinois",
       "jurisdiction": "Illinois",
-      "file": "illinois.svg",
+      "file": "illinois.png",
       "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Illinois.svg",
       "license": "Public domain",
-      "license_note": "Official state seal of Illinois; PD as a US state government insignia",
+      "license_note": "Official state seal of Illinois; PD as a US state government insignia Rasterized from the Wikimedia SVG and cropped tightly to content because the source SVG had ~28% empty canvas padding that caused clipping in the page's square photo slot.",
       "source_filename": "Seal_of_Illinois.svg"
     },
     {
@@ -472,10 +472,10 @@
     {
       "slug": "guam",
       "jurisdiction": "Guam",
-      "file": "guam.svg",
+      "file": "guam.png",
       "commons_url": "https://commons.wikimedia.org/wiki/File:Seal_of_Guam.svg",
       "license": "Public domain (CC0)",
-      "license_note": "Official seal of Guam (US territory); CC0 from Open Clipart Library; also PD as US government insignia viewBox cropped from 44504x66756 to 24878x56009 (original SVG had ~44% horizontal and ~16% vertical empty padding around the artwork).",
+      "license_note": "Official seal of Guam; PD as a US territory government insignia. Rasterized from the Wikimedia Commons SVG (Seal_of_Guam.svg) and cropped tightly to content (922x1384 PNG) because the source SVG's viewBox + matrix transforms placed content in the upper-left of an oversized canvas, causing clipping in the page's square photo slot.",
       "source_filename": "Seal_of_Guam.svg"
     },
     {
