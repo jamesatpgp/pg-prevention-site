@@ -527,63 +527,58 @@ ul {
   .fnf-top__grid > .fnf-top__aside { order: 1; }
 }
 
-/* ---------- Family & Friends hub — per-cohort banner + stats ---------- */
+/* ---------- Family & Friends hub — small photo identifier + lighter sections ---------- */
 .fnf-hub-section {
-  padding-block: var(--space-7);
+  padding-block: var(--space-8);
 }
-.fnf-hub-banner {
-  position: relative;
-  margin: 0 0 var(--space-6);
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: var(--c-surface-alt);
+.fnf-hub-section + .fnf-hub-section {
+  border-top: 1px solid var(--c-border);
 }
-.fnf-hub-banner img {
+.fnf-hub-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+.fnf-hub-photo {
+  margin: 0;
+  flex-shrink: 0;
+}
+.fnf-hub-photo img {
   display: block;
-  width: 100%;
-  aspect-ratio: 5 / 2;
+  width: 200px;
+  height: 200px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  border-radius: var(--radius);
 }
 @media (max-width: 47.99em) {
-  .fnf-hub-banner img {
-    aspect-ratio: 4 / 3;
+  .fnf-hub-photo img {
+    width: 120px;
+    height: 120px;
   }
 }
-.fnf-hub-banner__overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: var(--space-6) var(--space-7);
-  background: linear-gradient(
-    to right,
-    rgba(31, 48, 36, 0.82) 0%,
-    rgba(31, 48, 36, 0.55) 50%,
-    rgba(31, 48, 36, 0.05) 100%
-  );
-  color: #fff;
+.fnf-hub-header__text {
+  min-width: 0;
 }
-.fnf-hub-banner__title {
+.fnf-hub-title {
   margin: 0 0 var(--space-2);
-  color: #fff;
-  font-size: clamp(2rem, 4vw + 1rem, 3rem);
-  line-height: 1.05;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  color: var(--c-heading);
+  font-size: clamp(1.75rem, 2.5vw + 1rem, 2.25rem);
+  line-height: 1.1;
 }
-.fnf-hub-banner__tagline {
+.fnf-hub-tagline {
   margin: 0;
-  color: #fff;
-  font-size: 1.15rem;
-  max-width: 32ch;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  color: var(--c-text-muted);
+  font-size: 1.0625rem;
+  max-width: 40ch;
 }
 .fnf-stats {
   list-style: none;
-  margin: 0 0 var(--space-5);
+  margin: 0 0 var(--space-6);
   padding: 0;
   display: grid;
-  gap: var(--space-3);
+  gap: var(--space-5);
 }
 @media (min-width: 48em) {
   .fnf-stats {
@@ -591,37 +586,43 @@ ul {
   }
 }
 .fnf-stats li {
-  background: var(--c-surface);
-  border-left: 4px solid var(--c-primary);
-  padding: var(--space-4) var(--space-5);
-  border-radius: var(--radius);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  color: var(--c-text);
+  background: transparent;
+  border-left: 2px solid var(--c-border-strong);
+  padding: var(--space-1) 0 var(--space-1) var(--space-4);
+  border-radius: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--c-text-muted);
 }
 .fnf-hub-content {
-  max-width: 70ch;
+  max-width: 62ch;
 }
 .fnf-hub-cta {
   margin-top: var(--space-5);
 }
 .fnf-hub-cta a {
-  display: inline-block;
-  padding: var(--space-3) var(--space-5);
-  background: var(--c-primary);
-  color: #fff;
-  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0;
+  background: transparent;
+  color: var(--c-link);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.fnf-hub-cta a::after {
+  content: "\203A";
   font-weight: 700;
   text-decoration: none;
-  transition: background-color 0.15s ease;
+  font-size: 1.2em;
+  line-height: 1;
 }
-.fnf-hub-cta a:hover,
+.fnf-hub-cta a:hover {
+  color: var(--c-primary);
+}
 .fnf-hub-cta a:focus-visible {
-  background: var(--c-heading);
-  outline: none;
-}
-.fnf-hub-intro :global(h3) {
-  margin-top: var(--space-6);
-  margin-bottom: var(--space-3);
-  font-size: 1.15rem;
+  outline: 3px solid var(--c-primary);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
