@@ -475,3 +475,54 @@ ul {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ---------- Family & friends — page top block (photo on right) ---------- */
+.fnf-top {
+  padding-block: var(--space-6) var(--space-4);
+}
+.fnf-top__grid {
+  display: grid;
+  gap: var(--space-6);
+}
+@media (min-width: 56em) {
+  .fnf-top__grid {
+    grid-template-columns: 1fr 18rem;
+    gap: var(--space-8);
+    align-items: start;
+  }
+}
+.fnf-top__main {
+  min-width: 0;
+}
+.fnf-top__main > p {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  max-width: 70ch;
+  margin: 0 0 var(--space-4);
+}
+.fnf-top__main > p:last-child {
+  margin-bottom: 0;
+}
+.fnf-top__aside {
+  margin: 0;
+}
+.fnf-photo {
+  margin: 0;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3);
+  overflow: hidden;
+}
+.fnf-photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+@media (max-width: 55.99em) {
+  /* On narrow viewports, photo sits ABOVE the intro paragraphs. */
+  .fnf-top__grid > .fnf-top__main { order: 2; }
+  .fnf-top__grid > .fnf-top__aside { order: 1; }
+}
