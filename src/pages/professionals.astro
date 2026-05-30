@@ -2,10 +2,26 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const audiences = [
-  { title: "Prevention Specialists", body: "How credentialed prevention specialists can build problem gambling into their prevention work.", href: "/professionals/prevention-specialists" },
-  { title: "Treatment Providers", body: "How treatment providers can incorporate problem gambling prevention into their practice.", href: "/professionals/treatment-providers" },
-  { title: "Healthcare Providers", body: "How doctors, dentists, and other clinicians can work prevention into routine care.", href: "/professionals/healthcare-providers" },
-  { title: "Teachers", body: "How educators can bring problem gambling prevention into the classroom.", href: "/professionals/teachers" },
+  {
+    slug: "prevention-specialists",
+    title: "Prevention Specialists",
+    href: "/professionals/prevention-specialists",
+  },
+  {
+    slug: "treatment-providers",
+    title: "Treatment Providers",
+    href: "/professionals/treatment-providers",
+  },
+  {
+    slug: "healthcare-providers",
+    title: "Healthcare Providers",
+    href: "/professionals/healthcare-providers",
+  },
+  {
+    slug: "teachers",
+    title: "Teachers",
+    href: "/professionals/teachers",
+  },
 ];
 ---
 
@@ -15,31 +31,46 @@ const audiences = [
 >
   <header class="page-header">
     <div class="container">
-      <p class="page-header__eyebrow">By profession</p>
       <h1>Professionals</h1>
       <p class="page-header__lead">
-        How to bring problem gambling prevention into your work — organized by
-        profession. Choose the role that fits you.
+        How to bring problem gambling prevention into your work. Pick your
+        role.
       </p>
     </div>
   </header>
 
   <section class="section">
     <div class="container">
-      <ul class="card-grid">
+      <ul class="audience-grid">
         {
           audiences.map((a) => (
             <li>
-              <a class="card-link" href={a.href}>
-                <span class="card-link__title">{a.title}</span>
-                <span>{a.body}</span>
+              <a
+                class="audience-card"
+                href={a.href}
+                aria-label={`Read the full ${a.title} guide`}
+              >
+                <img
+                  class="audience-card__photo"
+                  src={`/photos/professionals/${a.slug}.jpg`}
+                  alt=""
+                  role="presentation"
+                  width="200"
+                  height="200"
+                  loading="lazy"
+                />
+                <p class="audience-card__eyebrow">Guidance for</p>
+                <h2 class="audience-card__title">{a.title}</h2>
               </a>
             </li>
           ))
         }
       </ul>
-      <p style="margin-top: var(--space-6); font-weight: 700;">
-        <a href="/resources">Browse the Resource Library →</a>
+
+      <p class="audience-escape">
+        Working in a different role? Browse the
+        <a href="/resources">Resource Library</a>, or
+        <a href="mailto:james@pgprevention.com">send a note</a>.
       </p>
     </div>
   </section>

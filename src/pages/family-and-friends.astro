@@ -5,70 +5,21 @@ const audiences = [
   {
     slug: "youth",
     title: "Youth",
-    tagline: "Worried about a young person.",
-    stats: [
-      "Most exposure happens long before legal gambling age — through video games, social-casino apps, and bets placed through someone else's account.",
-      "Adolescents face gambling problems at roughly two to three times the adult rate.",
-      "Starting before 18 raises the chance of gambling problems in adulthood, alongside related struggles with money, substances, and mental health.",
-    ],
-    narrative:
-      "For young people today, gambling usually starts with a phone, not a casino. Loot boxes in video games. Social-casino apps that look like real slots. Sports bets placed through a friend's adult account. The harm is real — lost school time, money drained from families, and a teenage brain learning that risk feels good.",
-    earlyHelp: [
-      "Habits formed in the teen years carry forward. A young person who develops a gambling problem before leaving high school is more likely to carry it into adulthood. The single most useful thing the adults around a young person can do is start the conversation early. The conversation doesn't have to be perfect — and it rarely is on the first try.",
-    ],
-    ctaText: "How to talk with a young person",
     href: "/family-and-friends/youth",
   },
   {
     slug: "young-adults",
     title: "Young Adults",
-    tagline: "Worried about a young adult.",
-    stats: [
-      "Ages 18–25 are the highest-risk age group for gambling problems — the brain's reward and impulse systems are still maturing.",
-      "Mobile sports betting has put an always-on platform in every pocket since 2018, raising exposure for this age group.",
-      "College students show higher rates of risky gambling than older adults.",
-    ],
-    narrative:
-      "The late teens through mid-twenties are when most gambling problems either take hold or pass. It's the age group most exposed to mobile sports betting marketing and 24/7 online casinos — and the years when the brain's reward and impulse systems are still maturing. A young adult on their own with a phone and an account faces real risk that wasn't there at sixteen.",
-    earlyHelp: [
-      "Young adulthood is also when help is most likely to stick. People in their twenties are usually flexible enough — in routines, in identity — to make real changes when they recognize a problem and have someone in their corner. People in recovery repeatedly name a calm, non-judgmental person in their life as the thing that made the difference. The role doesn't matter. Showing up does.",
-    ],
-    ctaText: "How to talk with a young adult",
     href: "/family-and-friends/young-adults",
   },
   {
     slug: "older-adults",
     title: "Older Adults",
-    tagline: "Worried about an older parent or partner.",
-    stats: [
-      "Older adults gamble less overall, but when problems develop, the financial damage is often more severe — retirement savings can't be replaced.",
-      "Casinos meet a real social need for many retirees: well-lit, climate-controlled, friendly staff — and rarely about the money.",
-      "Loneliness, recent loss, and early cognitive decline are among the strongest risk factors in this age group.",
-    ],
-    narrative:
-      "Older adults face a different landscape. Rates of gambling problems are lower than in younger groups, but when problems develop, the damage is often more severe. A retirement account drained over six months can't be earned back the way a paycheck can. And casinos meet a real social need for retirees who are isolated, recently bereaved, or feeling unmoored after retirement.",
-    earlyHelp: [
-      "The people who notice first are usually adult children or longtime friends. The signs are different from a teen's: not missing curfew, but missing the rent. The most useful move is to treat them like the adult they are — without taking over their decisions, but also without ignoring what you see. Direct conversations and an open door work better than fear-driven control.",
-    ],
-    ctaText: "How to talk with an older adult",
     href: "/family-and-friends/older-adults",
   },
   {
     slug: "veterans",
     title: "Veterans",
-    tagline: "Worried about a veteran.",
-    stats: [
-      "Veterans face gambling problems at about twice the rate of other adults.",
-      "PTSD and traumatic brain injury are strongly linked to gambling problems — both affect brain regions involved in impulse control and reward.",
-      "The transition from active duty to civilian life is a particular risk window — structure gives way to unstructured time.",
-    ],
-    narrative:
-      "Gambling problems show up at higher rates in veterans for several reasons: PTSD and traumatic brain injury affect the brain systems gambling activates. Sudden unstructured time after structured service creates a window for high-stakes risk-taking. Treatment systems built around substance use don't always have a clear answer for gambling. And the pressure to handle things alone keeps many veterans from raising it until losses are deep.",
-    earlyHelp: [
-      "Veterans often respond best to people who don't make the conversation about veterans-as-a-category. The most effective talks come from family or unit members who can say what they've seen, ask a direct question, and not flinch at the answer.",
-      "If a veteran in your life is in crisis right now: 988 (then press 1) reaches the Veterans Crisis Line. For gambling-specific support, call or text 1-800-MY-RESET.",
-    ],
-    ctaText: "How to talk with a veteran",
     href: "/family-and-friends/veterans",
   },
 ];
@@ -113,56 +64,43 @@ const audiences = [
     </div>
   </section>
 
-  {
-    audiences.map((a) => (
-      <section
-        class="section fnf-hub-section"
-        aria-labelledby={`hub-${a.slug}`}
-      >
-        <div class="container">
-          <header class="fnf-hub-header">
-            <figure class="fnf-hub-photo">
-              <img
-                src={`/photos/family-and-friends/${a.slug}.jpg`}
-                alt=""
-                role="presentation"
-                width="200"
-                height="200"
-                loading="lazy"
-              />
-            </figure>
-            <div class="fnf-hub-header__text">
-              <h2 id={`hub-${a.slug}`} class="fnf-hub-title">
-                {a.title}
-              </h2>
-              <p class="fnf-hub-tagline">{a.tagline}</p>
-            </div>
-          </header>
+  <section class="section">
+    <div class="container">
+      <ul class="audience-grid">
+        {
+          audiences.map((a) => (
+            <li>
+              <a
+                class="audience-card"
+                href={a.href}
+                aria-label={`Read the full ${a.title} guide`}
+              >
+                <img
+                  class="audience-card__photo"
+                  src={`/photos/family-and-friends/${a.slug}.jpg`}
+                  alt=""
+                  role="presentation"
+                  width="200"
+                  height="200"
+                  loading="lazy"
+                />
+                <p class="audience-card__eyebrow">
+                  For families and friends of
+                </p>
+                <h2 class="audience-card__title">{a.title}</h2>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
 
-          <ul
-            class="fnf-stats"
-            aria-label={`Key facts about ${a.title.toLowerCase()}`}
-          >
-            {a.stats.map((s) => (
-              <li>{s}</li>
-            ))}
-          </ul>
-
-          <div class="fnf-hub-content prose">
-            <h3>What this looks like for {a.title.toLowerCase()}</h3>
-            <p>{a.narrative}</p>
-
-            <h3>Why early conversations help</h3>
-            {a.earlyHelp.map((p) => (
-              <p>{p}</p>
-            ))}
-
-            <p class="fnf-hub-cta">
-              <a href={a.href}>{a.ctaText}</a>
-            </p>
-          </div>
-        </div>
-      </section>
-    ))
-  }
+      <p class="audience-escape">
+        Not sure which fits? Start with
+        <a href="/understand-gambling">Understand gambling</a>
+        for the basics, or browse the
+        <a href="/find-your-state">state directory</a>
+        to find local resources.
+      </p>
+    </div>
+  </section>
 </BaseLayout>
