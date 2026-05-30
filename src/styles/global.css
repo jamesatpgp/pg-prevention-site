@@ -509,7 +509,7 @@ ul {
 }
 
 /* Gambling-types card grid (Understand Gambling: what-is-gambling) */
-.gambling-types {
+ul.gambling-types {
   list-style: none;
   padding: 0;
   margin: var(--space-5) 0;
@@ -518,7 +518,7 @@ ul {
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
   max-width: none;
 }
-.gambling-types > li {
+ul.gambling-types > li {
   background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-lg);
@@ -533,7 +533,7 @@ ul {
   height: 2.5rem;
   color: var(--c-primary);
 }
-.gambling-types__title {
+h3.gambling-types__title {
   margin: 0;
   font-size: var(--fs-h3);
   color: var(--c-heading);
