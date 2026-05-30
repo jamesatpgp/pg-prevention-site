@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HelpCallout from "../components/HelpCallout.astro";
+
+const topics = [
+  { title: "Topic 1", body: "TBD.", href: "/understand-prevention/topic-1" },
+  { title: "Topic 2", body: "TBD.", href: "/understand-prevention/topic-2" },
+  { title: "Topic 3", body: "TBD.", href: "/understand-prevention/topic-3" },
+  { title: "Topic 4", body: "TBD.", href: "/understand-prevention/topic-4" },
+];
+---
+
+<BaseLayout
+  title="Understand Prevention"
+  description="Plain-language information about problem gambling prevention — what it is, how it works, and who does the work."
+>
+  <header class="page-header">
+    <div class="container">
+      <p class="page-header__eyebrow">Public education</p>
+      <h1>Understand prevention</h1>
+      <p class="page-header__lead">
+        Clear, judgment-free information about problem gambling prevention.
+        <em>[Section content in development.]</em>
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <ul class="card-grid">
+        {
+          topics.map((t) => (
+            <li>
+              <a class="card-link" href={t.href}>
+                <span class="card-link__title">{t.title}</span>
+                <span>{t.body}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <HelpCallout />
+    </div>
+  </section>
+</BaseLayout>
